@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Simulator from '../components/Simulator.astro';
+---
+<BaseLayout title="Simulations | Guide Investissement 2026–2055" description="Simulateur pédagogique d’intérêts composés.">
+  <article class="prose">
+    <p class="eyebrow">Guide Investissement 2026–2055</p>
+    <h1>Simulations</h1>
+    <p class="muted">Espace de projection pédagogique pour tester des versements mensuels et hypothèses de rendement.</p>
+    <h2>Zone hypothèses de rendement</h2>
+    <p>Indiquer ici les hypothèses utilisées : rendement nominal, inflation, frais, fiscalité, fréquence des versements et horizon. Les simulations sont illustratives.</p>
+    <div class="callout attention"><strong>Attention — pas une prévision</strong><p>Les marchés ne suivent pas une progression régulière. Une moyenne annuelle masque les baisses temporaires et les séquences défavorables.</p></div>
+  </article>
+  <section class="section"><Simulator /></section>
+</BaseLayout>

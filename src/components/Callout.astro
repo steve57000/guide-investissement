@@ -1,0 +1,8 @@
+---
+interface Props { type?: 'attention' | 'conseil' | 'retenir'; title: string }
+const { type = 'retenir', title } = Astro.props;
+---
+<div class={`callout ${type}`}>
+  <strong>{type === 'attention' ? 'Attention' : type === 'conseil' ? 'Conseil' : 'À retenir'} — {title}</strong>
+  <slot />
+</div>
