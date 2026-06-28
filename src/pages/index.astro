@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Simulator from '../components/Simulator.astro';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 ---
 <BaseLayout>
-<section class="hero"><div class="eyebrow">2026–2055 • Patrimoine progressif</div><h1>Construire un patrimoine, dès 50 € par mois.</h1><p>Un site premium et interactif pour comprendre les enveloppes, comparer les plateformes, tester des hypothèses de rendement et documenter une stratégie d’investissement long terme.</p><div class="actions"><a class="btn" href="/commencer-50">Commencer avec 50 €</a><a class="btn secondary" href="/simulations">Tester une simulation</a></div></section>
+<section class="hero"><div class="eyebrow">2026–2055 • Patrimoine progressif</div><h1>Construire un patrimoine, dès 50 € par mois.</h1><p>Un site premium et interactif pour comprendre les enveloppes, comparer les plateformes, tester des hypothèses de rendement et documenter une stratégie d’investissement long terme.</p><div class="actions"><a class="btn" href={withBase('commencer-50')}>Commencer avec 50 €</a><a class="btn secondary" href={withBase('simulations')}>Tester une simulation</a></div></section>
 <section class="section grid"><article class="card"><h3>Scénarios mensuels</h3><p class="muted">50 €, 75 €, 100 €, 150 €, 200 €, 300 €, 500 € et 1000 € avec des repères pédagogiques.</p></article><article class="card"><h3>Sources d’abord</h3><p class="muted">Aucune donnée financière chiffrée non sourcée : les pages prévoient des emplacements pour sources officielles.</p></article><article class="card"><h3>Fiscalité française</h3><p class="muted">Structure claire pour PEA, CTO, assurance-vie, actifs numériques et déclarations, à compléter avec textes officiels.</p></article></section>
 <section class="section"><Simulator /></section>
 </BaseLayout>
