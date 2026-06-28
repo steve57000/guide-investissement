@@ -1,0 +1,18 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({ params: { slug: page.id.replace(/\.mdx?$/, '') }, props: { page } }));
+}
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+<BaseLayout title={`${page.data.title} | Guide Investissement 2026–2055`} description={page.data.description}>
+  <article class="prose">
+    <p class="eyebrow">Guide Investissement 2026–2055</p>
+    <h1>{page.data.title}</h1>
+    <p class="muted">{page.data.description}</p>
+    <Content />
+  </article>
+</BaseLayout>

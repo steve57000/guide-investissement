@@ -1,0 +1,7 @@
+---
+import '../styles/global.css';
+const { title = 'Guide Investissement 2026–2055', description = 'Guide éducatif pour investir progressivement.' } = Astro.props;
+const nav = [['/commencer-50','50 €/mois'],['/placements','Placements'],['/etf','ETF'],['/crypto','Crypto'],['/plateformes','Plateformes'],['/simulations','Simulations'],['/fiscalite','Fiscalité'],['/portefeuille-steve','Portefeuille Steve'],['/sources','Sources']];
+---
+<html lang="fr"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><meta name="description" content={description} /><title>{title}</title></head>
+<body><nav class="nav"><div class="container nav-inner"><a class="brand" href="/">Guide <span>Investissement</span></a><div class="links">{nav.map(([href,label]) => <a href={href}>{label}</a>)}</div></div></nav><main class="container"><slot /></main><footer class="footer"><div class="container">Contenu éducatif uniquement : ne constitue pas un conseil financier personnalisé. Sources à compléter avec documents officiels avant toute décision.</div></footer></body></html>

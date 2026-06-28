@@ -1,0 +1,9 @@
+---
+const amounts = [50,75,100,150,200,300,500,1000];
+---
+<table>
+  <thead><tr><th>Versement mensuel</th><th>Usage du scénario</th><th>Point de vigilance</th></tr></thead>
+  <tbody>
+    {amounts.map((amount) => <tr><td>{amount} €</td><td>{amount <= 100 ? 'Démarrer l’habitude et automatiser' : amount <= 300 ? 'Accélérer la diversification' : 'Construire une allocation multi-enveloppes'}</td><td>Vérifier les frais, la fiscalité et l’adéquation au profil de risque.</td></tr>)}
+  </tbody>
+</table>
