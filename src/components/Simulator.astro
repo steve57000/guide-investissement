@@ -1,7 +1,7 @@
 <div class="card simulator" data-simulator>
   <div class="form">
     <h2>Simulateur d’intérêts composés</h2>
-    <p class="muted">Simulations non garanties, hors fiscalité, hors frais et hors inflation.</p>
+    <p class="muted">Simulations non garanties : le rendement saisi est diminué des frais estimés, puis le résultat réel est corrigé de l’inflation.</p>
     <label>Versement mensuel (€)<input data-input="monthly" type="number" value="50" min="0" step="25" /></label>
     <label>Capital initial (€)<input data-input="initial" type="number" value="0" min="0" step="100" /></label>
     <label>Scénario
@@ -13,18 +13,21 @@
       </select>
     </label>
     <label>Rendement annuel hypothétique (%)<input data-input="rate" type="number" value="6" min="-20" max="20" step="0.1" /></label>
+    <label>Frais annuels estimés (%)<input data-input="fees" type="number" value="0.3" min="0" max="5" step="0.05" /></label>
+    <label>Inflation annuelle estimée (%)<input data-input="inflation" type="number" value="2" min="0" max="10" step="0.1" /></label>
     <label>Durée (années)<input data-input="years" type="number" value="30" min="1" max="60" step="1" /></label>
   </div>
   <div>
     <div class="metric">
-      <div><span class="muted">Capital final</span><b data-output="final">—</b></div>
+      <div><span class="muted">Capital nominal</span><b data-output="final">—</b></div>
+      <div><span class="muted">Capital corrigé de l’inflation</span><b data-output="real">—</b></div>
       <div><span class="muted">Versements cumulés</span><b data-output="paid">—</b></div>
       <div><span class="muted">Gains théoriques</span><b data-output="gain">—</b></div>
     </div>
     <div class="bars" data-bars aria-label="Graphique de progression du capital"></div>
     <div class="table-wrap">
       <table class="year-table">
-        <thead><tr><th>Année</th><th>Versements cumulés</th><th>Capital théorique</th><th>Gains théoriques</th></tr></thead>
+        <thead><tr><th>Année</th><th>Versements cumulés</th><th>Capital nominal</th><th>Capital corrigé inflation</th><th>Gains théoriques</th></tr></thead>
         <tbody data-output="rows"></tbody>
       </table>
     </div>
@@ -44,7 +47,9 @@
     const monthly = Number(root.querySelector('[data-input="monthly"]')?.value || 0);
     const initial = Number(root.querySelector('[data-input="initial"]')?.value || 0);
     const annualRate = Number(root.querySelector('[data-input="rate"]')?.value || 0) / 100;
-    const monthlyRate = annualRate / 12;
+    const annualFees = Number(root.querySelector('[data-input="fees"]')?.value || 0) / 100;
+    const annualInflation = Number(root.querySelector('[data-input="inflation"]')?.value || 0) / 100;
+    const monthlyRate = (annualRate - annualFees) / 12;
     const years = Number(root.querySelector('[data-input="years"]')?.value || 0);
     let capital = initial;
     const points = [];
@@ -54,17 +59,18 @@
       if(m % 12 === 0){
         const year = m / 12;
         const paid = initial + monthly * m;
-        rows.push({ year, paid, capital, gain: capital - paid });
+        rows.push({ year, paid, capital, real: capital / Math.pow(1 + annualInflation, year), gain: capital - paid });
         if(year % 5 === 0 || year === years) points.push({year, capital});
       }
     }
     const paid = initial + monthly * years * 12;
     root.querySelector('[data-output="final"]').textContent = euro.format(capital);
+    root.querySelector('[data-output="real"]').textContent = euro.format(capital / Math.pow(1 + annualInflation, years || 0));
     root.querySelector('[data-output="paid"]').textContent = euro.format(paid);
     root.querySelector('[data-output="gain"]').textContent = euro.format(capital - paid);
     const max = Math.max(...points.map(p=>p.capital), 1);
     root.querySelector('[data-bars]').innerHTML = points.map(p=>`<div class="bar" style="height:${Math.max(8,p.capital/max*100)}%"><span>${p.year}a</span></div>`).join('');
-    root.querySelector('[data-output="rows"]').innerHTML = rows.map((row)=>`<tr><td>${row.year}</td><td>${euro.format(row.paid)}</td><td>${euro.format(row.capital)}</td><td>${euro.format(row.gain)}</td></tr>`).join('');
+    root.querySelector('[data-output="rows"]').innerHTML = rows.map((row)=>`<tr><td>${row.year}</td><td>${euro.format(row.paid)}</td><td>${euro.format(row.capital)}</td><td>${euro.format(row.real)}</td><td>${euro.format(row.gain)}</td></tr>`).join('');
   }
   root?.querySelector('[data-input="scenario"]')?.addEventListener('change', ()=>{ syncScenario(); calc(); });
   root?.querySelector('[data-input="rate"]')?.addEventListener('input', ()=>{

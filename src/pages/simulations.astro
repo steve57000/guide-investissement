@@ -1,15 +1,87 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Simulator from '../components/Simulator.astro';
+import { buildScenarioTable, calculateCompoundProjection, formatEuro } from '../utils/compound';
+
+const monthlyAmounts = [50, 75, 100, 150, 200, 300, 500, 1000];
+const horizons = [5, 10, 15, 20, 25, 30];
+const scenarioTables = buildScenarioTable(monthlyAmounts, horizons);
+const objectives = [10000, 25000, 50000, 100000, 250000, 500000, 1000000].map((target) => {
+  const candidates = horizons.flatMap((years) => monthlyAmounts.flatMap((monthly) => [0.04, 0.06, 0.08].map((rate) => ({
+    target,
+    years,
+    monthly,
+    rate,
+    final: calculateCompoundProjection({ monthly, years, annualRate: rate }).nominalCapital,
+  }))));
+  const match = candidates.find((candidate) => candidate.final >= target) ?? candidates.at(-1)!;
+  return {
+    target,
+    monthly: match.monthly,
+    years: match.years,
+    rate: match.rate,
+    note: match.final >= target
+      ? `Projection atteinte dans le scénario ${(match.rate * 100).toFixed(0)} %, hors fiscalité, frais et inflation.`
+      : 'Nécessite probablement un effort supérieur à 1 000 €/mois ou un horizon plus long.',
+  };
+});
 ---
-<BaseLayout title="Simulations | Guide Investissement 2026–2055" description="Simulateur pédagogique d’intérêts composés.">
-  <article class="prose">
+<BaseLayout title="Simulations | Guide Investissement 2026–2055" description="Tableau de bord pédagogique pour comparer des scénarios patrimoniaux non garantis.">
+  <article class="prose dashboard">
     <p class="eyebrow">Guide Investissement 2026–2055</p>
-    <h1>Simulations</h1>
-    <p class="muted">Espace de projection pédagogique pour tester des versements mensuels et hypothèses de rendement.</p>
-    <h2>Zone hypothèses de rendement</h2>
-    <p>Indiquer ici les hypothèses utilisées : rendement nominal, inflation, frais, fiscalité, fréquence des versements et horizon. Les simulations sont illustratives, non garanties, hors fiscalité, hors frais et hors inflation.</p>
-    <div class="callout attention"><strong>Attention — pas une prévision</strong><p>Les marchés ne suivent pas une progression régulière. Une moyenne annuelle masque les baisses temporaires et les séquences défavorables.</p></div>
+    <h1>Simulations patrimoniales</h1>
+    <p class="lead">Cette page transforme les versements mensuels en projections lisibles : comparer des efforts d’épargne, visualiser des scénarios prudent, équilibré et dynamique, puis relier les chiffres à des objectifs patrimoniaux concrets.</p>
+
+    <div class="dashboard-cards">
+      <div class="card"><span class="badge badge-prudent">Prudent</span><h3>4 % annuel</h3><p class="muted">Hypothèse nominale pédagogique pour tester une trajectoire modérée.</p></div>
+      <div class="card"><span class="badge badge-balanced">Équilibré</span><h3>6 % annuel</h3><p class="muted">Scénario central utilisé pour la colonne “gains théoriques”.</p></div>
+      <div class="card"><span class="badge badge-dynamic">Dynamique</span><h3>8 % annuel</h3><p class="muted">Projection plus exigeante, avec une volatilité potentiellement plus forte.</p></div>
+    </div>
+
+    <div class="callout attention"><strong>Attention — projections non garanties</strong><p>Les montants ci-dessous sont des simulations, pas des promesses de rendement. Ils supposent des versements mensuels en fin de mois, hors fiscalité, hors frais et hors inflation.</p></div>
+
+    <h2>Hypothèses de calcul</h2>
+    <ul>
+      <li>Versement mensuel constant réalisé en fin de mois.</li>
+      <li>Capital initial nul dans les tableaux comparatifs.</li>
+      <li>Rendements nominaux annualisés : 4 %, 6 % et 8 %.</li>
+      <li>Aucune fiscalité, aucun frais et aucune inflation dans les tableaux de projection.</li>
+      <li>Les gains théoriques correspondent au scénario équilibré 6 % moins le capital investi.</li>
+    </ul>
+
+    <div class="callout conseil"><strong>Conseil — méthode de lecture</strong><p>Commencez par choisir un horizon réaliste, puis comparez l’écart entre capital investi et capital final simulé. Plus l’horizon est long, plus la régularité et les frais deviennent déterminants.</p></div>
+
+    <h2>Tableaux de projection par horizon</h2>
+    {scenarioTables.map((table) => (
+      <section class="projection-block">
+        <h3>Horizon {table.horizon} ans</h3>
+        <div class="table-wrap projection-table">
+          <table>
+            <thead><tr><th>Versement mensuel</th><th>Capital investi</th><th>Prudent 4 %</th><th>Équilibré 6 %</th><th>Dynamique 8 %</th><th>Gains théoriques 6 %</th></tr></thead>
+            <tbody>{table.rows.map((row) => <tr><td><strong>{formatEuro(row.monthly)}/mois</strong></td><td>{formatEuro(row.invested)}</td><td>{formatEuro(row.prudent)}</td><td>{formatEuro(row.balanced)}</td><td>{formatEuro(row.dynamic)}</td><td>{formatEuro(row.theoreticalGains)}</td></tr>)}</tbody>
+          </table>
+        </div>
+      </section>
+    ))}
+
+    <h2>Objectifs patrimoniaux</h2>
+    <p>Ce tableau donne un effort mensuel approximatif parmi les paliers proposés. Il s’agit d’une aide pédagogique pour cadrer un ordre de grandeur, pas d’une garantie.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Objectif</th><th>Effort mensuel approximatif</th><th>Horizon possible</th><th>Remarque</th></tr></thead>
+        <tbody>{objectives.map((objective) => <tr><td><strong>{formatEuro(objective.target)}</strong></td><td>{formatEuro(objective.monthly)}/mois</td><td>{objective.years} ans</td><td>{objective.note}</td></tr>)}</tbody>
+      </table>
+    </div>
+
+    <h2>Ce que les simulations ne montrent pas</h2>
+    <div class="dashboard-cards two-cols">
+      <div class="card"><h3>Marchés irréguliers</h3><p class="muted">Les marchés ne montent pas régulièrement : les krachs, corrections et années négatives existent.</p></div>
+      <div class="card"><h3>Pouvoir d’achat</h3><p class="muted">L’inflation réduit la valeur réelle du capital, même si le capital nominal augmente.</p></div>
+      <div class="card"><h3>Frais et fiscalité</h3><p class="muted">Les frais diminuent la performance et la fiscalité dépend de l’enveloppe utilisée.</p></div>
+      <div class="card"><h3>Comportement</h3><p class="muted">La psychologie de l’investisseur compte autant que les chiffres : tenir le plan est souvent la partie difficile.</p></div>
+    </div>
+
+    <div class="callout a-retenir"><strong>À retenir</strong><p>Une bonne simulation sert à préparer des décisions, pas à prédire l’avenir. Testez plusieurs hypothèses et gardez une marge de sécurité.</p></div>
   </article>
   <section class="section"><Simulator /></section>
 </BaseLayout>
