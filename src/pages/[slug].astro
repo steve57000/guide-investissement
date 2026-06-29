@@ -19,6 +19,5 @@ const { Content } = await render(page);
     <Content />
     {page.id === 'commencer-50' && <><h2>Allocations officielles centralisées</h2><AllocationTable /></>}
     {page.id === 'plan-action' && <><h2>Allocation de départ officielle</h2><AllocationTable /></>}
-    {page.id === 'portefeuille-steve' && <><h2>Allocations officielles du portefeuille Steve</h2><AllocationTable variant="steve" /></>}
   </article>
 </BaseLayout>

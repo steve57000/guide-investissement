@@ -2,8 +2,17 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PlanCards from '../components/PlanCards.astro';
 import Simulator from '../components/Simulator.astro';
+import { allocations } from '../data/allocations';
 const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
+const starterAllocation = allocations.find(({ total }) => total === 50) ?? allocations[0];
+const euro = (value: number) => `${value.toLocaleString('fr-FR')} €`;
+const pct = (value: number) => `${value.toLocaleString('fr-FR')} %`;
+const dashboardRows = [
+  { label: 'ETF Monde', amount: starterAllocation.etfMonde, percentage: starterAllocation.etfPercentage },
+  { label: 'Bitcoin', amount: starterAllocation.bitcoin, percentage: starterAllocation.bitcoinPercentage },
+  { label: 'Ethereum', amount: starterAllocation.ethereum, percentage: starterAllocation.ethereumPercentage },
+];
 ---
 <BaseLayout>
 <section class="hero hero-premium">
@@ -14,11 +23,15 @@ const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
     <div class="actions"><a class="btn" href={withBase('commencer-50')}>Commencer avec 50 €</a><a class="btn secondary" href={withBase('plateformes')}>Comparer les plateformes</a><a class="btn secondary" href={withBase('simulations')}>Tester une simulation</a></div>
   </div>
   <aside class="hero-dashboard" aria-label="Exemple de plan à 50 euros par mois">
-    <div class="dashboard-topline"><span class="badge">Plan 50 €/mois</span><strong>Allocation simple</strong></div>
-    <div class="dashboard-total"><span>Versement mensuel</span><b>50 €</b></div>
-    <div class="allocation-row"><span>ETF Monde</span><strong>40 €</strong><i style="--w:80%"></i></div>
-    <div class="allocation-row"><span>Bitcoin</span><strong>7 €</strong><i style="--w:14%"></i></div>
-    <div class="allocation-row"><span>Ethereum</span><strong>3 €</strong><i style="--w:6%"></i></div>
+    <div class="dashboard-topline"><span class="badge">Plan {euro(starterAllocation.total)}/mois</span><strong>Allocation simple</strong></div>
+    <div class="dashboard-total"><span>Versement mensuel</span><b>{euro(starterAllocation.total)}</b></div>
+    {dashboardRows.map(({ label, amount, percentage }) => (
+      <div class="allocation-row">
+        <span>{label}</span>
+        <strong>{euro(amount)} · {pct(percentage)}</strong>
+        <i style={`--w:${percentage}%`}></i>
+      </div>
+    ))}
     <p class="muted">Un point de départ pédagogique : enveloppe lisible, frais surveillés, crypto volontairement limitée.</p>
   </aside>
 </section>
