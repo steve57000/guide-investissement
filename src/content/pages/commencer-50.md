@@ -21,6 +21,14 @@ La logique proposée privilégie un socle ETF Monde via PEA lorsque l’ETF est 
 | 500 € | 400 € ETF Monde PEA, 70 € Bitcoin, 30 € Ethereum | Dynamique | 10 ans minimum, idéalement 15–30 ans | Construire un patrimoine financier structuré |
 | 1000 € | 800 € ETF Monde PEA, 150 € Bitcoin, 50 € Ethereum | Dynamique avec pilotage | 10 ans minimum, idéalement 15–30 ans | Piloter une stratégie patrimoniale complète et documentée |
 
+
+<div class="callout a-retenir"><strong>Plateforme concrète pour démarrer</strong><p>Le choix ci-dessous est une recommandation pédagogique, pas un conseil personnalisé. Il faut vérifier les frais, ETF disponibles, documents fiscaux et conditions d’éligibilité dans les pages officielles de chaque plateforme.</p>
+<ul>
+<li><span class="badge badge-beginner">Option simple</span> <strong>continuer temporairement N26/Revolut</strong> : acceptable pour installer l’habitude avec de petits montants, surtout si Steve utilise déjà ces applications. Vérifier toutefois la fiscalité, les comptes étrangers Revolut et l’aide fiscale disponible.</li>
+<li><span class="badge badge-pea">Option optimisée PEA</span> <strong>ouvrir ou centraliser sur un PEA</strong> : prioritaire pour le cœur ETF long terme. Comparer N26, Trade Republic, BoursoBank, Fortuneo, Bourse Direct et autres acteurs selon frais officiels, IFU/aide fiscale, simplicité et ETF éligibles.</li>
+<li><span class="badge badge-crypto">Option séparation propre</span> <strong>PEA pour ETF + plateforme crypto séparée</strong> : garder les ETF long terme dans l’enveloppe PEA et limiter la crypto à une petite poche indépendante, documentée et déclarée.</li>
+</ul></div>
+
 <div class="callout conseil"><strong>Conseil — ordre de priorité</strong><p>Avant d’investir, conserver une épargne de sécurité. Ensuite, automatiser le versement mensuel, documenter l’allocation et vérifier une fois par trimestre que les frais et l’enveloppe restent adaptés.</p></div>
 
 ## Tableaux de simulation
