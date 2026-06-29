@@ -1,31 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Simulator from '../components/Simulator.astro';
-import ScenarioTable from '../components/ScenarioTable.astro';
-import { buildScenarioTable, calculateCompoundProjection, formatEuro } from '../utils/compound';
-
-const monthlyAmounts = [50, 75, 100, 150, 200, 300, 500, 1000];
-const horizons = [5, 10, 15, 20, 25, 30];
-const scenarioTables = buildScenarioTable(monthlyAmounts, horizons);
-const objectives = [10000, 25000, 50000, 100000, 250000, 500000, 1000000].map((target) => {
-  const candidates = horizons.flatMap((years) => monthlyAmounts.flatMap((monthly) => [0.04, 0.06, 0.08].map((rate) => ({
-    target,
-    years,
-    monthly,
-    rate,
-    final: calculateCompoundProjection({ monthly, years, annualRate: rate }).nominalCapital,
-  }))));
-  const match = candidates.find((candidate) => candidate.final >= target) ?? candidates.at(-1)!;
-  return {
-    target,
-    monthly: match.monthly,
-    years: match.years,
-    rate: match.rate,
-    note: match.final >= target
-      ? `Projection atteinte dans le scénario ${(match.rate * 100).toFixed(0)} %, hors fiscalité, frais et inflation.`
-      : 'Nécessite probablement un effort supérieur à 1 000 €/mois ou un horizon plus long.',
-  };
-});
+import SimulationTables from '../components/SimulationTables.astro';
 ---
 <BaseLayout title="Simulations | Guide Investissement 2026–2055" description="Tableau de bord pédagogique pour comparer des scénarios patrimoniaux non garantis.">
   <article class="prose dashboard">
@@ -52,17 +28,7 @@ const objectives = [10000, 25000, 50000, 100000, 250000, 500000, 1000000].map((t
 
     <div class="callout conseil"><strong>Conseil — méthode de lecture</strong><p>Commencez par choisir un horizon réaliste, puis comparez l’écart entre capital investi et capital final simulé. Plus l’horizon est long, plus la régularité et les frais deviennent déterminants.</p></div>
 
-    <h2>Tableaux de projection par horizon</h2>
-    {scenarioTables.map((table) => <ScenarioTable table={table} />)}
-
-    <h2>Objectifs patrimoniaux</h2>
-    <p>Ce tableau donne un effort mensuel approximatif parmi les paliers proposés. Il s’agit d’une aide pédagogique pour cadrer un ordre de grandeur, pas d’une garantie.</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Objectif</th><th>Effort mensuel approximatif</th><th>Horizon possible</th><th>Remarque</th></tr></thead>
-        <tbody>{objectives.map((objective) => <tr><td><strong>{formatEuro(objective.target)}</strong></td><td>{formatEuro(objective.monthly)}/mois</td><td>{objective.years} ans</td><td>{objective.note}</td></tr>)}</tbody>
-      </table>
-    </div>
+    <SimulationTables />
 
     <h2>Ce que les simulations ne montrent pas</h2>
     <div class="dashboard-cards two-cols">
