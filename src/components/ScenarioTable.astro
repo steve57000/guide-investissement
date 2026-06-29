@@ -1,9 +1,33 @@
 ---
-const amounts = [50,75,100,150,200,300,500,1000];
+import { formatEuro } from '../utils/compound';
+const { table } = Astro.props;
 ---
-<table>
-  <thead><tr><th>Versement mensuel</th><th>Usage du scénario</th><th>Point de vigilance</th></tr></thead>
-  <tbody>
-    {amounts.map((amount) => <tr><td>{amount} €</td><td>{amount <= 100 ? 'Démarrer l’habitude et automatiser' : amount <= 300 ? 'Accélérer la diversification' : 'Construire une allocation multi-enveloppes'}</td><td>Vérifier les frais, la fiscalité et l’adéquation au profil de risque.</td></tr>)}
-  </tbody>
-</table>
+<section class="projection-block">
+  <h3>Horizon {table.horizon} ans</h3>
+  <div class="table-wrap projection-table" tabindex="0" aria-label={`Tableau de projection sur ${table.horizon} ans`}>
+    <table>
+      <thead>
+        <tr>
+          <th>Versement mensuel</th>
+          <th>Capital investi</th>
+          <th>Prudent 4 %</th>
+          <th>Équilibré 6 %</th>
+          <th>Dynamique 8 %</th>
+          <th>Gains théoriques 6 %</th>
+        </tr>
+      </thead>
+      <tbody>
+        {table.rows.map((row) => (
+          <tr>
+            <td><strong>{formatEuro(row.monthly)}/mois</strong></td>
+            <td>{formatEuro(row.invested)}</td>
+            <td>{formatEuro(row.prudent)}</td>
+            <td>{formatEuro(row.balanced)}</td>
+            <td>{formatEuro(row.dynamic)}</td>
+            <td>{formatEuro(row.theoreticalGains)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>

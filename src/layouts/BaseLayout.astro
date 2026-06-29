@@ -13,8 +13,60 @@ const normalizePath = (path = '/') => {
 const activePath = normalizePath(Astro.url.pathname);
 const isActive = (href = '') => normalizePath(href) === activePath;
 ---
-<html lang="fr"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><meta name="description" content={description} /><title>{title}</title></head>
-<body><nav class="nav"><div class="container nav-inner"><a class="brand" href={baseUrl}>Guide <span>Investissement</span></a><div class="links">{nav.map(([href,label]) => {
-  const active = isActive(href);
-  return <a class:list={[{ 'nav-active': active }]} aria-current={active ? 'page' : undefined} href={withBase(href)}>{label}</a>;
-})}</div></div></nav><main class="container"><slot /></main><footer class="footer"><div class="container">Contenu éducatif uniquement : ne constitue pas un conseil financier personnalisé. Sources à compléter avec documents officiels avant toute décision.</div></footer></body></html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <nav class="nav" data-main-nav>
+      <div class="container nav-inner">
+        <a class="brand" href={baseUrl}>Guide <span>Investissement</span></a>
+        <button class="nav-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-navigation" data-nav-toggle>
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+        </button>
+        <div class="links" id="main-navigation" data-nav-menu>
+          {nav.map(([href,label]) => {
+            const active = isActive(href);
+            return <a class:list={[{ 'nav-active': active }]} aria-current={active ? 'page' : undefined} href={withBase(href)}>{label}</a>;
+          })}
+        </div>
+      </div>
+    </nav>
+    <main class="container"><slot /></main>
+    <footer class="footer"><div class="container">Contenu éducatif uniquement : ne constitue pas un conseil financier personnalisé. Sources à compléter avec documents officiels avant toute décision.</div></footer>
+    <script is:inline>
+      const navRoot = document.querySelector('[data-main-nav]');
+      const navToggle = document.querySelector('[data-nav-toggle]');
+      const navMenu = document.querySelector('[data-nav-menu]');
+
+      if (navRoot && navToggle && navMenu) {
+        const setMenuOpen = (isOpen) => {
+          navRoot.classList.toggle('is-open', isOpen);
+          navToggle.setAttribute('aria-expanded', String(isOpen));
+          navToggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+        };
+
+        navToggle.addEventListener('click', () => {
+          setMenuOpen(navToggle.getAttribute('aria-expanded') !== 'true');
+        });
+
+        navMenu.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => setMenuOpen(false));
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') setMenuOpen(false);
+        });
+
+        document.addEventListener('click', (event) => {
+          if (!navRoot.contains(event.target)) setMenuOpen(false);
+        });
+      }
+    </script>
+  </body>
+</html>
