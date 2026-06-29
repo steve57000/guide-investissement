@@ -3,7 +3,7 @@ import '../styles/global.css';
 const { title = 'Guide Investissement 2026–2055', description = 'Guide éducatif pour investir progressivement.' } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
-const nav = [['','Accueil'],['commencer-50','50 €/mois'],['placements','Placements'],['etf','ETF'],['crypto','Crypto'],['plateformes','Plateformes'],['simulations','Simulations'],['fiscalite','Fiscalité'],['portefeuille-steve','Portefeuille Steve'],['sources','Sources']];
+const nav = [['','Accueil'],['commencer-50','50 €/mois'],['placements','Placements'],['etf','ETF'],['crypto','Crypto'],['plateformes','Plateformes'],['simulations','Simulations'],['plan-action','Plan d’action'],['fiscalite','Fiscalité'],['portefeuille-steve','Portefeuille Steve'],['sources','Sources']];
 const normalizePath = (path = '/') => {
   const basePath = new URL(baseUrl, 'https://example.com').pathname;
   let current = path.startsWith(basePath) ? path.slice(basePath.length) : path.replace(/^\/+/, '');
