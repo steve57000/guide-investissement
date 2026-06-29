@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Simulator from '../components/Simulator.astro';
+import ScenarioTable from '../components/ScenarioTable.astro';
 import { buildScenarioTable, calculateCompoundProjection, formatEuro } from '../utils/compound';
 
 const monthlyAmounts = [50, 75, 100, 150, 200, 300, 500, 1000];
@@ -52,17 +53,7 @@ const objectives = [10000, 25000, 50000, 100000, 250000, 500000, 1000000].map((t
     <div class="callout conseil"><strong>Conseil — méthode de lecture</strong><p>Commencez par choisir un horizon réaliste, puis comparez l’écart entre capital investi et capital final simulé. Plus l’horizon est long, plus la régularité et les frais deviennent déterminants.</p></div>
 
     <h2>Tableaux de projection par horizon</h2>
-    {scenarioTables.map((table) => (
-      <section class="projection-block">
-        <h3>Horizon {table.horizon} ans</h3>
-        <div class="table-wrap projection-table">
-          <table>
-            <thead><tr><th>Versement mensuel</th><th>Capital investi</th><th>Prudent 4 %</th><th>Équilibré 6 %</th><th>Dynamique 8 %</th><th>Gains théoriques 6 %</th></tr></thead>
-            <tbody>{table.rows.map((row) => <tr><td><strong>{formatEuro(row.monthly)}/mois</strong></td><td>{formatEuro(row.invested)}</td><td>{formatEuro(row.prudent)}</td><td>{formatEuro(row.balanced)}</td><td>{formatEuro(row.dynamic)}</td><td>{formatEuro(row.theoreticalGains)}</td></tr>)}</tbody>
-          </table>
-        </div>
-      </section>
-    ))}
+    {scenarioTables.map((table) => <ScenarioTable table={table} />)}
 
     <h2>Objectifs patrimoniaux</h2>
     <p>Ce tableau donne un effort mensuel approximatif parmi les paliers proposés. Il s’agit d’une aide pédagogique pour cadrer un ordre de grandeur, pas d’une garantie.</p>

@@ -27,6 +27,20 @@ Cette page sert de tableau de bord pédagogique pour comparer des versements men
 4. Ajuster l’effort mensuel selon sa capacité d’épargne et son épargne de sécurité.
 5. Refaire la simulation avec frais et inflation dans le simulateur interactif.
 
+## Tableaux comparatifs par montant mensuel
+
+Les tableaux de la page comparent plusieurs versements mensuels — 50 €, 75 €, 100 €, 150 €, 200 €, 300 €, 500 € et 1 000 € — sur des horizons de 5 à 30 ans. Pour chaque horizon, ils affichent le capital réellement versé, le capital final simulé à 4 %, 6 % et 8 %, puis l’écart théorique du scénario 6 %.
+
+## Comprendre les scénarios 4 %, 6 % et 8 %
+
+- **4 % prudent** : hypothèse volontairement modérée pour tester une trajectoire plus conservatrice.
+- **6 % équilibré** : scénario central utilisé pour donner un repère de lecture, sans garantie.
+- **8 % dynamique** : hypothèse plus ambitieuse, qui suppose d’accepter plus de volatilité et des périodes de baisse possibles.
+
+## Lecture des résultats
+
+Un capital final élevé ne signifie pas que l’investisseur recevra une progression régulière chaque année. Il faut lire les chiffres comme une trajectoire moyenne simulée : le résultat final dépendra de la date de début, des frais, de la fiscalité, de l’inflation, des supports choisis et de la capacité à continuer pendant les périodes difficiles.
+
 ## Objectifs patrimoniaux
 
 Les objectifs de 10 000 € à 1 000 000 € sont volontairement présentés comme des ordres de grandeur. Plus l’objectif est élevé, plus l’horizon, la régularité, les frais, la fiscalité et la psychologie de l’investisseur deviennent importants.
