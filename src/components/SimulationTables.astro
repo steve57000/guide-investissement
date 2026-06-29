@@ -1,0 +1,63 @@
+---
+import { buildScenarioTable, calculateCompoundProjection, formatEuro } from '../utils/compound';
+import ScenarioTable from './ScenarioTable.astro';
+
+const monthlyAmounts = [50, 75, 100, 150, 200, 300, 500, 1000];
+const horizons = [5, 10, 15, 20, 25, 30];
+const rates = [0.04, 0.06, 0.08];
+const scenarioTables = buildScenarioTable(monthlyAmounts, horizons);
+const objectives = [10000, 25000, 50000, 100000, 250000, 500000, 1000000].map((target) => {
+  const candidates = horizons
+    .flatMap((years) => monthlyAmounts.flatMap((monthly) => rates.map((rate) => ({
+      target,
+      years,
+      monthly,
+      rate,
+      final: calculateCompoundProjection({ monthly, years, annualRate: rate }).nominalCapital,
+    }))))
+    .sort((a, b) => a.years - b.years || a.monthly - b.monthly || a.rate - b.rate);
+  const match = candidates.find((candidate) => candidate.final >= target) ?? candidates.at(-1)!;
+  return {
+    target,
+    monthly: match.monthly,
+    years: match.years,
+    rate: match.rate,
+    note: match.final >= target
+      ? 'Ordre de grandeur pédagogique, hors fiscalité, frais, inflation et variations de marché.'
+      : 'Objectif non atteint avec les paliers testés : envisager un effort supérieur, un horizon plus long ou revoir l’objectif.',
+  };
+});
+---
+<section aria-labelledby="projection-tables-title">
+  <h2 id="projection-tables-title">Tableaux de projection par horizon</h2>
+  {scenarioTables.map((table) => <ScenarioTable table={table} />)}
+</section>
+
+<section aria-labelledby="objectives-title">
+  <h2 id="objectives-title">Objectifs patrimoniaux</h2>
+  <p>Ce tableau donne un effort mensuel approximatif parmi les paliers proposés. Il s’agit d’une aide pédagogique pour cadrer un ordre de grandeur, pas d’une garantie.</p>
+  <div class="table-wrap" tabindex="0" aria-label="Objectifs patrimoniaux indicatifs">
+    <table>
+      <thead>
+        <tr>
+          <th>Objectif</th>
+          <th>Effort mensuel indicatif</th>
+          <th>Horizon approximatif</th>
+          <th>Scénario utilisé</th>
+          <th>Remarque prudente</th>
+        </tr>
+      </thead>
+      <tbody>
+        {objectives.map((objective) => (
+          <tr>
+            <td><strong>{formatEuro(objective.target)}</strong></td>
+            <td>{formatEuro(objective.monthly)}/mois</td>
+            <td>{objective.years} ans</td>
+            <td>{(objective.rate * 100).toFixed(0)} % nominal annuel</td>
+            <td>{objective.note}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -44,6 +44,27 @@ Indice de marchés émergents. Il apporte une diversification géographique, ave
 
 Certains ETF peuvent être logés dans un PEA s’ils respectent les conditions réglementaires d’éligibilité. L’éligibilité n’est pas permanente : vérifiez la page de l’émetteur, le DIC/KID, votre courtier et les règles officielles du PEA avant achat.
 
+
+## ETF à comparer pour un PEA
+
+Les lignes ci-dessous sont des **exemples de familles d’ETF PEA à comparer**, pas une recommandation d’achat. Vérification effectuée le **29 juin 2026** à partir des fiches émetteur Amundi ETF et des informations générales AMF. L’éligibilité PEA, les frais et les documents peuvent changer : vérifiez toujours la fiche émetteur, le DIC/KID, le prospectus et l’affichage de votre courtier juste avant d’investir.
+
+| Famille | Nom commercial | Émetteur | Ticker / code de place | ISIN | Indice suivi | Éligibilité PEA | Politique | Frais courants | Réplication | DIC/KID officiel | Vérifié le |
+|---|---|---|---|---|---|---|---|---:|---|---|---|
+| ETF Monde | Amundi PEA Monde (MSCI World) UCITS ETF | Amundi Asset Management | DCAM FP | FR001400U5Q4 | MSCI World | Oui, selon fiche émetteur | Capitalisant | 0,20 % | Synthétique / swap | [DIC sur la fiche officielle Amundi](https://www.amundietf.fr/fr/professionnels/produits/equity/amundi-pea-monde-msci-world-ucits-etf/fr001400u5q4) | 29/06/2026 |
+| ETF S&P 500 | Amundi PEA S&P 500 Screened UCITS ETF S - Acc | Amundi Asset Management | — à vérifier chez le courtier | FR001400ZGS5 | S&P 500 Screened | Oui, selon fiche émetteur | Capitalisant | 0,20 % | Synthétique / swap | [DIC sur la fiche officielle Amundi](https://www.amundietf.fr/fr/professionnels/produits/equity/amundi-pea-sp-500-screened-ucits-etf-s-acc/fr001400zgs5) | 29/06/2026 |
+| ETF Nasdaq 100 | Amundi PEA Nasdaq-100 UCITS ETF S - Acc | Amundi Asset Management | — à vérifier chez le courtier | FR001400ZGR7 | Nasdaq-100 | Oui, selon fiche émetteur | Capitalisant | 0,27 % | Synthétique / swap | [DIC sur la fiche officielle Amundi](https://www.amundietf.fr/fr/professionnels/produits/equity/amundi-pea-nasdaq100-ucits-etf-s-acc/fr001400zgr7) | 29/06/2026 |
+| ETF Europe | Amundi PEA MSCI Europe UCITS ETF Acc | Amundi Asset Management | PCEU FP | FR0013412038 | MSCI Europe | Oui, selon fiche émetteur | Capitalisant | 0,15 % | Synthétique / swap | [DIC sur la fiche officielle Amundi](https://www.amundietf.fr/fr/professionnels/produits/equity/amundi-pea-msci-europe-ucits-etf-acc/fr0013412038) | 29/06/2026 |
+| ETF Emerging Markets | Amundi PEA Emergent (MSCI Emerging) ESG Transition UCITS ETF S - Acc | Amundi Asset Management | — à vérifier chez le courtier | FR001400ZGO4 | MSCI Emerging ESG Transition | Oui, selon fiche émetteur | Capitalisant | 0,22 % | Synthétique / swap | [DIC sur la fiche officielle Amundi](https://www.amundietf.fr/fr/professionnels/produits/equity/amundi-pea-emergent-msci-emerging-esg-transition-ucits-etf-s-acc/fr001400zgo4) | 29/06/2026 |
+
+### Comment choisir sans se perdre
+
+- **Commencer simplement** : pour un premier portefeuille PEA, un ETF Monde PEA peut suffire à obtenir une exposition actions internationale large.
+- **Ajouter du S&P 500 ou du Nasdaq 100** augmente la concentration sur les États-Unis, le dollar et, surtout pour le Nasdaq 100, les grandes valeurs technologiques.
+- **Ajouter des marchés émergents** peut diversifier la zone géographique, mais avec une volatilité, des devises, une liquidité et des risques politiques généralement plus marqués.
+- **Éviter de multiplier les ETF au début** : deux ETF très proches peuvent créer une fausse diversification et compliquer le suivi.
+- **Comparer les documents officiels** : l’AMF recommande de lire le DIC et le prospectus pour vérifier l’objectif, les frais, les risques, les scénarios de performance et les informations pratiques.
+
 ## Risques principaux
 
 - **Risque de marché** : un ETF actions peut baisser fortement.
