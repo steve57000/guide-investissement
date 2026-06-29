@@ -62,13 +62,8 @@ N26 et Revolut peuvent être utiles, mais leur simplicité ne doit pas devenir l
 
 Cette répartition reste volontairement simple : une majorité en ETF Monde, une poche Bitcoin limitée et une poche Ethereum encore plus petite. Les montants doivent être adaptés au budget réel de Steve.
 
-| Montant | ETF Monde | Bitcoin | Ethereum | Pourquoi cette répartition | Risque |
-|---|---:|---:|---:|---|---|
-| 50 €/mois | 35 € | 10 € | 5 € | Base simple pour commencer sans surpondérer la crypto. | Élevé à court terme, mais crypto contenue. |
-| 75 €/mois | 55 € | 15 € | 5 € | Renforce l’ETF tout en gardant une découverte crypto limitée. | Élevé si Steve regarde trop souvent les variations. |
-| 100 €/mois | 75 € | 20 € | 5 € | Allocation lisible : l’essentiel reste sur l’ETF Monde. | Modéré à élevé selon horizon et discipline. |
-| 150 €/mois | 115 € | 25 € | 10 € | Hausse de l’effort mensuel sans laisser la crypto devenir centrale. | Modéré à élevé, avec volatilité crypto assumée. |
-| 200 €/mois | 155 € | 35 € | 10 € | Le PEA/ETF reste le moteur principal de la stratégie. | Modéré à élevé, dépend surtout de la tenue du plan. |
+Les montants officiels sont affichés depuis la table centralisée du site afin que le plan reste cohérent avec l’accueil et le portefeuille Steve.
+
 
 <div class="callout conseil"><strong>Conseil</strong><p>Si Steve hésite, il peut commencer plus bas pendant quelques mois. Un petit montant régulier et tenu vaut mieux qu’un montant ambitieux abandonné rapidement.</p></div>
 

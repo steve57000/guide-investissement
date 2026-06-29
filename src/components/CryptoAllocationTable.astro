@@ -1,0 +1,6 @@
+---
+import { allocations } from '../data/allocations';
+const euro = (value: number) => `${value.toLocaleString('fr-FR')} €`;
+const pct = (value: number) => `${value.toLocaleString('fr-FR')} %`;
+---
+<div class="table-wrap"><table><thead><tr><th>Montant mensuel</th><th>Bitcoin</th><th>Ethereum</th><th>Poids crypto total</th><th>Remarque</th></tr></thead><tbody>{allocations.map((allocation) => { const cryptoWeight = allocation.bitcoinPercentage + allocation.ethereumPercentage; return <tr><td>{euro(allocation.total)}/mois</td><td>{euro(allocation.bitcoin)}</td><td>{euro(allocation.ethereum)}</td><td>{pct(cryptoWeight)}</td><td>Petite poche satellite ; ETF Monde majoritaire à {pct(allocation.etfPercentage)}.</td></tr>; })}</tbody></table></div>

@@ -1,10 +1,11 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AllocationTable from '../components/AllocationTable.astro';
 export async function getStaticPaths() {
   const pages = await getCollection('pages');
   return pages
-    .filter((page) => page.id !== 'simulations')
+    .filter((page) => page.id !== 'simulations' && page.id !== 'crypto')
     .map((page) => ({ params: { slug: page.id.replace(/\.mdx?$/, '') }, props: { page } }));
 }
 const { page } = Astro.props;
@@ -16,5 +17,8 @@ const { Content } = await render(page);
     <h1>{page.data.title}</h1>
     <p class="muted">{page.data.description}</p>
     <Content />
+    {page.id === 'commencer-50' && <><h2>Allocations officielles centralisées</h2><AllocationTable /></>}
+    {page.id === 'plan-action' && <><h2>Allocation de départ officielle</h2><AllocationTable /></>}
+    {page.id === 'portefeuille-steve' && <><h2>Allocations officielles du portefeuille Steve</h2><AllocationTable variant="steve" /></>}
   </article>
 </BaseLayout>

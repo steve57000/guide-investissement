@@ -1,0 +1,8 @@
+---
+import { featuredAllocations } from '../data/allocations';
+const euro = (value: number) => `${value.toLocaleString('fr-FR')} €`;
+const badges: Record<number, string> = { 50: 'Débutant', 100: 'PEA + Crypto', 200: 'Long terme' };
+---
+<div class="grid">
+  {featuredAllocations.map((plan) => <article class="card plan-card"><span class="badge">{badges[plan.total]}</span><h3>{euro(plan.total)}/mois</h3><p class="allocation">{euro(plan.etfMonde)} ETF Monde • {euro(plan.bitcoin)} Bitcoin • {euro(plan.ethereum)} Ethereum</p><p class="muted">{plan.objective}</p><div class="mini-chart" aria-hidden="true"><i style={`height:${plan.etfPercentage}%`} /><i style={`height:${Math.max(20, plan.bitcoinPercentage * 3)}%`} /><i style={`height:${Math.max(16, plan.ethereumPercentage * 3)}%`} /></div></article>)}
+</div>

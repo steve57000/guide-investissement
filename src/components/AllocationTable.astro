@@ -1,0 +1,13 @@
+---
+import { allocations, steveAllocations } from '../data/allocations';
+const { variant = 'full' } = Astro.props;
+const rows = variant === 'steve' ? steveAllocations : allocations;
+const euro = (value: number) => `${value.toLocaleString('fr-FR')} €`;
+const pct = (value: number) => `${value.toLocaleString('fr-FR')} %`;
+---
+<div class="table-wrap allocation-table">
+  <table>
+    <thead><tr><th>Montant mensuel</th><th>ETF Monde</th><th>Bitcoin</th><th>Ethereum</th><th>Poids ETF</th><th>Poids BTC</th><th>Poids ETH</th><th>Niveau de risque</th><th>Horizon recommandé</th><th>Objectif</th></tr></thead>
+    <tbody>{rows.map((allocation) => <tr><td>{euro(allocation.total)}/mois</td><td>{euro(allocation.etfMonde)}</td><td>{euro(allocation.bitcoin)}</td><td>{euro(allocation.ethereum)}</td><td>{pct(allocation.etfPercentage)}</td><td>{pct(allocation.bitcoinPercentage)}</td><td>{pct(allocation.ethereumPercentage)}</td><td>{allocation.riskLevel}</td><td>{allocation.recommendedHorizon}</td><td>{allocation.objective}</td></tr>)}</tbody>
+  </table>
+</div>
