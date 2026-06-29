@@ -10,16 +10,7 @@ order: 1
 
 La logique proposée privilégie un socle ETF Monde via PEA lorsque l’ETF est éligible, puis une poche crypto limitée et assumée pour les profils qui acceptent une volatilité élevée.
 
-| Montant mensuel | Allocation proposée | Niveau de risque | Horizon recommandé | Objectif patrimonial |
-|---|---|---|---|---|
-| 50 € | 35 € ETF Monde PEA, 10 € Bitcoin, 5 € Ethereum | Modéré à dynamique | 10 ans minimum, idéalement 15–30 ans | Installer l’habitude et atteindre les premiers milliers d’euros investis |
-| 75 € | 55 € ETF Monde PEA, 15 € Bitcoin, 5 € Ethereum | Modéré à dynamique | 10 ans minimum, idéalement 15–30 ans | Consolider la régularité et créer une base diversifiée |
-| 100 € | 75 € ETF Monde PEA, 15 € Bitcoin, 10 € Ethereum | Modéré à dynamique | 10 ans minimum, idéalement 15–30 ans | Construire un capital visible sans complexifier |
-| 150 € | 115 € ETF Monde PEA, 20 € Bitcoin, 15 € Ethereum | Dynamique maîtrisé | 10 ans minimum, idéalement 15–30 ans | Accélérer la boule de neige patrimoniale |
-| 200 € | 155 € ETF Monde PEA, 30 € Bitcoin, 15 € Ethereum | Dynamique maîtrisé | 10 ans minimum, idéalement 15–30 ans | Créer un socle long terme significatif |
-| 300 € | 235 € ETF Monde PEA, 45 € Bitcoin, 20 € Ethereum | Dynamique | 10 ans minimum, idéalement 15–30 ans | Financer des objectifs familiaux ou retraite à long terme |
-| 500 € | 400 € ETF Monde PEA, 70 € Bitcoin, 30 € Ethereum | Dynamique | 10 ans minimum, idéalement 15–30 ans | Construire un patrimoine financier structuré |
-| 1000 € | 800 € ETF Monde PEA, 150 € Bitcoin, 50 € Ethereum | Dynamique avec pilotage | 10 ans minimum, idéalement 15–30 ans | Piloter une stratégie patrimoniale complète et documentée |
+Les montants officiels sont affichés depuis la table centralisée du site afin d’éviter toute divergence entre les pages.
 
 
 <div class="callout a-retenir"><strong>Plateforme concrète pour démarrer</strong><p>Le choix ci-dessous est une recommandation pédagogique, pas un conseil personnalisé. Il faut vérifier les frais, ETF disponibles, documents fiscaux et conditions d’éligibilité dans les pages officielles de chaque plateforme.</p>

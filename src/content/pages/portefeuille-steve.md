@@ -68,12 +68,8 @@ La logique proposée est simple : sécuriser d’abord, investir ensuite, puis a
 
 ## Allocations recommandées
 
-| Montant mensuel | ETF Monde | Bitcoin | Ethereum | Objectif | Niveau de risque |
-|---|---:|---:|---:|---|---|
-| 50 €/mois | 35 € | 10 € | 5 € | Installer l’habitude avec une majorité ETF | Modéré à dynamique |
-| 100 €/mois | 75 € | 15 € | 10 € | Construire un socle plus solide | Modéré à dynamique |
-| 200 €/mois | 155 € | 30 € | 15 € | Accélérer sans surpondérer la crypto | Dynamique |
-| 300 €/mois | 235 € | 45 € | 20 € | Renforcer le PEA avec crypto toujours contrôlée | Dynamique |
+Les montants officiels sont affichés depuis la table centralisée du site. Steve doit choisir la ligne correspondant à sa capacité réelle, sans considérer cette grille comme un conseil personnalisé.
+
 
 <div class="callout a-retenir"><strong>À retenir</strong><p>Dans chaque scénario, l’ETF Monde reste le cœur du portefeuille. La crypto est volontairement limitée : elle peut contribuer à la performance, mais elle peut aussi chuter fortement.</p></div>
 

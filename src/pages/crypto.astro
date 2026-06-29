@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CryptoAllocationTable from '../components/CryptoAllocationTable.astro';
+---
+<BaseLayout title="Cryptomonnaies | Guide Investissement 2026–2055" description="Page éducative et prudente sur Bitcoin, Ethereum, la sécurité, la fiscalité française générale et la place limitée de la crypto dans un portefeuille.">
+  <article class="prose">
+    <p class="eyebrow">Guide Investissement 2026–2055</p>
+    <h1>Cryptomonnaies</h1>
+    <p class="muted">Bitcoin, Ethereum, conservation, fiscalité française générale et règles de prudence pour une petite poche satellite.</p>
+
+    <div class="callout attention"><strong>Attention — risque très élevé</strong><p>Les crypto-actifs peuvent perdre une grande partie de leur valeur, devenir illiquides ou être perdus définitivement en cas d’erreur de conservation. Cette page est pédagogique, pas une recommandation financière personnalisée.</p></div>
+
+    <h2>Bitcoin</h2>
+    <p>Bitcoin est le premier grand crypto-actif. Il vise principalement une fonction de réseau monétaire décentralisé avec une émission programmée par protocole. Sa valeur dépend de l’offre et de la demande, de la confiance dans le réseau, de la liquidité mondiale et du cadre réglementaire.</p>
+
+    <h2>Ethereum</h2>
+    <p>Ethereum est une blockchain programmable utilisée pour des applications décentralisées, contrats intelligents, stablecoins, NFT et protocoles financiers. Son actif natif, l’ether, sert notamment à payer l’utilisation du réseau.</p>
+
+    <h2>Différence BTC / ETH</h2>
+    <table><thead><tr><th>Point</th><th>Bitcoin</th><th>Ethereum</th></tr></thead><tbody><tr><td>Rôle principal</td><td>Réseau monétaire et réserve de valeur spéculative.</td><td>Infrastructure programmable pour applications blockchain.</td></tr><tr><td>Risque dominant</td><td>Adoption, réglementation, volatilité, concentration de détention.</td><td>Risque technologique, concurrence, bugs de smart contracts, évolution du protocole.</td></tr><tr><td>Analyse</td><td>Plus proche d’un actif monétaire numérique.</td><td>Plus proche d’une plateforme technologique décentralisée.</td></tr></tbody></table>
+
+    <h2>Crypto dans le portefeuille de Steve</h2>
+    <p>Dans ce guide, la crypto reste une <strong>petite poche satellite</strong> autour d’un cœur ETF Monde majoritaire. Steve démarre uniquement avec Bitcoin et Ethereum, car multiplier les altcoins avant d’avoir une stratégie principale solide augmente la complexité, la volatilité et le risque d’erreur.</p>
+    <ul><li>Éviter les altcoins tant que l’épargne de sécurité, le PEA/ETF et le suivi fiscal ne sont pas maîtrisés.</li><li>Ne jamais utiliser de levier, futures ou produits assimilés pour cette stratégie long terme.</li><li>Ne jamais investir l’argent nécessaire à court terme : loyers, impôts, projets proches et réserve d’urgence doivent rester hors crypto.</li></ul>
+
+    <h2>Allocation crypto recommandée</h2>
+    <p>La table ci-dessous reprend les montants centralisés du site : elle montre uniquement la poche Bitcoin/Ethereum, pas une incitation à acheter.</p>
+    <CryptoAllocationTable />
+
+    <h2>N26, Revolut ou plateforme crypto séparée ?</h2>
+    <table><thead><tr><th>Solution</th><th>Simplicité</th><th>Frais à vérifier</th><th>Retrait possible ou non</th><th>Fiscalité / export</th><th>Sécurité</th><th>Profil adapté</th><th>Limite principale</th></tr></thead><tbody>
+      <tr><td>N26 Crypto</td><td>Très simple si l’utilisateur est déjà client.</td><td>À vérifier dans les conditions officielles N26.</td><td>À vérifier dans l’application et les conditions officielles.</td><td>Exports et aide fiscale à vérifier avant usage.</td><td>Dépendance à l’intermédiaire et aux règles du compte.</td><td>Découverte avec petits montants.</td><td>Ne pas choisir uniquement pour la simplicité.</td></tr>
+      <tr><td>Revolut Crypto</td><td>Très simple et intégré au compte Revolut.</td><td>À vérifier dans les conditions officielles Revolut.</td><td>À vérifier selon actif, pays, offre et conditions.</td><td>Exports, comptes étrangers et obligations déclaratives à contrôler.</td><td>Dépendance à l’intermédiaire et à l’entité applicable.</td><td>Découverte ou petite poche satellite.</td><td>Fiscalité et conservation potentiellement plus manuelles.</td></tr>
+      <tr><td>Plateforme crypto dédiée</td><td>Moyenne : plus d’options, donc plus de réglages.</td><td>À vérifier dans la grille officielle : achat, spread, retrait, conversion.</td><td>Souvent possible, mais à vérifier par actif et réseau.</td><td>Exports généralement disponibles, qualité variable à tester.</td><td>Risque plateforme ; sécuriser le compte et limiter les soldes inutiles.</td><td>Utilisateur qui veut séparer ETF et crypto.</td><td>Plus de complexité opérationnelle.</td></tr>
+      <tr><td>Wallet personnel</td><td>Moins simple : gestion directe des clés.</td><td>Frais réseau à vérifier au moment des transactions.</td><td>Oui, l’utilisateur contrôle les transactions s’il conserve ses clés.</td><td>Historique à tenir soi-même avec justificatifs.</td><td>Très dépendant de la protection de la seed phrase.</td><td>Utilisateur formé avec montants justifiant l’autonomie.</td><td>Perte définitive possible en cas d’erreur.</td></tr>
+      <tr><td>Hardware wallet</td><td>Plus technique au départ.</td><td>Coût d’achat et frais réseau à vérifier.</td><td>Oui via wallet compatible, sous responsabilité de l’utilisateur.</td><td>Historique à tenir soi-même avec exports de plateforme.</td><td>Sécurité renforcée hors ligne si procédure correcte.</td><td>Montants significatifs et utilisateur discipliné.</td><td>Complexité, sauvegarde et risque de mauvaise manipulation.</td></tr>
+    </tbody></table>
+
+    <h2>Sécurité crypto</h2>
+    <ul class="checklist"><li>Activer 2FA.</li><li>Utiliser un mot de passe unique.</li><li>Ne jamais partager sa seed phrase.</li><li>Éviter les captures d’écran de phrase de récupération.</li><li>Vérifier les adresses avant retrait.</li><li>Tester un petit retrait avant un gros montant.</li><li>Conserver les justificatifs.</li></ul>
+
+    <h2>Fiscalité crypto France</h2>
+    <p>En France, une cession d’actifs numériques peut être imposable. La déclaration peut notamment impliquer le formulaire 2086 pour détailler les opérations, et les comptes crypto ouverts auprès d’acteurs étrangers peuvent devoir être déclarés si la situation l’exige. Steve doit conserver l’historique des transactions, exports, justificatifs de dépôts/retraits et vérifier impots.gouv.fr chaque année avant de déclarer.</p>
+
+    <h2>Erreurs crypto à éviter</h2>
+    <ul><li>Acheter trop d’altcoins.</li><li>Acheter après une forte hausse par peur de rater.</li><li>Vendre en panique.</li><li>Laisser une grosse somme sur une plateforme sans raison.</li><li>Utiliser levier ou futures.</li><li>Confondre staking/rendement avec sécurité.</li><li>Oublier la fiscalité.</li></ul>
+
+    <h2>Sources à vérifier</h2>
+    <p>Pour la fiscalité, vérifier chaque année les pages officielles impots.gouv.fr sur les cessions d’actifs numériques, le formulaire 2086 et la déclaration des comptes d’actifs numériques ouverts à l’étranger. Pour les plateformes, vérifier les conditions officielles N26, Revolut et de toute plateforme crypto avant achat ou retrait.</p>
+  </article>
+</BaseLayout>
