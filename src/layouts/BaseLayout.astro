@@ -3,7 +3,8 @@ import '../styles/global.css';
 const { title = 'Guide Investissement 2026–2055', description = 'Guide éducatif pour investir progressivement.' } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
-const nav = [['','Accueil'],['commencer-50','50 €/mois'],['placements','Placements'],['etf','ETF'],['crypto','Crypto'],['plateformes','Plateformes'],['simulations','Simulations'],['plan-action','Plan d’action'],['fiscalite','Fiscalité'],['portefeuille-steve','Portefeuille Steve'],['sources','Sources']];
+const mainNav = [['','Accueil'],['commencer-50','50 €/mois'],['plan-action','Plan d’action'],['simulations','Simulations'],['plateformes','Plateformes']];
+const understandNav = [['placements','Placements'],['etf','ETF'],['crypto','Crypto'],['fiscalite','Fiscalité'],['frais','Frais'],['sources','Sources'],['portefeuille-steve','Portefeuille Steve']];
 const normalizePath = (path = '/') => {
   const basePath = new URL(baseUrl, 'https://example.com').pathname;
   let current = path.startsWith(basePath) ? path.slice(basePath.length) : path.replace(/^\/+/, '');
@@ -12,6 +13,7 @@ const normalizePath = (path = '/') => {
 };
 const activePath = normalizePath(Astro.url.pathname);
 const isActive = (href = '') => normalizePath(href) === activePath;
+const hasActiveUnderstandLink = understandNav.some(([href]) => isActive(href));
 ---
 <html lang="fr">
   <head>
@@ -22,7 +24,7 @@ const isActive = (href = '') => normalizePath(href) === activePath;
   </head>
   <body>
     <nav class="nav" data-main-nav>
-      <div class="container nav-inner">
+      <div class="container nav-container nav-inner">
         <a class="brand" href={baseUrl}>Guide <span>Investissement</span></a>
         <button class="nav-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-navigation" data-nav-toggle>
           <span class="nav-toggle-line"></span>
@@ -30,10 +32,19 @@ const isActive = (href = '') => normalizePath(href) === activePath;
           <span class="nav-toggle-line"></span>
         </button>
         <div class="links" id="main-navigation" data-nav-menu>
-          {nav.map(([href,label]) => {
+          {mainNav.map(([href,label]) => {
             const active = isActive(href);
             return <a class:list={[{ 'nav-active': active }]} aria-current={active ? 'page' : undefined} href={withBase(href)}>{label}</a>;
           })}
+          <div class:list={["nav-group", { "nav-group-active": hasActiveUnderstandLink }]}>
+            <button class="nav-group-button" type="button" aria-expanded="false">Comprendre</button>
+            <div class="nav-dropdown">
+              {understandNav.map(([href,label]) => {
+                const active = isActive(href);
+                return <a class:list={[{ 'nav-active': active }]} aria-current={active ? 'page' : undefined} href={withBase(href)}>{label}</a>;
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -57,6 +68,16 @@ const isActive = (href = '') => normalizePath(href) === activePath;
 
         navMenu.querySelectorAll('a').forEach((link) => {
           link.addEventListener('click', () => setMenuOpen(false));
+        });
+
+        navMenu.querySelectorAll('.nav-group-button').forEach((button) => {
+          button.addEventListener('click', () => {
+            if (window.matchMedia('(max-width: 1279px)').matches) {
+              const group = button.closest('.nav-group');
+              const isOpen = group.classList.toggle('is-dropdown-open');
+              button.setAttribute('aria-expanded', String(isOpen));
+            }
+          });
         });
 
         document.addEventListener('keydown', (event) => {
