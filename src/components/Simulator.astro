@@ -1,38 +1,77 @@
 <div class="card simulator" data-simulator>
   <div class="form">
     <h2>Simulateur d’intérêts composés</h2>
-    <p class="muted">Hypothèses modifiables. Les résultats sont illustratifs et ne promettent aucun rendement.</p>
+    <p class="muted">Simulations non garanties, hors fiscalité, hors frais et hors inflation.</p>
     <label>Versement mensuel (€)<input data-input="monthly" type="number" value="50" min="0" step="25" /></label>
     <label>Capital initial (€)<input data-input="initial" type="number" value="0" min="0" step="100" /></label>
-    <label>Rendement annuel hypothétique (%)<input data-input="rate" type="number" value="5" min="-20" max="20" step="0.1" /></label>
+    <label>Scénario
+      <select data-input="scenario">
+        <option value="4">Prudent — 4 %</option>
+        <option value="6" selected>Équilibré — 6 %</option>
+        <option value="8">Dynamique — 8 %</option>
+        <option value="custom">Personnalisé</option>
+      </select>
+    </label>
+    <label>Rendement annuel hypothétique (%)<input data-input="rate" type="number" value="6" min="-20" max="20" step="0.1" /></label>
     <label>Durée (années)<input data-input="years" type="number" value="30" min="1" max="60" step="1" /></label>
   </div>
   <div>
     <div class="metric">
       <div><span class="muted">Capital final</span><b data-output="final">—</b></div>
-      <div><span class="muted">Versements</span><b data-output="paid">—</b></div>
+      <div><span class="muted">Versements cumulés</span><b data-output="paid">—</b></div>
       <div><span class="muted">Gains théoriques</span><b data-output="gain">—</b></div>
     </div>
     <div class="bars" data-bars aria-label="Graphique de progression du capital"></div>
+    <div class="table-wrap">
+      <table class="year-table">
+        <thead><tr><th>Année</th><th>Versements cumulés</th><th>Capital théorique</th><th>Gains théoriques</th></tr></thead>
+        <tbody data-output="rows"></tbody>
+      </table>
+    </div>
   </div>
 </div>
 <script>
   const root = document.querySelector('[data-simulator]');
   const euro = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+  function syncScenario(){
+    if (!root) return;
+    const scenario = root.querySelector('[data-input="scenario"]');
+    const rateInput = root.querySelector('[data-input="rate"]');
+    if (scenario?.value !== 'custom' && rateInput) rateInput.value = scenario.value;
+  }
   function calc(){
     if (!root) return;
     const monthly = Number(root.querySelector('[data-input="monthly"]')?.value || 0);
     const initial = Number(root.querySelector('[data-input="initial"]')?.value || 0);
-    const rate = Number(root.querySelector('[data-input="rate"]')?.value || 0) / 100 / 12;
+    const annualRate = Number(root.querySelector('[data-input="rate"]')?.value || 0) / 100;
+    const monthlyRate = annualRate / 12;
     const years = Number(root.querySelector('[data-input="years"]')?.value || 0);
-    let capital = initial; const points = [];
-    for(let m=1;m<=years*12;m++){ capital = capital * (1 + rate) + monthly; if(m%60===0 || m===years*12) points.push({year: Math.round(m/12), capital}); }
+    let capital = initial;
+    const points = [];
+    const rows = [];
+    for(let m=1;m<=years*12;m++){
+      capital = capital * (1 + monthlyRate) + monthly;
+      if(m % 12 === 0){
+        const year = m / 12;
+        const paid = initial + monthly * m;
+        rows.push({ year, paid, capital, gain: capital - paid });
+        if(year % 5 === 0 || year === years) points.push({year, capital});
+      }
+    }
     const paid = initial + monthly * years * 12;
     root.querySelector('[data-output="final"]').textContent = euro.format(capital);
     root.querySelector('[data-output="paid"]').textContent = euro.format(paid);
     root.querySelector('[data-output="gain"]').textContent = euro.format(capital - paid);
     const max = Math.max(...points.map(p=>p.capital), 1);
     root.querySelector('[data-bars]').innerHTML = points.map(p=>`<div class="bar" style="height:${Math.max(8,p.capital/max*100)}%"><span>${p.year}a</span></div>`).join('');
+    root.querySelector('[data-output="rows"]').innerHTML = rows.map((row)=>`<tr><td>${row.year}</td><td>${euro.format(row.paid)}</td><td>${euro.format(row.capital)}</td><td>${euro.format(row.gain)}</td></tr>`).join('');
   }
-  root?.querySelectorAll('input').forEach((input)=>input.addEventListener('input', calc)); calc();
+  root?.querySelector('[data-input="scenario"]')?.addEventListener('change', ()=>{ syncScenario(); calc(); });
+  root?.querySelector('[data-input="rate"]')?.addEventListener('input', ()=>{
+    const scenario = root.querySelector('[data-input="scenario"]');
+    if (scenario) scenario.value = 'custom';
+    calc();
+  });
+  root?.querySelectorAll('input:not([data-input="rate"])').forEach((input)=>input.addEventListener('input', calc));
+  syncScenario(); calc();
 </script>
