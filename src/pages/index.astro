@@ -6,9 +6,24 @@ const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_UR
 const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 ---
 <BaseLayout>
-<section class="hero"><div class="eyebrow">2026–2055 • Patrimoine progressif</div><h1>Construire un patrimoine, dès 50 € par mois.</h1><p>Un guide concret pour prioriser le PEA, comparer les plateformes, cadrer une petite poche crypto et tester des hypothèses de rendement sans confondre simulation et promesse.</p><div class="actions"><a class="btn" href={withBase('commencer-50')}>Commencer avec 50 €</a><a class="btn secondary" href={withBase('plateformes')}>Comparer les plateformes</a><a class="btn secondary" href={withBase('simulations')}>Tester une simulation</a></div></section>
-<section class="section plan-section"><div class="section-head"><div><p class="eyebrow">Plan recommandé</p><h2>Une progression simple : ETF d’abord, crypto limitée, suivi régulier.</h2></div><p class="muted">Ces exemples sont pédagogiques : ils doivent être adaptés à votre épargne de sécurité, votre fiscalité et votre tolérance au risque.</p></div><PlanCards /><div class="actions"><a class="btn" href={withBase('plateformes')}>Voir les plateformes</a><a class="btn secondary" href={withBase('simulations')}>Voir les simulations</a></div></section>
-<section class="section grid"><article class="card"><span class="badge">PEA</span><h3>Priorité aux enveloppes françaises</h3><p class="muted">Le PEA est à étudier en premier pour les ETF éligibles avant de multiplier les comptes.</p></article><article class="card"><span class="badge">CTO</span><h3>Comparer avant d’ouvrir</h3><p class="muted">Frais, IFU, investissement programmé et simplicité fiscale comptent autant que l’interface.</p></article><article class="card"><span class="badge">Crypto</span><h3>Poche volontairement limitée</h3><p class="muted">Bitcoin et Ethereum peuvent être inclus, mais uniquement avec une volatilité acceptée.</p></article></section>
+<section class="hero hero-premium">
+  <div class="hero-copy">
+    <div class="eyebrow">2026–2055 • Patrimoine progressif</div>
+    <h1>Construire un patrimoine, dès 50 € par mois.</h1>
+    <p>Un guide concret pour prioriser le PEA, comparer les plateformes, cadrer une petite poche crypto et tester des hypothèses de rendement sans confondre simulation et promesse.</p>
+    <div class="actions"><a class="btn" href={withBase('commencer-50')}>Commencer avec 50 €</a><a class="btn secondary" href={withBase('plateformes')}>Comparer les plateformes</a><a class="btn secondary" href={withBase('simulations')}>Tester une simulation</a></div>
+  </div>
+  <aside class="hero-dashboard" aria-label="Exemple de plan à 50 euros par mois">
+    <div class="dashboard-topline"><span class="badge">Plan 50 €/mois</span><strong>Allocation simple</strong></div>
+    <div class="dashboard-total"><span>Versement mensuel</span><b>50 €</b></div>
+    <div class="allocation-row"><span>ETF Monde</span><strong>40 €</strong><i style="--w:80%"></i></div>
+    <div class="allocation-row"><span>Bitcoin</span><strong>7 €</strong><i style="--w:14%"></i></div>
+    <div class="allocation-row"><span>Ethereum</span><strong>3 €</strong><i style="--w:6%"></i></div>
+    <p class="muted">Un point de départ pédagogique : enveloppe lisible, frais surveillés, crypto volontairement limitée.</p>
+  </aside>
+</section>
+<section class="section plan-section section-wide"><div class="section-head"><div><p class="eyebrow">Plan recommandé</p><h2>Une progression simple : ETF d’abord, crypto limitée, suivi régulier.</h2></div><p class="muted">Ces exemples sont pédagogiques : ils doivent être adaptés à votre épargne de sécurité, votre fiscalité et votre tolérance au risque.</p></div><PlanCards /><div class="actions"><a class="btn" href={withBase('plateformes')}>Voir les plateformes</a><a class="btn secondary" href={withBase('simulations')}>Voir les simulations</a></div></section>
+<section class="section grid home-principles"><article class="card"><span class="badge">PEA</span><h3>Priorité aux enveloppes françaises</h3><p class="muted">Le PEA est à étudier en premier pour les ETF éligibles avant de multiplier les comptes.</p></article><article class="card"><span class="badge">CTO</span><h3>Comparer avant d’ouvrir</h3><p class="muted">Frais, IFU, investissement programmé et simplicité fiscale comptent autant que l’interface.</p></article><article class="card"><span class="badge">Crypto</span><h3>Poche volontairement limitée</h3><p class="muted">Bitcoin et Ethereum peuvent être inclus, mais uniquement avec une volatilité acceptée.</p></article></section>
 
 <section class="section compound-section">
   <div class="section-head">
