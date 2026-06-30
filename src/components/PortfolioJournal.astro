@@ -1,0 +1,101 @@
+<section class="portfolio-journal content-wide" aria-labelledby="portfolio-journal-title">
+  <div class="journal-panel">
+    <p class="eyebrow">Outil local</p>
+    <h2 id="portfolio-journal-title">Journal interactif</h2>
+    <p class="muted">Les données saisies restent uniquement dans ce navigateur via localStorage. Aucun backend n’est créé et aucune donnée personnelle n’est collectée.</p>
+
+    <form class="journal-form" data-journal-form>
+      <label>Date<input name="date" type="date" required /></label>
+      <label>Type d’action<input name="type" type="text" placeholder="Versement, achat, vente…" required /></label>
+      <label>Montant<input name="amount" type="text" inputmode="decimal" placeholder="50 €" /></label>
+      <label>Support<input name="asset" type="text" placeholder="ETF Monde, Bitcoin…" /></label>
+      <label>Plateforme<input name="platform" type="text" placeholder="PEA, courtier, exchange…" /></label>
+      <label class="journal-form__wide">Commentaire<textarea name="comment" rows="3" placeholder="Raison, document conservé, point à vérifier…"></textarea></label>
+      <button class="btn" type="submit">Ajouter la ligne</button>
+    </form>
+  </div>
+
+  <div class="journal-panel">
+    <div class="journal-toolbar">
+      <div>
+        <p class="eyebrow">Historique local</p>
+        <h3>Lignes enregistrées</h3>
+      </div>
+      <button class="btn secondary" type="button" data-journal-clear>Vider le journal</button>
+    </div>
+    <p class="journal-empty" data-journal-empty>Aucune ligne enregistrée pour le moment.</p>
+    <div class="table-wrap journal-table-wrap">
+      <table class="journal-table">
+        <thead><tr><th>Date</th><th>Action</th><th>Montant</th><th>Support</th><th>Plateforme</th><th>Commentaire</th><th></th></tr></thead>
+        <tbody data-journal-body></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const storageKey = 'guide-investissement-portfolio-journal';
+  const form = document.querySelector('[data-journal-form]');
+  const body = document.querySelector('[data-journal-body]');
+  const empty = document.querySelector('[data-journal-empty]');
+  const clearButton = document.querySelector('[data-journal-clear]');
+
+  const loadRows = () => {
+    try { return JSON.parse(localStorage.getItem(storageKey) || '[]'); }
+    catch { return []; }
+  };
+  const saveRows = (rows) => localStorage.setItem(storageKey, JSON.stringify(rows));
+  const cell = (value) => {
+    const td = document.createElement('td');
+    td.textContent = value || '—';
+    return td;
+  };
+  const renderRows = () => {
+    const rows = loadRows();
+    body.innerHTML = '';
+    empty.hidden = rows.length > 0;
+    rows.forEach((row, index) => {
+      const tr = document.createElement('tr');
+      ['date', 'type', 'amount', 'asset', 'platform', 'comment'].forEach((key) => tr.append(cell(row[key])));
+      const actions = document.createElement('td');
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'journal-delete';
+      remove.textContent = 'Supprimer';
+      remove.addEventListener('click', () => {
+        const nextRows = loadRows().filter((_, rowIndex) => rowIndex !== index);
+        saveRows(nextRows);
+        renderRows();
+      });
+      actions.append(remove);
+      tr.append(actions);
+      body.append(tr);
+    });
+  };
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const rows = loadRows();
+    rows.push({
+      date: data.get('date'),
+      type: data.get('type'),
+      amount: data.get('amount'),
+      asset: data.get('asset'),
+      platform: data.get('platform'),
+      comment: data.get('comment'),
+    });
+    saveRows(rows);
+    form.reset();
+    renderRows();
+  });
+
+  clearButton?.addEventListener('click', () => {
+    if (confirm('Vider toutes les lignes du journal enregistrées dans ce navigateur ?')) {
+      saveRows([]);
+      renderRows();
+    }
+  });
+
+  renderRows();
+</script>
