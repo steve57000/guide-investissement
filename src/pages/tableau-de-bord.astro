@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PersonalDashboard from '../components/PersonalDashboard.astro';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
+const indicators = [
+  ['Versement actuel', '50 €/mois'],
+  ['Allocation cible', 'ETF Monde majoritaire, crypto limitée ou désactivée selon choix'],
+  ['Horizon', '2026–2055'],
+  ['Priorité actuelle', 'Épargne de sécurité + choix PEA'],
+  ['Plateformes actuelles', 'N26 / Revolut'],
+  ['Plateforme à comparer', 'PEA adapté France'],
+  ['Fréquence de suivi', 'Mensuel léger, trimestriel complet, annuel stratégique'],
+  ['Risque principal', 'Décisions émotionnelles / crypto trop élevée / frais non vérifiés'],
+];
+const nextActions = ['Vérifier épargne de sécurité','Comparer PEA','Choisir ETF Monde éligible','Décider du rôle de N26/Revolut','Télécharger les justificatifs','Remplir le journal','Faire un bilan trimestriel'];
+const usefulLinks = [['assistant','Assistant'],['plan-action','Plan d’action'],['journal-investissement','Journal d’investissement'],['choisir-plateforme','Choisir plateforme'],['simulations','Simulations'],['portefeuille-steve','Portefeuille Steve']];
+---
+<BaseLayout title="Tableau de bord personnel | Guide Investissement 2026–2055" description="Vue synthétique pour suivre le plan de Steve : effort mensuel, allocation cible, épargne de sécurité, plateforme principale, documents fiscaux, prochaines actions et points de vigilance.">
+  <article class="content-page prose dashboard-page">
+    <p class="eyebrow">Pilotage pratique</p>
+    <h1>Tableau de bord personnel</h1>
+    <p class="lead">Cette page sert à piloter la méthode de Steve sans suivre les cours tous les jours : vérifier les priorités, garder un rythme de suivi raisonnable et préparer les actions utiles.</p>
+    <div class="callout a-retenir"><strong>Cadre éducatif</strong><p>Le contenu reste éducatif et ne constitue pas un conseil financier personnalisé. Les choix doivent être vérifiés avec les documents officiels, les frais et la situation personnelle.</p></div>
+
+    <section class="indicator-grid content-wide" aria-label="Indicateurs clés">
+      {indicators.map(([label, value]) => <article class="indicator-card"><span>{label}</span><strong>{value}</strong></article>)}
+    </section>
+
+    <PersonalDashboard />
+
+    <h2>Prochaines actions</h2>
+    <ul class="checklist dashboard-checklist">{nextActions.map((action) => <li>{action}</li>)}</ul>
+
+    <h2>Liens utiles</h2>
+    <div class="actions dashboard-links">{usefulLinks.map(([href, label]) => <a class="btn secondary" href={withBase(href)}>{label}</a>)}</div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,70 @@
+<section class="personal-dashboard" data-personal-dashboard>
+  <div class="dashboard-panel dashboard-form-panel">
+    <div>
+      <p class="eyebrow">Paramètres locaux</p>
+      <h2>Adapter le tableau de bord</h2>
+      <p class="muted">Les données saisies restent dans ce navigateur via localStorage : aucune donnée n’est envoyée à un serveur.</p>
+    </div>
+    <form class="personal-dashboard-form" data-dashboard-form>
+      <label>Versement mensuel (€)<input type="number" min="0" step="5" name="monthly" value="50" /></label>
+      <label>Épargne de sécurité actuelle (€)<input type="number" min="0" step="50" name="safetyCurrent" value="0" /></label>
+      <label>Objectif d’épargne de sécurité (€)<input type="number" min="0" step="50" name="safetyTarget" value="3000" /></label>
+      <label>Plateforme principale<input type="text" name="platform" value="N26 / Revolut" /></label>
+      <label>Crypto<select name="crypto"><option value="non">Non</option><option value="oui">Oui</option></select></label>
+      <label>Fréquence de suivi<select name="frequency"><option>Mensuel léger</option><option>Trimestriel complet</option><option>Annuel stratégique</option></select></label>
+      <button class="btn secondary dashboard-reset" type="button" data-dashboard-reset>Réinitialiser</button>
+    </form>
+  </div>
+
+  <div class="dashboard-panel dashboard-live-panel" aria-live="polite">
+    <div class="personal-dashboard-grid">
+      <article class="indicator-card"><span>Versement mensuel</span><strong data-out-monthly>50 €/mois</strong></article>
+      <article class="indicator-card"><span>Épargne de sécurité</span><strong data-out-safety>0 € / 3 000 €</strong></article>
+      <article class="indicator-card"><span>Plateforme principale</span><strong data-out-platform>N26 / Revolut</strong></article>
+      <article class="indicator-card"><span>Crypto</span><strong data-out-crypto>Non</strong></article>
+      <article class="indicator-card"><span>Fréquence de suivi</span><strong data-out-frequency>Mensuel léger</strong></article>
+    </div>
+    <div class="safety-progress" role="group" aria-label="Progression de l'épargne de sécurité">
+      <div class="progress-top"><span>Progression sécurité</span><strong data-out-progress>0 %</strong></div>
+      <div class="progress-bar"><i data-progress-bar style="width:0%"></i></div>
+    </div>
+    <div class="dashboard-message attention" data-safety-message>Épargne de sécurité incomplète : priorité à compléter la réserve avant d’augmenter le risque.</div>
+    <div class="dashboard-message ok" data-crypto-message>Crypto désactivée : aucune recommandation crypto n’est affichée.</div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-personal-dashboard]');
+    if (!root) return;
+    const storageKey = 'guide-investissement-personal-dashboard';
+    const form = root.querySelector('[data-dashboard-form]');
+    const defaults = { monthly: 50, safetyCurrent: 0, safetyTarget: 3000, platform: 'N26 / Revolut', crypto: 'non', frequency: 'Mensuel léger' };
+    const euro = (value) => `${Number(value || 0).toLocaleString('fr-FR')} €`;
+    const read = () => Object.fromEntries(new FormData(form).entries());
+    const writeForm = (data) => Object.entries({ ...defaults, ...data }).forEach(([key, value]) => { if (form.elements[key]) form.elements[key].value = value; });
+    const render = () => {
+      const data = { ...defaults, ...read() };
+      const current = Math.max(0, Number(data.safetyCurrent) || 0);
+      const target = Math.max(0, Number(data.safetyTarget) || 0);
+      const progress = target > 0 ? Math.min(100, Math.round((current / target) * 100)) : 0;
+      root.querySelector('[data-out-monthly]').textContent = `${euro(data.monthly)}/mois`;
+      root.querySelector('[data-out-safety]').textContent = `${euro(current)} / ${euro(target)}`;
+      root.querySelector('[data-out-platform]').textContent = data.platform || defaults.platform;
+      root.querySelector('[data-out-crypto]').textContent = data.crypto === 'oui' ? 'Oui, limitée' : 'Non';
+      root.querySelector('[data-out-frequency]').textContent = data.frequency;
+      root.querySelector('[data-out-progress]').textContent = `${progress} %`;
+      root.querySelector('[data-progress-bar]').style.width = `${progress}%`;
+      const safetyMessage = root.querySelector('[data-safety-message]');
+      safetyMessage.textContent = progress >= 100 ? 'Épargne de sécurité complète : le plan peut être revu avec prudence.' : 'Épargne de sécurité incomplète : priorité à compléter la réserve avant d’augmenter le risque.';
+      safetyMessage.className = `dashboard-message ${progress >= 100 ? 'ok' : 'attention'}`;
+      root.querySelector('[data-crypto-message]').textContent = data.crypto === 'oui' ? 'Crypto activée : cette poche doit rester limitée, séparée et acceptée comme très volatile.' : 'Crypto désactivée : aucune recommandation crypto n’est affichée.';
+      localStorage.setItem(storageKey, JSON.stringify(data));
+    };
+    try { writeForm(JSON.parse(localStorage.getItem(storageKey)) || defaults); } catch { writeForm(defaults); }
+    form.addEventListener('input', render);
+    form.addEventListener('change', render);
+    root.querySelector('[data-dashboard-reset]').addEventListener('click', () => { if (confirm('Réinitialiser les données locales du tableau de bord ?')) { localStorage.removeItem(storageKey); writeForm(defaults); render(); } });
+    render();
+  })();
+</script>
