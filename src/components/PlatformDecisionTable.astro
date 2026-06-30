@@ -1,0 +1,65 @@
+---
+import { platforms, type Availability } from '../data/platforms';
+
+const availabilityLabel: Record<Availability, string> = { oui: 'Oui', non: 'Non', 'à vérifier': 'À vérifier' };
+const availabilityClass: Record<Availability, string> = { oui: 'badge-check', non: 'badge-advanced', 'à vérifier': 'badge-check' };
+const badgeFor = (kind: string, value: Availability) => `${kind.toUpperCase()} · ${availabilityLabel[value]}`;
+const scoreDots = (score: number) => Array.from({ length: 5 }, (_, index) => index < score);
+---
+
+<div class="platform-comparator" aria-label="Comparateur de plateformes d’investissement">
+  <div class="platform-comparator__intro">
+    <p class="muted">Lecture rapide : les badges indiquent les fonctionnalités à contrôler, puis les scores aident à arbitrer entre simplicité, fiscalité française et potentiel long terme. Les frais précis ne sont pas déduits s’ils ne sont pas sourcés ici.</p>
+  </div>
+  <div class="platform-table-wrap">
+    <table class="platform-table">
+      <thead>
+        <tr>
+          <th>Plateforme</th>
+          <th>Badges utiles</th>
+          <th>Scores</th>
+          <th>Décision courte</th>
+          <th>Limites à vérifier</th>
+          <th>Sources officielles</th>
+        </tr>
+      </thead>
+      <tbody>
+        {platforms.map((platform) => (
+          <tr>
+            <td>
+              <strong>{platform.name}</strong>
+              <span class="platform-type">{platform.type}</span>
+              <span class="platform-profile">{platform.recommendedProfile}</span>
+            </td>
+            <td>
+              <div class="platform-badges">
+                <span class:list={['badge', platform.pea === 'oui' ? 'badge-pea' : 'badge-check']}>{badgeFor('pea', platform.pea)}</span>
+                <span class:list={['badge', platform.cto === 'oui' ? 'badge-cto' : 'badge-check']}>{badgeFor('cto', platform.cto)}</span>
+                <span class:list={['badge', platform.crypto === 'oui' ? 'badge-crypto' : 'badge-check']}>{badgeFor('crypto', platform.crypto)}</span>
+                <span class:list={['badge', platform.taxHelp === 'oui' ? 'badge-ifu' : 'badge-check']}>IFU · {availabilityLabel[platform.taxHelp]}</span>
+                <span class:list={['badge', platform.beginnerScore >= 4 ? 'badge-beginner' : 'badge-check']}>Débutant</span>
+                <span class:list={['badge', platform.type === 'plateforme avancée' || platform.beginnerScore <= 3 ? 'badge-advanced' : 'badge-check']}>Avancé</span>
+              </div>
+            </td>
+            <td>
+              <div class="score-list">
+                <div><span>Débutant</span><span class="score-dots" aria-label={`${platform.beginnerScore} sur 5`}>{scoreDots(platform.beginnerScore).map((filled) => <i class:list={[{ filled }]}></i>)}</span></div>
+                <div><span>Long terme</span><span class="score-dots" aria-label={`${platform.longTermScore} sur 5`}>{scoreDots(platform.longTermScore).map((filled) => <i class:list={[{ filled }]}></i>)}</span></div>
+                <div><span>Fiscalité FR</span><span class="score-dots" aria-label={`${platform.frenchTaxScore} sur 5`}>{scoreDots(platform.frenchTaxScore).map((filled) => <i class:list={[{ filled }]}></i>)}</span></div>
+                <div><span>Simplicité</span><span class="score-dots" aria-label={`${platform.simplicityScore} sur 5`}>{scoreDots(platform.simplicityScore).map((filled) => <i class:list={[{ filled }]}></i>)}</span></div>
+              </div>
+            </td>
+            <td>{platform.recommendation}</td>
+            <td>{platform.mainLimits}</td>
+            <td>
+              <ul class="source-list">
+                {platform.officialSources.map((source) => <li><a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></li>)}
+              </ul>
+              <span class="verified">Vérifié le {platform.verifiedAt}</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
