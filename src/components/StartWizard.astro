@@ -1,0 +1,145 @@
+---
+import { allocations } from '../data/allocations';
+const allocationJson = JSON.stringify(allocations);
+---
+<section class="start-wizard" data-start-wizard data-allocations={allocationJson}>
+  <div class="wizard-shell">
+    <div class="wizard-header">
+      <div>
+        <p class="eyebrow">Assistant pédagogique</p>
+        <h2>Construire un parcours adapté au point de départ de Steve</h2>
+        <p class="muted">Réponds aux questions pour obtenir une synthèse éducative : priorité, allocation issue des exemples du guide, plateforme à comparer et actions concrètes.</p>
+      </div>
+      <div class="wizard-progress-card" aria-live="polite">
+        <span data-step-label>Étape 1/6</span>
+        <strong data-progress-percent>17 %</strong>
+        <div class="wizard-progress"><i data-progress-bar></i></div>
+      </div>
+    </div>
+
+    <div class="wizard-card" data-question-card></div>
+    <div class="wizard-result is-hidden" data-result-card></div>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const root = document.querySelector('[data-start-wizard]');
+      if (!root) return;
+
+      const allocations = JSON.parse(root.dataset.allocations || '[]');
+      const questions = [
+        { id: 'security', title: 'As-tu une épargne de sécurité ?', badge: 'Sécurité', options: ['Oui', 'En cours', 'Non'] },
+        { id: 'amount', title: 'Combien peux-tu investir par mois ?', badge: 'Budget', options: ['50 €', '75 €', '100 €', '150 €', '200 €', '300 €', '500 €', '1000 €'] },
+        { id: 'horizon', title: 'Horizon d’investissement', badge: 'Horizon', options: ['moins de 5 ans', '5 à 10 ans', '10 à 20 ans', '20 ans et plus'] },
+        { id: 'risk', title: 'Tolérance au risque', badge: 'Risque', options: ['prudente', 'équilibrée', 'dynamique'] },
+        { id: 'platform', title: 'Plateformes actuelles', badge: 'Plateforme', options: ['N26', 'Revolut', 'Les deux', 'Aucune', 'Autre'] },
+        { id: 'crypto', title: 'Souhaites-tu investir en crypto ?', badge: 'Crypto', options: ['Non', 'Oui, petite poche BTC/ETH', 'Oui, mais je débute'] },
+      ];
+
+      const answers = {};
+      let current = 0;
+      const questionCard = root.querySelector('[data-question-card]');
+      const resultCard = root.querySelector('[data-result-card]');
+      const stepLabel = root.querySelector('[data-step-label]');
+      const progressPercent = root.querySelector('[data-progress-percent]');
+      const progressBar = root.querySelector('[data-progress-bar]');
+      const euro = (value) => `${Number(value).toLocaleString('fr-FR')} €`;
+      const pct = (value) => `${Number(value).toLocaleString('fr-FR')} %`;
+      const cleanAmount = (value) => Number(String(value).replace(/[^0-9]/g, ''));
+
+      const setProgress = () => {
+        const percent = Math.round(((current + 1) / questions.length) * 100);
+        stepLabel.textContent = `Étape ${Math.min(current + 1, questions.length)}/${questions.length}`;
+        progressPercent.textContent = `${percent} %`;
+        progressBar.style.width = `${percent}%`;
+      };
+
+      const renderQuestion = () => {
+        setProgress();
+        const question = questions[current];
+        questionCard.classList.remove('is-hidden');
+        resultCard.classList.add('is-hidden');
+        questionCard.innerHTML = `
+          <span class="badge">${question.badge}</span>
+          <h3>${question.title}</h3>
+          <div class="wizard-options">
+            ${question.options.map((option) => `<button type="button" class="wizard-option${answers[question.id] === option ? ' is-selected' : ''}" data-answer="${option}">${option}</button>`).join('')}
+          </div>
+          <div class="wizard-controls">
+            <button type="button" class="btn secondary" data-back ${current === 0 ? 'disabled' : ''}>Retour</button>
+            <span class="muted">Contenu éducatif uniquement, pas un conseil financier personnalisé.</span>
+          </div>
+        `;
+      };
+
+      const platformPriority = () => {
+        if (['N26', 'Revolut', 'Les deux'].includes(answers.platform)) return 'Comparer en priorité une solution PEA claire avec documents fiscaux solides, puis vérifier si N26/Revolut restent utiles comme poche de découverte.';
+        if (answers.platform === 'Aucune') return 'Comparer d’abord Trade Republic, BoursoBank, Fortuneo et Bourse Direct pour le PEA avant d’ouvrir plusieurs comptes.';
+        return 'Comparer la plateforme actuelle avec un PEA français/compatible ETF Monde, puis garder seulement ce qui simplifie le suivi.';
+      };
+
+      const buildResult = () => {
+        const amount = cleanAmount(answers.amount);
+        const allocation = allocations.find((item) => item.total === amount);
+        const lacksSecurity = answers.security !== 'Oui';
+        const shortHorizon = answers.horizon === 'moins de 5 ans';
+        const wantsCrypto = answers.crypto !== 'Non';
+        const usesN26Revolut = ['N26', 'Revolut', 'Les deux'].includes(answers.platform);
+        const priority = lacksSecurity
+          ? 'Constituer ou terminer l’épargne de sécurité avant d’augmenter fortement l’investissement mensuel.'
+          : shortHorizon
+            ? 'Clarifier l’objectif à court terme : ETF et crypto peuvent être trop volatils pour moins de 5 ans.'
+            : 'Structurer le cœur long terme : PEA, ETF Monde, versement régulier et suivi simple.';
+        const attention = [
+          'Ce résultat est une aide pédagogique et ne remplace pas un conseil financier personnalisé.',
+          ...(lacksSecurity ? ['Sans épargne de sécurité complète, mieux vaut éviter d’augmenter le risque trop vite.'] : ['Même avec une épargne de sécurité, conserver une réserve disponible pour les imprévus.']),
+          ...(shortHorizon ? ['Horizon inférieur à 5 ans : ETF actions et crypto sont probablement trop volatils pour cet objectif.'] : ['Horizon long : accepter les baisses temporaires reste indispensable.']),
+          ...(wantsCrypto ? ['Crypto : BTC/ETH seulement au départ, petite poche, aucun levier, aucune promesse de rendement.'] : ['Crypto optionnelle : ne pas en ajouter si la volatilité ou le suivi fiscal compliquent le plan.']),
+          ...(usesN26Revolut ? ['N26/Revolut : vérifier fiscalité, IFU ou aide fiscale, comptes étrangers éventuels, frais et exports.'] : ['Plateforme : vérifier frais, ETF disponibles, documents fiscaux et simplicité de déclaration.']),
+        ];
+        const actions = [
+          lacksSecurity ? 'Fixer le montant cible de l’épargne de sécurité et automatiser son alimentation.' : 'Valider le montant mensuel soutenable sans toucher à la réserve de sécurité.',
+          'Comparer les plateformes PEA/ETF avant d’ouvrir ou de transférer de l’argent.',
+          allocation ? `Tester le versement ${euro(allocation.total)}/mois : ${euro(allocation.etfMonde)} ETF Monde, ${euro(allocation.bitcoin)} BTC, ${euro(allocation.ethereum)} ETH.` : 'Choisir un montant présent dans le guide pour afficher une allocation chiffrée.',
+          wantsCrypto ? 'Écrire une règle crypto simple : BTC/ETH uniquement, petite poche, pas de levier.' : 'Décider explicitement de laisser la crypto de côté pour garder le plan simple.',
+        ];
+
+        questionCard.classList.add('is-hidden');
+        resultCard.classList.remove('is-hidden');
+        stepLabel.textContent = 'Résultat';
+        progressPercent.textContent = '100 %';
+        progressBar.style.width = '100%';
+        resultCard.innerHTML = `
+          <div class="result-top">
+            <div><p class="eyebrow">Synthèse prudente</p><h3>Parcours de démarrage proposé</h3></div>
+            <div class="wizard-badges"><span class="badge">Sécurité</span><span class="badge badge-pea">PEA</span><span class="badge badge-cto">ETF</span><span class="badge badge-crypto">Crypto</span><span class="badge badge-ifu">À vérifier</span></div>
+          </div>
+          <div class="result-grid">
+            <article><span>Profil résumé</span><strong>${answers.security} épargne • ${answers.amount}/mois • ${answers.horizon} • risque ${answers.risk}</strong></article>
+            <article><span>Priorité immédiate</span><strong>${priority}</strong></article>
+            <article><span>Plateforme à comparer</span><strong>${platformPriority()}</strong></article>
+          </div>
+          <div class="allocation-result">
+            <h4>Allocation pédagogique issue du guide</h4>
+            ${allocation ? `<div class="allocation-split"><div><b>${euro(allocation.etfMonde)}</b><span>ETF Monde · ${pct(allocation.etfPercentage)}</span></div><div><b>${euro(allocation.bitcoin)}</b><span>Bitcoin · ${pct(allocation.bitcoinPercentage)}</span></div><div><b>${euro(allocation.ethereum)}</b><span>Ethereum · ${pct(allocation.ethereumPercentage)}</span></div></div><p class="muted">Objectif : ${allocation.objective} Horizon recommandé : ${allocation.recommendedHorizon}.</p>` : '<p class="muted">Aucune allocation chiffrée trouvée pour ce montant.</p>'}
+          </div>
+          <div class="result-columns"><div><h4>Points d’attention</h4><ul>${attention.map((item) => `<li>${item}</li>`).join('')}</ul></div><div><h4>Prochaines actions concrètes</h4><ol>${actions.map((item) => `<li>${item}</li>`).join('')}</ol></div></div>
+          <div class="wizard-controls"><button type="button" class="btn secondary" data-back-result>Modifier mes réponses</button><button type="button" class="btn" data-restart>Recommencer</button></div>
+        `;
+      };
+
+      root.addEventListener('click', (event) => {
+        const answerButton = event.target.closest('[data-answer]');
+        if (answerButton) {
+          answers[questions[current].id] = answerButton.dataset.answer;
+          if (current < questions.length - 1) { current += 1; renderQuestion(); } else { buildResult(); }
+        }
+        if (event.target.closest('[data-back]') && current > 0) { current -= 1; renderQuestion(); }
+        if (event.target.closest('[data-back-result]')) { current = questions.length - 1; renderQuestion(); }
+        if (event.target.closest('[data-restart]')) { Object.keys(answers).forEach((key) => delete answers[key]); current = 0; renderQuestion(); }
+      });
+
+      renderQuestion();
+    })();
+  </script>
+</section>
