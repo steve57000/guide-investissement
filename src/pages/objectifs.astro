@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { allocations } from '../data/allocations';
+import { calculateCompoundProjection, formatEuro } from '../utils/compound';
+
+const starterAllocation = allocations.find(({ total }) => total === 50) ?? allocations[0];
+const euro = (value: number) => formatEuro(value);
+const pct = (value: number) => `${value.toLocaleString('fr-FR')} %`;
+
+const roadmap = [
+  {
+    period: '2026–2027',
+    title: 'Installer l’habitude',
+    monthly: '50 €/mois',
+    priority: 'Épargne de sécurité, automatisation, PEA à comparer',
+    action: 'Programmer un petit versement régulier et documenter les choix',
+    vigilance: 'Ne pas surpondérer la crypto',
+    badges: ['Objectif', 'Sécurité', 'PEA', 'Crypto'],
+    items: [
+      'Objectif : investir 50 €/mois sans fragiliser le budget courant.',
+      'Priorité : renforcer l’épargne de sécurité, automatiser le versement et comparer les PEA avant d’aller trop vite.',
+      `Allocation pédagogique à 50 €/mois : ${euro(starterAllocation.etfMonde)} ETF Monde, ${euro(starterAllocation.bitcoin)} Bitcoin et ${euro(starterAllocation.ethereum)} Ethereum.`,
+      'Point de vigilance : garder BTC/ETH comme une poche limitée, jamais comme le cœur du plan.',
+    ],
+  },
+  {
+    period: '2028–2030',
+    title: 'Passer à 75–100 €/mois',
+    monthly: '75–100 €/mois',
+    priority: 'Budget confortable et ETF Monde renforcé',
+    action: 'Augmenter seulement si les charges restent maîtrisées',
+    vigilance: 'Vérifier frais et documents fiscaux',
+    badges: ['Objectif', 'ETF', 'Crypto', 'À vérifier'],
+    items: [
+      'Augmenter les versements seulement si le budget reste confortable après dépenses contraintes et épargne de sécurité.',
+      'Renforcer progressivement l’ETF Monde pour construire un socle simple et diversifié.',
+      'Garder BTC/ETH limité afin que la volatilité ne pilote pas toute la trajectoire.',
+      'Vérifier les frais, les relevés, les justificatifs et les documents fiscaux disponibles sur la plateforme.',
+    ],
+  },
+  {
+    period: '2030–2035',
+    title: 'Viser 150–200 €/mois',
+    monthly: '150–200 €/mois',
+    priority: 'Accélération du capital',
+    action: 'Automatiser davantage et simplifier les lignes',
+    vigilance: 'Ne pas multiplier les ETF inutilement',
+    badges: ['Objectif', 'ETF', 'À vérifier'],
+    items: [
+      'Objectif : accélérer la construction du capital avec un effort mensuel plus visible.',
+      'Automatiser davantage pour éviter les décisions au gré des émotions de marché.',
+      'Suivre les frais réels, notamment les frais de courtage, de change et les frais internes des supports.',
+      'Ne pas multiplier les ETF inutilement : un portefeuille lisible est plus facile à tenir.',
+    ],
+  },
+  {
+    period: '2035–2045',
+    title: 'Renforcer le cœur PEA',
+    monthly: 'Selon revenus',
+    priority: 'PEA, ETF Monde, discipline',
+    action: 'Faire un bilan annuel et rééquilibrer si besoin',
+    vigilance: 'Garder un suivi fiscal propre',
+    badges: ['PEA', 'ETF', 'À vérifier'],
+    items: [
+      'Priorité : continuer à renforcer le PEA, l’ETF Monde et la discipline de versement.',
+      'Diversifier éventuellement si le socle est solide, compris et compatible avec les objectifs personnels.',
+      'Prévoir un rééquilibrage annuel plutôt que des arbitrages fréquents.',
+      'Maintenir un suivi fiscal propre : relevés, dates d’achat, enveloppes, frais et justificatifs.',
+    ],
+  },
+  {
+    period: '2045–2055',
+    title: 'Sécuriser progressivement',
+    monthly: 'À adapter',
+    priority: 'Préservation du capital constitué',
+    action: 'Réduire le risque si l’argent devient nécessaire',
+    vigilance: 'Éviter de vendre dans la panique',
+    badges: ['Sécurité', 'À vérifier'],
+    items: [
+      'Réduire progressivement le risque si l’argent devient nécessaire à court ou moyen terme.',
+      'Éviter de vendre dans la panique après une baisse brutale : préparer les règles avant les crises.',
+      'Anticiper les projets importants : immobilier, famille, retraite progressive, changement d’activité.',
+      'Préserver le capital constitué en séparant argent nécessaire bientôt et argent encore investi à long terme.',
+    ],
+  },
+];
+
+const objectives = [10_000, 25_000, 50_000, 100_000, 250_000, 500_000];
+const monthlyCandidates = [50, 75, 100, 150, 200, 300, 500, 750, 1000, 1500];
+const scenario = { label: 'Équilibré 6 % annuel nominal', annualRate: 0.06 };
+const objectiveRows = objectives.map((target) => {
+  const match = monthlyCandidates
+    .flatMap((monthly) => Array.from({ length: 31 }, (_, index) => index + 5).map((years) => ({ monthly, years, projection: calculateCompoundProjection({ monthly, years, annualRate: scenario.annualRate }) })))
+    .filter(({ projection }) => projection.nominalCapital >= target)
+    .sort((a, b) => a.monthly - b.monthly || a.years - b.years)[0];
+
+  return {
+    target,
+    monthly: match?.monthly ?? monthlyCandidates.at(-1),
+    years: match?.years ?? 30,
+    capital: match?.projection.nominalCapital ?? calculateCompoundProjection({ monthly: 1500, years: 30, annualRate: scenario.annualRate }).nominalCapital,
+  };
+});
+
+const badgeClass = (badge: string) => ({
+  Objectif: 'badge-balanced',
+  PEA: 'badge-pea',
+  ETF: 'badge-cto',
+  Crypto: 'badge-crypto',
+  Sécurité: 'badge-prudent',
+  'À vérifier': 'badge-ifu',
+}[badge] ?? 'badge-check');
+---
+<BaseLayout title="Objectifs 2026–2055 | Guide Investissement" description="Feuille de route patrimoniale avec jalons, montants mensuels, objectifs intermédiaires et règles de révision.">
+  <article class="prose objectifs-page">
+    <p class="eyebrow">Feuille de route patrimoniale</p>
+    <h1>Objectifs 2026–2055</h1>
+    <p class="lead">Feuille de route patrimoniale avec jalons, montants mensuels, objectifs intermédiaires et règles de révision.</p>
+
+    <div class="callout attention"><strong>Cadre pédagogique</strong><p>Cette page n’est pas un conseil financier réglementé. Elle aide à structurer une méthode de travail, avec des simulations incertaines à adapter à la situation réelle de Steve.</p></div>
+
+    <h2>Pourquoi définir les objectifs avant d’investir ?</h2>
+    <p>Définir les objectifs avant d’investir évite de choisir des produits au hasard. Le montant disponible, l’horizon, la tolérance au risque, la fiscalité et les projets personnels doivent guider l’ordre des décisions.</p>
+    <p>Une stratégie progressive est plus réaliste qu’un plan trop ambitieux dès le départ : elle installe l’habitude, laisse le temps de comprendre les supports et limite les erreurs coûteuses.</p>
+    <p>Les projections ne sont jamais garanties. Les marchés peuvent baisser, les rendements peuvent être inférieurs aux hypothèses, les frais et la fiscalité peuvent changer.</p>
+    <p>Le plan doit donc évoluer avec les revenus, les charges, les priorités familiales, la stabilité professionnelle et les projets de vie.</p>
+
+    <h2>Feuille de route par période</h2>
+    <div class="roadmap-grid">
+      {roadmap.map((step) => (
+        <section class="card roadmap-card">
+          <div class="roadmap-card__top">
+            <span class="badge">{step.period}</span>
+            <div class="roadmap-card__badges">{step.badges.map((badge) => <span class:list={["badge", badgeClass(badge)]}>{badge}</span>)}</div>
+          </div>
+          <h3>{step.period} — {step.title}</h3>
+          <ul>{step.items.map((item) => <li>{item}</li>)}</ul>
+        </section>
+      ))}
+    </div>
+
+    <h2>Tableau récapitulatif</h2>
+    <div class="table-wrap objectifs-table-wrap">
+      <table>
+        <thead><tr><th>Période</th><th>Montant mensuel cible</th><th>Priorité</th><th>Action principale</th><th>Point de vigilance</th></tr></thead>
+        <tbody>{roadmap.map((step) => <tr><td><strong>{step.period}</strong></td><td>{step.monthly}</td><td>{step.priority}</td><td>{step.action}</td><td>{step.vigilance}</td></tr>)}</tbody>
+      </table>
+    </div>
+
+    <h2>Objectifs chiffrés possibles</h2>
+    <p>Les montants ci-dessous sont des simulations indicatives, calculées avec un scénario {scenario.label}, hors fiscalité, hors frais et hors inflation. Ils ne constituent pas une promesse de résultat.</p>
+    <div class="objective-grid">
+      {objectiveRows.map((row) => (
+        <article class="card objective-card">
+          <span class="badge badge-balanced">Simulation</span>
+          <h3>{euro(row.target)}</h3>
+          <dl>
+            <div><dt>Effort mensuel indicatif</dt><dd>{euro(row.monthly ?? 0)}</dd></div>
+            <div><dt>Horizon possible</dt><dd>{row.years} ans</dd></div>
+            <div><dt>Scénario utilisé</dt><dd>{scenario.label}</dd></div>
+          </dl>
+          <p class="muted">Remarque prudente : capital simulé d’environ {euro(row.capital)} si les hypothèses se réalisent, avec des résultats réels possiblement inférieurs.</p>
+        </article>
+      ))}
+    </div>
+
+    <h2>Quand revoir le plan ?</h2>
+    <ul class="checklist">
+      <li>Changement de revenus, à la hausse comme à la baisse.</li>
+      <li>Dépense importante prévue ou imprévue.</li>
+      <li>Perte d’emploi, baisse d’activité ou période d’incertitude professionnelle.</li>
+      <li>Achat immobilier ou projet nécessitant un apport.</li>
+      <li>Naissance, famille ou nouvelle responsabilité financière.</li>
+      <li>Fiscalité qui change ou nouvelle règle applicable à une enveloppe.</li>
+      <li>Frais de plateforme qui augmentent.</li>
+      <li>Changement d’objectif personnel ou d’horizon.</li>
+    </ul>
+
+    <h2>Règles de pilotage</h2>
+    <div class="dashboard-cards pilotage-cards">
+      <article class="card"><span class="badge badge-quarterly">Révision trimestrielle</span><h3>Contrôle léger</h3><p class="muted">Vérifier versements, budget, épargne de sécurité et absence de dérive crypto.</p></article>
+      <article class="card"><span class="badge badge-annual">Bilan annuel</span><h3>Décision structurée</h3><p class="muted">Comparer objectifs, frais, fiscalité, allocation et capacité d’épargne réelle.</p></article>
+      <article class="card"><span class="badge badge-cto">Rééquilibrage</span><h3>Revenir au plan</h3><p class="muted">Ajuster calmement si une poche devient trop importante par rapport au plan.</p></article>
+      <article class="card"><span class="badge badge-prudent">Sécurisation progressive</span><h3>Réduire le risque</h3><p class="muted">Diminuer l’exposition risquée quand un projet important approche.</p></article>
+      <article class="card"><span class="badge badge-priority">Stop aux décisions impulsives</span><h3>Attendre avant d’agir</h3><p class="muted">Pas d’achat ou de vente dicté par la peur, l’euphorie ou les réseaux sociaux.</p></article>
+    </div>
+
+    <div class="callout a-retenir"><strong>À retenir</strong><p>Le meilleur plan est celui que Steve peut suivre, documenter et réviser sans stress excessif. La régularité compte davantage que la recherche permanente du placement parfait.</p></div>
+  </article>
+</BaseLayout>
