@@ -5,6 +5,7 @@ order: 9
 ---
 
 <div class="callout a-retenir"><strong>Objectif</strong><p>Le suivi sert à vérifier que la stratégie reste cohérente, pas à surveiller les cours tous les jours ni à multiplier les arbitrages.</p></div>
+<div class="actions"><a class="btn secondary" href="../sauvegarde-donnees">Sauvegarder les données locales</a></div>
 
 ## Pourquoi suivre sans regarder tous les jours
 
