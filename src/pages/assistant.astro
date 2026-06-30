@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StartWizard from '../components/StartWizard.astro';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 ---
 <BaseLayout title="Assistant de démarrage | Guide Investissement 2026–2055" description="Questionnaire pédagogique pour choisir un parcours : épargne de sécurité, PEA, ETF Monde, crypto limitée, plateforme principale.">
   <section class="content-page assistant-hero">
@@ -8,7 +10,7 @@ import StartWizard from '../components/StartWizard.astro';
     <h1>Assistant de démarrage</h1>
     <p class="lead">Un questionnaire pédagogique pour aider Steve à choisir un parcours cohérent : épargne de sécurité, PEA, ETF Monde, crypto limitée et plateforme principale à comparer.</p>
     <div class="callout a-retenir"><strong>Important</strong><p>Le résultat sert à structurer la réflexion. Il ne constitue pas un conseil financier personnalisé, ni une recommandation réglementée d’achat ou de vente.</p></div>
-  <div class="actions"><a class="btn secondary" href={`${import.meta.env.BASE_URL}scenarios-crise`.replace(/\/\//g, '/')}>Préparer les scénarios de crise</a></div>
+  <div class="actions"><a class="btn secondary" href={withBase('scenarios-crise')}>Préparer les scénarios de crise</a><a class="btn secondary" href={withBase('tableau-de-bord')}>Ouvrir le tableau de bord</a></div>
   </section>
   <StartWizard />
 </BaseLayout>

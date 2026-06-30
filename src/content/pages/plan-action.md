@@ -14,6 +14,8 @@ order: 9
   <span class="badge badge-annual">Annuel</span>
 </div>
 
+<div class="actions"><a class="btn secondary" href="../tableau-de-bord">Ouvrir le tableau de bord</a></div>
+
 ## Étape 1 — Faire le point avant d’investir
 
 <span class="badge badge-priority">Priorité</span>
