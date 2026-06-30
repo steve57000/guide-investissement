@@ -84,7 +84,7 @@
           platform: answers.platform,
         });
         const rows = assetRows(recommendation);
-        const cryptoExcluded = answers.crypto === 'Non';
+        const hasCryptoAllocation = recommendation.bitcoin > 0 || recommendation.ethereum > 0;
 
         questionCard.classList.add('is-hidden');
         resultCard.classList.remove('is-hidden');
@@ -94,7 +94,7 @@
         resultCard.innerHTML = `
           <div class="result-top">
             <div><p class="eyebrow">Synthèse prudente</p><h3>Parcours de démarrage proposé</h3></div>
-            <div class="wizard-badges"><span class="badge">Sécurité</span><span class="badge badge-pea">PEA</span><span class="badge badge-cto">ETF</span>${cryptoExcluded ? '' : '<span class="badge badge-crypto">Crypto limitée</span>'}<span class="badge badge-ifu">À vérifier</span></div>
+            <div class="wizard-badges"><span class="badge">Sécurité</span><span class="badge badge-pea">PEA</span><span class="badge badge-cto">ETF</span>${hasCryptoAllocation ? '<span class="badge badge-crypto">Crypto limitée</span>' : ''}<span class="badge badge-ifu">À vérifier</span></div>
           </div>
           <div class="result-grid">
             <article><span>Profil résumé</span><strong>${answers.security} épargne • ${answers.amount}/mois • ${answers.horizon} • risque ${answers.risk}</strong></article>

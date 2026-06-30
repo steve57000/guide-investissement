@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const documents = [
+  ['Relevés PEA', 'Banque ou courtier PEA', 'Suivre les versements, retraits, positions et mouvements du plan.', 'Mensuelle ou annuelle'],
+  ['Relevés CTO', 'Courtier CTO', 'Contrôler dividendes, plus-values, frais et espèces disponibles.', 'Mensuelle ou annuelle'],
+  ['IFU', 'Courtier français ou établissement payeur', 'Rapprocher les montants préremplis et les revenus de capitaux mobiliers.', 'Annuelle'],
+  ['Justificatifs d’ordres', 'Historique d’ordres du courtier', 'Justifier prix, dates, quantités et frais en cas de contrôle.', 'À chaque ordre'],
+  ['Historiques crypto', 'Exchange, wallet, outil fiscal crypto', 'Reconstituer achats, ventes, swaps, dépôts et retraits.', 'Trimestrielle et annuelle'],
+  ['Exports CSV', 'Plateforme, courtier, banque, exchange', 'Conserver une trace exploitable même si l’interface change.', 'Annuelle'],
+  ['Justificatifs de dépôts/retraits', 'Banque, exchange, courtier', 'Relier les virements aux comptes d’investissement.', 'À chaque mouvement important'],
+  ['Documents de frais', 'Courtier, banque, N26/Revolut', 'Vérifier frais de courtage, change, tenue de compte ou abonnement.', 'Annuelle'],
+  ['DIC/KID des ETF', 'Émetteur ETF, courtier ou AMF', 'Comprendre risques, coûts, scénarios et caractéristiques avant achat.', 'Avant achat puis à chaque changement'],
+  ['Relevés N26/Revolut', 'Application ou espace client', 'Identifier IBAN, entité, transactions, frais et éventuels justificatifs fiscaux.', 'Mensuelle ou annuelle'],
+];
+---
+<BaseLayout title="Déclaration & documents | Guide Investissement 2026–2055" description="Documents à conserver et points fiscaux à vérifier pour PEA, CTO, N26, Revolut, crypto et comptes étrangers.">
+  <article class="prose wide-prose">
+    <p class="eyebrow">Fiscalité & archivage</p>
+    <h1>Déclaration & documents</h1>
+    <p class="lead">Documents à conserver et points fiscaux à vérifier pour PEA, CTO, N26, Revolut, crypto et comptes étrangers.</p>
+
+    <div class="callout a-retenir">
+      <strong>Rappel éducatif</strong>
+      <p>Cette page aide à préparer les justificatifs et les questions à vérifier. Elle ne remplace pas les notices officielles, un professionnel fiscal ou votre espace personnel sur <a href="https://www.impots.gouv.fr/" rel="noreferrer">impots.gouv.fr</a>.</p>
+    </div>
+
+    <h2>1. Pourquoi conserver les justificatifs ?</h2>
+    <p>Les relevés, IFU, historiques d’ordres et exports CSV permettent de retrouver les dates, montants, frais, dépôts, retraits et revenus lorsque la déclaration arrive ou lorsqu’une plateforme change son interface.</p>
+    <p>La fiscalité dépend aussi de l’enveloppe : un PEA, un CTO, un compte bancaire étranger, un compte d’actifs numériques ou une application comme N26/Revolut ne se documentent pas de la même manière.</p>
+    <p>Le bon réflexe consiste à archiver les PDF et CSV dans un dossier annuel, puis à vérifier les formulaires et notices applicables sur les sources officielles au moment de déclarer.</p>
+
+    <h2>2. Documents à conserver</h2>
+    <table>
+      <thead><tr><th>Document</th><th>Où le trouver</th><th>Pourquoi c’est utile</th><th>Fréquence</th></tr></thead>
+      <tbody>
+        {documents.map(([document, source, reason, frequency]) => <tr><td><strong>{document}</strong></td><td>{source}</td><td>{reason}</td><td>{frequency}</td></tr>)}
+      </tbody>
+    </table>
+
+    <h2>3. PEA</h2>
+    <p>À conserver : relevés annuels, versements, retraits, historique d’ordres, frais, DIC/KID des ETF, justificatifs de clôture ou de transfert si besoin.</p>
+    <ul>
+      <li>Vérifier la fiscalité des retraits avant/après 5 ans et les exceptions éventuelles.</li>
+      <li>Vérifier les prélèvements sociaux applicables aux gains.</li>
+      <li>Conserver les documents même lorsque l’établissement fournit une synthèse fiscale.</li>
+    </ul>
+    <p>Source officielle à vérifier : <a href="https://www.service-public.fr/particuliers/vosdroits/F22449" rel="noreferrer">Service-Public.fr — imposition des revenus d’un PEA</a> et <a href="https://www.service-public.fr/particuliers/vosdroits/F2385" rel="noreferrer">Service-Public.fr — fonctionnement du PEA</a>.</p>
+
+    <h2>4. CTO</h2>
+    <p>Pour un courtier français, l’IFU aide à rapprocher les revenus et opérations de valeurs mobilières. Pour un courtier étranger, il faut être encore plus rigoureux : exports, dividendes, retenues à la source, plus-values, frais et éventuels formulaires liés aux revenus étrangers.</p>
+    <ul>
+      <li>Comparer l’IFU, les relevés et les montants préremplis.</li>
+      <li>Documenter les plus-values, moins-values, dividendes et frais.</li>
+      <li>Vérifier les formulaires utiles si le courtier ou les revenus sont étrangers.</li>
+    </ul>
+    <p>Sources officielles : <a href="https://www.impots.gouv.fr/formulaire/2561/declaration-recapitulative-des-operations-sur-valeurs-mobilieres-et-revenus-de-capi" rel="noreferrer">impots.gouv.fr — IFU n°2561</a> et <a href="https://www.impots.gouv.fr/formulaire/2047/declaration-des-revenus-encaisses-letranger" rel="noreferrer">impots.gouv.fr — revenus encaissés à l’étranger n°2047</a>.</p>
+
+    <h2>5. N26 / Revolut</h2>
+    <p>Le point clé est de vérifier l’entité du compte, l’IBAN, les documents disponibles et l’existence éventuelle d’un compte étranger à déclarer. Il faut conserver les relevés, exports, documents de frais, justificatifs d’opérations et éventuelles aides fiscales fournies par l’application.</p>
+    <ul>
+      <li>N26 : télécharger relevés, rapports d’activité, relevés de frais ou documents fiscaux disponibles.</li>
+      <li>Revolut : télécharger les relevés de compte par devise et conserver les historiques d’opérations.</li>
+      <li>Dans les deux cas : vérifier chaque année les obligations de déclaration des comptes étrangers sur impots.gouv.fr.</li>
+    </ul>
+    <p>Sources officielles : <a href="https://support.n26.com/fr-fr/paiements-virements-et-retraits/solde-et-plafonds/comment-obtenir-un-releve-bancaire" rel="noreferrer">N26 — relevés bancaires</a>, <a href="https://support.n26.com/fr-fr/compte-et-informations-personnelles/informations-personnelles/comment-telecharger-mon-releve-de-frais" rel="noreferrer">N26 — relevé de frais</a>, <a href="https://help.revolut.com/fr-FR/help/profile-and-plan/managing-my-account/account-statement-per-chosen-currency/" rel="noreferrer">Revolut — relevé de compte</a> et <a href="https://www.impots.gouv.fr/formulaire/3916/declaration-par-un-resident-dun-compte-letranger-ou-dun-contrat-de-capitalisation-o" rel="noreferrer">impots.gouv.fr — formulaire n°3916/3916 bis</a>.</p>
+
+    <h2>6. Crypto</h2>
+    <p>Les actifs numériques exigent un historique précis : achats, ventes, swaps, dépôts, retraits, frais, adresses de wallets, justificatifs bancaires et exports CSV des plateformes utilisées.</p>
+    <ul>
+      <li>Vérifier le formulaire 2086 pour les plus ou moins-values de cessions d’actifs numériques.</li>
+      <li>Vérifier les comptes d’actifs numériques ouverts, détenus, utilisés ou clos à l’étranger lorsque c’est applicable.</li>
+      <li>Garder les traces même pour les transferts entre wallet et exchange, car elles peuvent expliquer l’origine des fonds.</li>
+    </ul>
+    <p>Sources officielles : <a href="https://www.impots.gouv.fr/formulaire/2086/declaration-des-plus-ou-moins-values-de-cessions-dactifs-numeriques" rel="noreferrer">impots.gouv.fr — formulaire n°2086</a> et <a href="https://www.impots.gouv.fr/particulier/questions/comment-declarer-les-plus-ou-moins-values-sur-cessions-dactifs-numeriques" rel="noreferrer">impots.gouv.fr — déclaration des cessions d’actifs numériques</a>.</p>
+
+    <h2>7. Checklist annuelle</h2>
+    <ul class="checklist">
+      <li>Télécharger les IFU et relevés annuels disponibles.</li>
+      <li>Exporter les transactions en PDF et CSV pour PEA, CTO, N26/Revolut et crypto.</li>
+      <li>Vérifier les comptes étrangers et comptes d’actifs numériques étrangers éventuels.</li>
+      <li>Vérifier les formulaires utiles : 2042, 2047, 2074, 2086, 3916/3916 bis selon la situation.</li>
+      <li>Archiver PDF, CSV, DIC/KID, justificatifs d’ordres, dépôts, retraits et frais.</li>
+      <li>Mettre à jour les sources fiscales officielles avant de valider la déclaration.</li>
+    </ul>
+
+    <h2>8. Sources officielles</h2>
+    <ul>
+      <li><a href="https://www.impots.gouv.fr/" rel="noreferrer">impots.gouv.fr</a></li>
+      <li><a href="https://www.service-public.fr/particuliers/vosdroits/F22449" rel="noreferrer">Service-Public.fr — PEA</a></li>
+      <li><a href="https://www.amf-france.org/fr/espace-epargnants/actualites-mises-en-garde/le-document-dinformations-cles-dic-est-desormais-generalise-tous-les-placements-collectifs" rel="noreferrer">AMF — document d’informations clés</a></li>
+      <li><a href="https://www.banque-france.fr/fr" rel="noreferrer">Banque de France</a></li>
+      <li><a href="https://support.n26.com/fr-fr" rel="noreferrer">N26 — support officiel</a></li>
+      <li><a href="https://help.revolut.com/fr-FR/" rel="noreferrer">Revolut — aide officielle</a></li>
+    </ul>
+  </article>
+</BaseLayout>

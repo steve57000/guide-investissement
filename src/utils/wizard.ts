@@ -83,6 +83,31 @@ export const buildAssistantAllocation = (
     };
   }
 
+  const shouldAvoidRiskyAssets = security !== 'Oui' || horizon === 'moins de 5 ans';
+
+  if (shouldAvoidRiskyAssets) {
+    return {
+      etfMonde: amount,
+      bitcoin: 0,
+      ethereum: 0,
+      etfPercentage: 100,
+      bitcoinPercentage: 0,
+      ethereumPercentage: 0,
+      explanation:
+        security !== 'Oui'
+          ? 'Priorité sécurité : préparer le PEA, mais ne pas accélérer tant que la sécurité n’est pas prête. La crypto est mise à 0 dans ce plan.'
+          : 'Horizon court : ETF actions et crypto sont volatils. La crypto est mise à 0 et la sécurisation court terme passe avant l’allocation risquée.',
+      warnings,
+      priority,
+      objective: security !== 'Oui' ? 'Finaliser la réserve de sécurité avant d’augmenter les actifs risqués.' : 'Sécuriser l’argent nécessaire à moins de 5 ans.',
+      recommendedHorizon: base?.recommendedHorizon,
+    };
+  }
+
+  if (risk === 'prudente' && crypto === 'Oui, petite poche BTC/ETH') {
+    warnings.push('Profil prudent avec petite poche crypto : alerte forte, limiter strictement la poche et accepter une perte possible importante.');
+  }
+
   if (crypto === 'Oui, petite poche BTC/ETH' && base) {
     return {
       etfMonde: base.etfMonde,
@@ -99,7 +124,7 @@ export const buildAssistantAllocation = (
     };
   }
 
-  const allowTinyCrypto = risk !== 'prudente' && security === 'Oui' && horizon !== 'moins de 5 ans';
+  const allowTinyCrypto = risk !== 'prudente';
   const bitcoin = allowTinyCrypto ? Math.floor(amount * 0.06 / 5) * 5 : 0;
   const ethereum = allowTinyCrypto ? Math.floor(amount * 0.03 / 5) * 5 : 0;
   const etfMonde = amount - bitcoin - ethereum;
@@ -124,13 +149,14 @@ export const buildAssistantAllocation = (
 
 export const buildWizardRecommendation = (answers: WizardAnswers): WizardRecommendation => {
   const allocation = buildAssistantAllocation(answers.amount, answers.crypto, answers.horizon, answers.security, answers.risk);
+  const hasCryptoAllocation = allocation.bitcoin > 0 || allocation.ethereum > 0;
   return {
     ...allocation,
     platformRecommendation: getPlatformRecommendation(answers.platform),
     nextActions: [
       answers.security !== 'Oui' ? 'Définir le montant cible de l’épargne de sécurité et l’automatiser.' : 'Valider un versement mensuel soutenable sans toucher à la réserve de sécurité.',
       answers.horizon === 'moins de 5 ans' ? 'Isoler l’argent nécessaire à court terme sur des supports moins volatils.' : 'Préparer le PEA et la règle de versement ETF Monde.',
-      answers.crypto === 'Non' ? 'Noter explicitement : pas de Bitcoin ni Ethereum dans ce plan.' : 'Écrire une règle crypto : petite poche, pas de levier, aucun achat sous émotion.',
+      hasCryptoAllocation ? 'Écrire une règle crypto : petite poche, pas de levier, aucun achat sous émotion.' : 'Noter explicitement : pas de Bitcoin ni Ethereum dans ce plan.',
       'Comparer les frais, documents fiscaux, exports et contraintes avant de choisir une plateforme.',
     ],
   };
