@@ -12,7 +12,7 @@ const { page } = Astro.props;
 const { Content } = await render(page);
 ---
 <BaseLayout title={`${page.data.title} | Guide Investissement 2026–2055`} description={page.data.description}>
-  <article class="prose">
+  <article class="content-page prose">
     <p class="eyebrow">Guide Investissement 2026–2055</p>
     <h1>{page.data.title}</h1>
     <p class="muted">{page.data.description}</p>
