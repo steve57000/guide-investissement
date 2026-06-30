@@ -124,6 +124,6 @@ Un krach fait partie des scénarios possibles quand on investit en actions ou en
 <div class="callout a-retenir"><strong>À retenir</strong><p>Pour démarrer proprement, Steve peut :</p><ol><li>garder N26/Revolut temporairement ;</li><li>comparer sérieusement le PEA N26, Trade Republic, BoursoBank, Fortuneo et Bourse Direct ;</li><li>choisir une plateforme principale pour l’ETF Monde ;</li><li>garder Bitcoin/Ethereum en petite poche séparée ;</li><li>éviter les altcoins et le trading.</li></ol></div>
 
 
-## Étape 8 — Savoir vendre ou sécuriser
+## Étape 9 — Savoir vendre ou sécuriser
 
-Avant une vente, vérifier la méthode dédiée : [Quand vendre ou sécuriser ?](/strategie-sortie). Une décision rationnelle doit préciser le montant, l’horizon, les frais, la fiscalité et le risque évité.
+Avant une vente, vérifier la méthode dédiée : [Quand vendre ou sécuriser ?](../strategie-sortie). Une décision rationnelle doit préciser le montant, l’horizon, les frais, la fiscalité et le risque évité. Noter aussi la décision dans le [journal d’investissement](../journal-investissement) pour conserver la raison, les frais et les documents associés.

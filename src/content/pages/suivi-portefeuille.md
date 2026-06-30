@@ -8,7 +8,7 @@ order: 9
 
 ## Pourquoi suivre sans regarder tous les jours
 
-Un portefeuille long terme se pilote avec des règles simples : versements réguliers, allocation cible, frais maîtrisés et décisions documentées. Regarder les cours quotidiennement augmente souvent le risque d’achat impulsif, de vente panique ou de changement de stratégie après une simple variation de marché.
+Un portefeuille long terme se pilote avec des règles simples : versements réguliers, allocation cible, frais maîtrisés et décisions documentées. Le [journal d’investissement](../journal-investissement) permet de centraliser ces traces sans consulter les cours tous les jours. Regarder les cours quotidiennement augmente souvent le risque d’achat impulsif, de vente panique ou de changement de stratégie après une simple variation de marché.
 
 ## Suivi mensuel
 
