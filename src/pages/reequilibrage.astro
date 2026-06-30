@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Rééquilibrage | Guide Investissement 2026–2055" description="Méthode simple pour rééquilibrer un portefeuille ETF / crypto sans faire du trading.">
-  <article class="prose wide-prose">
+  <article class="content-page prose">
     <p class="eyebrow">Méthode de suivi</p>
     <h1>Rééquilibrage</h1>
     <p class="lead">Méthode simple pour rééquilibrer un portefeuille ETF / crypto sans faire du trading.</p>
@@ -34,6 +34,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <li>Une vente créerait des frais ou une fiscalité disproportionnés.</li>
       <li>L’argent est nécessaire à court terme : il faut d’abord sécuriser l’objectif.</li>
     </ul>
+
+    <div class="callout conseil"><strong>Vendre ou sécuriser</strong><p>Si le rééquilibrage implique une vente, vérifier aussi la méthode proposée dans <a href={`${import.meta.env.BASE_URL}strategie-sortie`}>Quand vendre ou sécuriser ?</a> : horizon, fiscalité, frais et risque de décision émotionnelle.</p></div>
 
     <div class="callout conseil"><strong>Pour les baisses fortes</strong><p>La page <a href={`${import.meta.env.BASE_URL}scenarios-crise`.replace(/\/\//g, '/')}>Scénarios de crise</a> détaille les réactions possibles face à un ETF Monde à -10 %, -20 % ou -40 %, une chute crypto ou un besoin de liquidités.</p></div>
 
