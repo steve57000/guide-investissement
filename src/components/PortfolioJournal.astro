@@ -21,8 +21,16 @@
         <p class="eyebrow">Historique local</p>
         <h3>Lignes enregistrées</h3>
       </div>
-      <button class="btn secondary" type="button" data-journal-clear>Vider le journal</button>
+      <div class="tool-actions" aria-label="Actions du journal">
+        <button class="btn secondary" type="button" data-journal-sort>Trier par date</button>
+        <button class="btn secondary" type="button" data-journal-export-csv>Exporter CSV</button>
+        <button class="btn secondary" type="button" data-journal-export-json>Exporter JSON</button>
+        <label class="btn secondary file-action">Importer JSON<input type="file" accept="application/json,.json" data-journal-import /></label>
+        <button class="btn secondary danger" type="button" data-journal-clear>Vider le journal</button>
+      </div>
     </div>
+    <div class="journal-feedback" data-journal-feedback aria-live="polite" hidden></div>
+    <div class="journal-summary" data-journal-summary aria-live="polite"></div>
     <p class="journal-empty" data-journal-empty>Aucune ligne enregistrée pour le moment.</p>
     <div class="table-wrap journal-table-wrap">
       <table class="journal-table">
@@ -35,36 +43,84 @@
 
 <script is:inline>
   const storageKey = 'guide-investissement-portfolio-journal';
+  const fields = ['date', 'type', 'amount', 'asset', 'platform', 'comment'];
   const form = document.querySelector('[data-journal-form]');
   const body = document.querySelector('[data-journal-body]');
   const empty = document.querySelector('[data-journal-empty]');
   const clearButton = document.querySelector('[data-journal-clear]');
+  const sortButton = document.querySelector('[data-journal-sort]');
+  const exportCsvButton = document.querySelector('[data-journal-export-csv]');
+  const exportJsonButton = document.querySelector('[data-journal-export-json]');
+  const importInput = document.querySelector('[data-journal-import]');
+  const summary = document.querySelector('[data-journal-summary]');
+  const feedback = document.querySelector('[data-journal-feedback]');
 
+  const normalizeRow = (row) => fields.reduce((entry, field) => ({ ...entry, [field]: String(row?.[field] ?? '') }), {});
   const loadRows = () => {
-    try { return JSON.parse(localStorage.getItem(storageKey) || '[]'); }
-    catch { return []; }
+    try {
+      const rows = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      return Array.isArray(rows) ? rows.map(normalizeRow) : [];
+    } catch { return []; }
   };
-  const saveRows = (rows) => localStorage.setItem(storageKey, JSON.stringify(rows));
+  const saveRows = (rows) => localStorage.setItem(storageKey, JSON.stringify(rows.map(normalizeRow)));
+  const showFeedback = (message, type = 'ok') => {
+    feedback.textContent = message;
+    feedback.className = `journal-feedback ${type}`;
+    feedback.hidden = false;
+  };
+  const parseAmount = (value) => {
+    const cleaned = String(value || '').replace(/\s/g, '').replace(/€/g, '').replace(',', '.').replace(/[^0-9.-]/g, '');
+    const number = Number(cleaned);
+    return Number.isFinite(number) ? number : null;
+  };
+  const download = (content, filename, type) => {
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+  const csvEscape = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
   const cell = (value) => {
     const td = document.createElement('td');
     td.textContent = value || '—';
     return td;
   };
+  const renderSummary = (rows) => {
+    const total = rows.reduce((sum, row) => sum + (parseAmount(row.amount) ?? 0), 0);
+    const numericCount = rows.filter((row) => parseAmount(row.amount) !== null).length;
+    const last = rows.at(-1);
+    const platforms = [...new Set(rows.map((row) => row.platform.trim()).filter(Boolean))];
+    summary.innerHTML = '';
+    [
+      ['Lignes', rows.length || '0'],
+      ['Total montants numériques', numericCount ? `${total.toLocaleString('fr-FR', { maximumFractionDigits: 2 })} €` : 'Aucun montant numérique'],
+      ['Dernière action', last ? `${last.date || 'Sans date'} — ${last.type || 'Action non précisée'}` : 'Aucune'],
+      ['Plateformes utilisées', platforms.length ? platforms.join(', ') : 'Aucune plateforme renseignée'],
+    ].forEach(([label, value]) => {
+      const item = document.createElement('article');
+      item.innerHTML = `<span>${label}</span><strong></strong>`;
+      item.querySelector('strong').textContent = value;
+      summary.append(item);
+    });
+  };
   const renderRows = () => {
     const rows = loadRows();
     body.innerHTML = '';
     empty.hidden = rows.length > 0;
+    renderSummary(rows);
     rows.forEach((row, index) => {
       const tr = document.createElement('tr');
-      ['date', 'type', 'amount', 'asset', 'platform', 'comment'].forEach((key) => tr.append(cell(row[key])));
+      fields.forEach((key) => tr.append(cell(row[key])));
       const actions = document.createElement('td');
       const remove = document.createElement('button');
       remove.type = 'button';
       remove.className = 'journal-delete';
       remove.textContent = 'Supprimer';
       remove.addEventListener('click', () => {
-        const nextRows = loadRows().filter((_, rowIndex) => rowIndex !== index);
-        saveRows(nextRows);
+        saveRows(loadRows().filter((_, rowIndex) => rowIndex !== index));
         renderRows();
       });
       actions.append(remove);
@@ -77,22 +133,58 @@
     event.preventDefault();
     const data = new FormData(form);
     const rows = loadRows();
-    rows.push({
-      date: data.get('date'),
-      type: data.get('type'),
-      amount: data.get('amount'),
-      asset: data.get('asset'),
-      platform: data.get('platform'),
-      comment: data.get('comment'),
-    });
+    rows.push(normalizeRow(Object.fromEntries(fields.map((field) => [field, data.get(field)]))));
     saveRows(rows);
     form.reset();
+    showFeedback('Ligne ajoutée au journal.', 'ok');
     renderRows();
+  });
+
+  sortButton?.addEventListener('click', () => {
+    const rows = loadRows().sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
+    saveRows(rows);
+    showFeedback('Journal trié par date croissante.', 'ok');
+    renderRows();
+  });
+
+  exportCsvButton?.addEventListener('click', () => {
+    const rows = loadRows();
+    const header = ['Date', 'Action', 'Montant', 'Support', 'Plateforme', 'Commentaire'];
+    const lines = [header, ...rows.map((row) => fields.map((field) => row[field]))].map((line) => line.map(csvEscape).join(';'));
+    download(`\uFEFF${lines.join('\r\n')}`, 'journal-investissement.csv', 'text/csv;charset=utf-8');
+    showFeedback('Export CSV généré.', 'ok');
+  });
+
+  exportJsonButton?.addEventListener('click', () => {
+    download(JSON.stringify(loadRows(), null, 2), 'journal-investissement.json', 'application/json;charset=utf-8');
+    showFeedback('Export JSON généré.', 'ok');
+  });
+
+  importInput?.addEventListener('change', async () => {
+    const file = importInput.files?.[0];
+    if (!file) return;
+    try {
+      const parsed = JSON.parse(await file.text());
+      const importedRows = Array.isArray(parsed) ? parsed.map(normalizeRow) : null;
+      if (!importedRows) throw new Error('Format invalide');
+      const mode = confirm('OK : ajouter les lignes importées aux lignes existantes. Annuler : remplacer toutes les lignes existantes après confirmation.') ? 'append' : 'replace';
+      let nextRows = importedRows;
+      if (mode === 'append') nextRows = [...loadRows(), ...importedRows];
+      if (mode === 'replace' && !confirm('Remplacer définitivement le journal local par le fichier importé ?')) return;
+      saveRows(nextRows);
+      showFeedback(`${importedRows.length} ligne(s) importée(s).`, 'ok');
+      renderRows();
+    } catch {
+      showFeedback('Import impossible : le fichier JSON ne contient pas un journal valide.', 'error');
+    } finally {
+      importInput.value = '';
+    }
   });
 
   clearButton?.addEventListener('click', () => {
     if (confirm('Vider toutes les lignes du journal enregistrées dans ce navigateur ?')) {
       saveRows([]);
+      showFeedback('Journal vidé.', 'ok');
       renderRows();
     }
   });

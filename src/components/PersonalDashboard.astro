@@ -4,6 +4,7 @@
       <p class="eyebrow">Paramètres locaux</p>
       <h2>Adapter le tableau de bord</h2>
       <p class="muted">Les données saisies restent dans ce navigateur via localStorage : aucune donnée n’est envoyée à un serveur.</p>
+      <div class="dashboard-feedback" data-dashboard-feedback aria-live="polite" hidden></div>
     </div>
     <form class="personal-dashboard-form" data-dashboard-form>
       <label>Versement mensuel (€)<input type="number" min="0" step="5" name="monthly" value="50" /></label>
@@ -12,7 +13,11 @@
       <label>Plateforme principale<input type="text" name="platform" value="N26 / Revolut" /></label>
       <label>Crypto<select name="crypto"><option value="non">Non</option><option value="oui">Oui</option></select></label>
       <label>Fréquence de suivi<select name="frequency"><option>Mensuel léger</option><option>Trimestriel complet</option><option>Annuel stratégique</option></select></label>
-      <button class="btn secondary dashboard-reset" type="button" data-dashboard-reset>Réinitialiser</button>
+      <div class="dashboard-actions">
+        <button class="btn secondary" type="button" data-dashboard-export>Exporter mes paramètres</button>
+        <label class="btn secondary file-action">Importer mes paramètres<input type="file" accept="application/json,.json" data-dashboard-import /></label>
+        <button class="btn secondary dashboard-reset danger" type="button" data-dashboard-reset>Réinitialiser</button>
+      </div>
     </form>
   </div>
 
@@ -39,14 +44,48 @@
     if (!root) return;
     const storageKey = 'guide-investissement-personal-dashboard';
     const form = root.querySelector('[data-dashboard-form]');
+    const importInput = root.querySelector('[data-dashboard-import]');
+    const feedback = root.querySelector('[data-dashboard-feedback]');
     const defaults = { monthly: 50, safetyCurrent: 0, safetyTarget: 3000, platform: 'N26 / Revolut', crypto: 'non', frequency: 'Mensuel léger' };
+    const numericFields = ['monthly', 'safetyCurrent', 'safetyTarget'];
     const euro = (value) => `${Number(value || 0).toLocaleString('fr-FR')} €`;
-    const read = () => Object.fromEntries(new FormData(form).entries());
-    const writeForm = (data) => Object.entries({ ...defaults, ...data }).forEach(([key, value]) => { if (form.elements[key]) form.elements[key].value = value; });
+    const toNumber = (value) => {
+      const number = Number(String(value ?? '').replace(',', '.'));
+      return Number.isFinite(number) && number >= 0 ? number : 0;
+    };
+    const showFeedback = (message, type = 'ok') => {
+      feedback.textContent = message;
+      feedback.className = `dashboard-feedback ${type}`;
+      feedback.hidden = false;
+    };
+    const validateData = (data) => {
+      if (!data || typeof data !== 'object' || Array.isArray(data)) return null;
+      const cleaned = { ...defaults };
+      numericFields.forEach((field) => {
+        const number = Number(String(data[field] ?? defaults[field]).replace(',', '.'));
+        cleaned[field] = Number.isFinite(number) && number >= 0 ? number : defaults[field];
+      });
+      cleaned.platform = String(data.platform ?? defaults.platform).slice(0, 80);
+      cleaned.crypto = data.crypto === 'oui' ? 'oui' : 'non';
+      cleaned.frequency = ['Mensuel léger', 'Trimestriel complet', 'Annuel stratégique'].includes(data.frequency) ? data.frequency : defaults.frequency;
+      return cleaned;
+    };
+    const read = () => validateData(Object.fromEntries(new FormData(form).entries()));
+    const writeForm = (data) => Object.entries(validateData(data) || defaults).forEach(([key, value]) => { if (form.elements[key]) form.elements[key].value = value; });
+    const download = (content, filename) => {
+      const blob = new Blob([content], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+    };
     const render = () => {
-      const data = { ...defaults, ...read() };
-      const current = Math.max(0, Number(data.safetyCurrent) || 0);
-      const target = Math.max(0, Number(data.safetyTarget) || 0);
+      const data = read();
+      numericFields.forEach((field) => { form.elements[field].value = data[field]; });
+      const current = toNumber(data.safetyCurrent);
+      const target = toNumber(data.safetyTarget);
       const progress = target > 0 ? Math.min(100, Math.round((current / target) * 100)) : 0;
       root.querySelector('[data-out-monthly]').textContent = `${euro(data.monthly)}/mois`;
       root.querySelector('[data-out-safety]').textContent = `${euro(current)} / ${euro(target)}`;
@@ -56,15 +95,37 @@
       root.querySelector('[data-out-progress]').textContent = `${progress} %`;
       root.querySelector('[data-progress-bar]').style.width = `${progress}%`;
       const safetyMessage = root.querySelector('[data-safety-message]');
-      safetyMessage.textContent = progress >= 100 ? 'Épargne de sécurité complète : le plan peut être revu avec prudence.' : 'Épargne de sécurité incomplète : priorité à compléter la réserve avant d’augmenter le risque.';
-      safetyMessage.className = `dashboard-message ${progress >= 100 ? 'ok' : 'attention'}`;
+      if (target <= 0) {
+        safetyMessage.textContent = 'Objectif d’épargne de sécurité à 0 ou invalide : renseigner un objectif positif pour obtenir une progression utile.';
+        safetyMessage.className = 'dashboard-message attention';
+      } else {
+        safetyMessage.textContent = progress >= 100 ? 'Épargne de sécurité complète : le plan peut être revu avec prudence.' : 'Épargne de sécurité incomplète : priorité à compléter la réserve avant d’augmenter le risque.';
+        safetyMessage.className = `dashboard-message ${progress >= 100 ? 'ok' : 'attention'}`;
+      }
       root.querySelector('[data-crypto-message]').textContent = data.crypto === 'oui' ? 'Crypto activée : cette poche doit rester limitée, séparée et acceptée comme très volatile.' : 'Crypto désactivée : aucune recommandation crypto n’est affichée.';
       localStorage.setItem(storageKey, JSON.stringify(data));
     };
     try { writeForm(JSON.parse(localStorage.getItem(storageKey)) || defaults); } catch { writeForm(defaults); }
     form.addEventListener('input', render);
     form.addEventListener('change', render);
-    root.querySelector('[data-dashboard-reset]').addEventListener('click', () => { if (confirm('Réinitialiser les données locales du tableau de bord ?')) { localStorage.removeItem(storageKey); writeForm(defaults); render(); } });
+    root.querySelector('[data-dashboard-export]').addEventListener('click', () => { download(JSON.stringify(read(), null, 2), 'parametres-tableau-de-bord.json'); showFeedback('Paramètres exportés.', 'ok'); });
+    importInput.addEventListener('change', async () => {
+      const file = importInput.files?.[0];
+      if (!file) return;
+      try {
+        const parsed = JSON.parse(await file.text());
+        const data = validateData(parsed);
+        if (!data || !confirm('Remplacer les paramètres locaux du tableau de bord par ce fichier ?')) return;
+        writeForm(data);
+        render();
+        showFeedback('Paramètres importés avec succès.', 'ok');
+      } catch {
+        showFeedback('Données importées invalides : choisir un export JSON du tableau de bord.', 'error');
+      } finally {
+        importInput.value = '';
+      }
+    });
+    root.querySelector('[data-dashboard-reset]').addEventListener('click', () => { if (confirm('Réinitialiser les données locales du tableau de bord ?')) { localStorage.removeItem(storageKey); writeForm(defaults); render(); showFeedback('Paramètres réinitialisés.', 'ok'); } });
     render();
   })();
 </script>

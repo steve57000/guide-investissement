@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
+---
+<BaseLayout title="Sauvegarde des données locales | Guide Investissement 2026–2055" description="Comprendre comment sauvegarder le journal d’investissement et les paramètres locaux du tableau de bord.">
+  <article class="content-page prose sauvegarde-page">
+    <p class="eyebrow">Données locales</p>
+    <h1>Sauvegarde des données locales</h1>
+    <p class="lead">Les outils interactifs du site fonctionnent côté navigateur : ils sont pratiques, mais ils doivent être exportés régulièrement pour éviter de perdre le journal ou les paramètres personnels.</p>
+
+    <div class="callout a-retenir"><strong>À retenir</strong><p>Les données restent dans le navigateur utilisé. Elles ne sont pas envoyées au site, à GitHub Pages ou à un serveur externe.</p></div>
+
+    <h2>Où sont stockées les données ?</h2>
+    <p>Le journal d’investissement et le tableau de bord personnel utilisent le stockage local du navigateur. Cela permet de conserver les lignes et les paramètres sur le même appareil, sans compte utilisateur et sans base de données distante.</p>
+
+    <h2>Quels sont les risques ?</h2>
+    <p>Ce stockage local peut disparaître si le cache ou les données du site sont vidés, si Steve change de navigateur, s’il utilise un autre ordinateur ou si son profil navigateur est réinitialisé. Il faut donc prévoir un export régulier, surtout avant un changement de PC ou un nettoyage du navigateur.</p>
+
+    <div class="callout attention"><strong>Attention</strong><p>Un export JSON remplace ou complète les données locales lors de l’import. Avant un remplacement, vérifier que le fichier choisi est bien le bon.</p></div>
+
+    <h2>Quoi exporter ?</h2>
+    <ul class="checklist">
+      <li>Le journal d’investissement en CSV pour l’ouvrir facilement dans Excel avec le séparateur français « ; ».</li>
+      <li>Le journal complet en JSON pour pouvoir le réimporter dans le navigateur.</li>
+      <li>Les paramètres du tableau de bord en JSON pour retrouver le versement mensuel, l’objectif de sécurité, la plateforme principale et la fréquence de suivi.</li>
+    </ul>
+
+    <h2>Routine mensuelle simple</h2>
+    <ol>
+      <li>Ouvrir le <a href={withBase('journal-investissement')}>journal d’investissement</a> après le versement mensuel.</li>
+      <li>Exporter le CSV pour archivage lisible.</li>
+      <li>Exporter le JSON du journal pour sauvegarde complète.</li>
+      <li>Ouvrir le <a href={withBase('tableau-de-bord')}>tableau de bord personnel</a> et exporter les paramètres si quelque chose a changé.</li>
+      <li>Ranger les fichiers dans un dossier daté, par exemple <code>investissement/2026-06</code>.</li>
+    </ol>
+
+    <div class="callout conseil"><strong>Conseil</strong><p>Conserver au moins une copie hors du navigateur : dossier local sauvegardé, disque externe ou espace cloud personnel si cela correspond aux habitudes de sécurité de Steve.</p></div>
+
+    <h2>Données sensibles</h2>
+    <p>Le journal doit rester utile et sobre. Il n’est pas nécessaire d’y stocker des mots de passe, numéros complets de compte, clés privées crypto, documents d’identité ou informations sensibles inutiles. Un commentaire peut indiquer où se trouve un justificatif sans recopier son contenu confidentiel.</p>
+  </article>
+</BaseLayout>
