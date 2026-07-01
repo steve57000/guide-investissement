@@ -104,8 +104,21 @@ export const buildAssistantAllocation = (
     };
   }
 
-  if (risk === 'prudente' && crypto === 'Oui, petite poche BTC/ETH') {
-    warnings.push('Profil prudent avec petite poche crypto : alerte forte, limiter strictement la poche et accepter une perte possible importante.');
+  if (risk === 'prudente') {
+    warnings.push('Profil prudent : même si la crypto est acceptée, le plan pédagogique met Bitcoin et Ethereum à 0.');
+    return {
+      etfMonde: amount,
+      bitcoin: 0,
+      ethereum: 0,
+      etfPercentage: 100,
+      bitcoinPercentage: 0,
+      ethereumPercentage: 0,
+      explanation: 'Profil prudent : la crypto reste optionnelle et n’est pas retenue dans ce plan. Le portefeuille reste centré sur ETF Monde / PEA.',
+      warnings,
+      priority,
+      objective: 'Construire un plan simple hors crypto, compatible avec une tolérance au risque limitée.',
+      recommendedHorizon: base?.recommendedHorizon,
+    };
   }
 
   if (crypto === 'Oui, petite poche BTC/ETH' && base) {
@@ -124,9 +137,8 @@ export const buildAssistantAllocation = (
     };
   }
 
-  const allowTinyCrypto = risk !== 'prudente';
-  const bitcoin = allowTinyCrypto ? Math.floor(amount * 0.06 / 5) * 5 : 0;
-  const ethereum = allowTinyCrypto ? Math.floor(amount * 0.03 / 5) * 5 : 0;
+  const bitcoin = Math.floor(amount * 0.06 / 5) * 5;
+  const ethereum = Math.floor(amount * 0.03 / 5) * 5;
   const etfMonde = amount - bitcoin - ethereum;
   warnings.push('Crypto débutant : la poche peut rester à 0 tant que la stratégie principale ETF Monde / PEA n’est pas maîtrisée.');
 
@@ -137,9 +149,7 @@ export const buildAssistantAllocation = (
     etfPercentage: percent(etfMonde, amount),
     bitcoinPercentage: percent(bitcoin, amount),
     ethereumPercentage: percent(ethereum, amount),
-    explanation: allowTinyCrypto
-      ? 'Version prudente pour débuter : ETF Monde majoritaire, Bitcoin et Ethereum très limités.'
-      : 'Version prudente : crypto mise à 0 car la sécurité, l’horizon ou le profil prudent ne justifient pas de la prioriser.',
+    explanation: 'Version prudente pour débuter : ETF Monde majoritaire, Bitcoin et Ethereum très limités.',
     warnings,
     priority,
     objective: 'Maîtriser le socle ETF Monde / PEA avant toute complexité crypto.',

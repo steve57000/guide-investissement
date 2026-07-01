@@ -2,52 +2,86 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DataWarning from '../components/DataWarning.astro';
 import CryptoAllocationTable from '../components/CryptoAllocationTable.astro';
+import CryptoRiskTable from '../components/CryptoRiskTable.astro';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 ---
-<BaseLayout title="Cryptomonnaies | Guide Investissement 2026–2055" description="Page éducative et prudente sur Bitcoin, Ethereum, la sécurité, la fiscalité française générale et la place limitée de la crypto dans un portefeuille.">
+<BaseLayout title="Cryptomonnaies | Guide Investissement 2026–2055" description="Page éducative et prudente sur les crypto-actifs, leurs risques, leur fiscalité française générale et leur place optionnelle dans un portefeuille.">
   <article class="content-page prose">
     <p class="eyebrow">Guide Investissement 2026–2055</p>
     <h1>Cryptomonnaies</h1>
-    <p class="muted">Bitcoin, Ethereum, conservation, fiscalité française générale et règles de prudence pour une petite poche satellite.</p>
-    <DataWarning context="Données variables — crypto" />
+    <p class="muted">Comprendre Bitcoin, Ethereum, stablecoins et altcoins sans transformer la crypto en recommandation d’achat.</p>
+    <DataWarning context="Données variables — crypto-actifs" />
 
-    <div class="callout attention"><strong>Attention — risque très élevé</strong><p>Les crypto-actifs peuvent perdre une grande partie de leur valeur, devenir illiquides ou être perdus définitivement en cas d’erreur de conservation. Cette page est pédagogique, pas une recommandation financière personnalisée.</p></div>
+    <div class="callout a-retenir"><strong>À retenir : la crypto est optionnelle</strong><p>Un plan d’investissement peut être construit sans Bitcoin, sans Ethereum et sans aucune poche crypto. Pour beaucoup d’investisseurs, le socle prioritaire reste l’épargne de sécurité, puis une stratégie ETF / PEA comprise et tenue dans le temps.</p></div>
+    <div class="callout attention"><strong>Important — contenu éducatif</strong><p>Cette page ne constitue pas un conseil financier personnalisé, ni une recommandation d’achat ou de vente. Les crypto-actifs peuvent subir des baisses de 50 %, 70 %, 90 % ou plus, et certaines altcoins peuvent perdre toute leur valeur.</p></div>
 
-    <h2>Bitcoin</h2>
-    <p>Bitcoin est le premier grand crypto-actif. Il vise principalement une fonction de réseau monétaire décentralisé avec une émission programmée par protocole. Sa valeur dépend de l’offre et de la demande, de la confiance dans le réseau, de la liquidité mondiale et du cadre réglementaire.</p>
+    <h2>Qu’est-ce qu’une cryptomonnaie ?</h2>
+    <p>Dans ce guide, on parle surtout de <strong>crypto-actifs</strong> : des actifs numériques inscrits sur une blockchain ou un registre comparable. Ils ne sont pas une monnaie au sens d’une devise garantie par une banque centrale. Leur prix dépend de l’offre, de la demande, de la confiance, de la liquidité, de la réglementation et parfois d’une narration très spéculative.</p>
+    <p>La conséquence pratique est simple : il ne faut pas investir en crypto si l’on ne comprend pas ce que l’on achète, comment le conserver, comment le vendre, comment le déclarer et quelle perte maximale on peut supporter.</p>
 
-    <h2>Ethereum</h2>
-    <p>Ethereum est une blockchain programmable utilisée pour des applications décentralisées, contrats intelligents, stablecoins, NFT et protocoles financiers. Son actif natif, l’ether, sert notamment à payer l’utilisation du réseau.</p>
-
-    <h2>Différence BTC / ETH</h2>
-    <table><thead><tr><th>Point</th><th>Bitcoin</th><th>Ethereum</th></tr></thead><tbody><tr><td>Rôle principal</td><td>Réseau monétaire et réserve de valeur spéculative.</td><td>Infrastructure programmable pour applications blockchain.</td></tr><tr><td>Risque dominant</td><td>Adoption, réglementation, volatilité, concentration de détention.</td><td>Risque technologique, concurrence, bugs de smart contracts, évolution du protocole.</td></tr><tr><td>Analyse</td><td>Plus proche d’un actif monétaire numérique.</td><td>Plus proche d’une plateforme technologique décentralisée.</td></tr></tbody></table>
-
-    <h2>Crypto dans le portefeuille de Steve</h2>
-    <p>Dans ce guide, la crypto reste une <strong>petite poche satellite</strong> autour d’un cœur ETF Monde majoritaire. Steve démarre avec Bitcoin et Ethereum uniquement au départ, car multiplier les altcoins avant d’avoir une stratégie principale solide augmente la complexité, la volatilité et le risque d’erreur.</p>
-    <ul><li>Éviter les altcoins tant que l’épargne de sécurité, le PEA/ETF et le suivi fiscal ne sont pas maîtrisés.</li><li>Ne jamais utiliser de levier, futures ou produits assimilés pour cette stratégie long terme.</li><li>Ne jamais investir l’argent nécessaire à court terme : loyers, impôts, projets proches et réserve d’urgence doivent rester hors crypto.</li></ul>
-
-    <h2>Allocation crypto recommandée</h2>
-    <p>La table ci-dessous reprend les montants centralisés du site depuis src/data/allocations.ts : elle montre uniquement la poche Bitcoin/Ethereum, pas une incitation à acheter.</p>
-    <CryptoAllocationTable />
-
-    <h2>N26, Revolut ou plateforme crypto séparée ?</h2>
-    <table><thead><tr><th>Solution</th><th>Simplicité</th><th>Frais à vérifier</th><th>Retrait possible ou non</th><th>Fiscalité / export</th><th>Sécurité</th><th>Profil adapté</th><th>Limite principale</th></tr></thead><tbody>
-      <tr><td>N26 Crypto</td><td>Très simple si l’utilisateur est déjà client.</td><td>À vérifier dans les conditions officielles N26.</td><td>À vérifier dans l’application et les conditions officielles.</td><td>Exports et aide fiscale à vérifier avant usage.</td><td>Dépendance à l’intermédiaire et aux règles du compte.</td><td>Découverte avec petits montants.</td><td>Ne pas choisir uniquement pour la simplicité.</td></tr>
-      <tr><td>Revolut Crypto</td><td>Très simple et intégré au compte Revolut.</td><td>À vérifier dans les conditions officielles Revolut.</td><td>À vérifier selon actif, pays, offre et conditions.</td><td>Exports, comptes étrangers et obligations déclaratives à contrôler.</td><td>Dépendance à l’intermédiaire et à l’entité applicable.</td><td>Découverte ou petite poche satellite.</td><td>Fiscalité et conservation potentiellement plus manuelles.</td></tr>
-      <tr><td>Plateforme crypto dédiée</td><td>Moyenne : plus d’options, donc plus de réglages.</td><td>À vérifier dans la grille officielle : achat, spread, retrait, conversion.</td><td>Souvent possible, mais à vérifier par actif et réseau.</td><td>Exports généralement disponibles, qualité variable à tester.</td><td>Risque plateforme ; sécuriser le compte et limiter les soldes inutiles.</td><td>Utilisateur qui veut séparer ETF et crypto.</td><td>Plus de complexité opérationnelle.</td></tr>
-      <tr><td>Wallet personnel</td><td>Moins simple : gestion directe des clés.</td><td>Frais réseau à vérifier au moment des transactions.</td><td>Oui, l’utilisateur contrôle les transactions s’il conserve ses clés.</td><td>Historique à tenir soi-même avec justificatifs.</td><td>Très dépendant de la protection de la seed phrase.</td><td>Utilisateur formé avec montants justifiant l’autonomie.</td><td>Perte définitive possible en cas d’erreur.</td></tr>
-      <tr><td>Hardware wallet</td><td>Plus technique au départ.</td><td>Coût d’achat et frais réseau à vérifier.</td><td>Oui via wallet compatible, sous responsabilité de l’utilisateur.</td><td>Historique à tenir soi-même avec exports de plateforme.</td><td>Sécurité renforcée hors ligne si procédure correcte.</td><td>Montants significatifs et utilisateur discipliné.</td><td>Complexité, sauvegarde et risque de mauvaise manipulation.</td></tr>
+    <h2>Bitcoin, Ethereum, stablecoins et altcoins : quelles différences ?</h2>
+    <table><thead><tr><th>Catégorie</th><th>Idée générale</th><th>Point de vigilance</th></tr></thead><tbody>
+      <tr><td>Bitcoin</td><td>Premier grand crypto-actif, souvent présenté comme un actif monétaire numérique rare.</td><td>Volatilité, réglementation, adoption réelle, concentration de détention et absence de garantie de capital.</td></tr>
+      <tr><td>Ethereum</td><td>Blockchain programmable utilisée par des applications, smart contracts, stablecoins et protocoles décentralisés.</td><td>Risque technologique, concurrence, bugs, frais réseau et évolution du protocole.</td></tr>
+      <tr><td>Stablecoins</td><td>Jetons cherchant à suivre une devise ou un actif de référence.</td><td>Le mot “stable” ne veut pas dire garanti : risque d’émetteur, de réserve, de liquidité, de plateforme et de réglementation.</td></tr>
+      <tr><td>Altcoins spéculatives</td><td>Crypto-actifs hors Bitcoin / Ethereum, parfois liés à des projets jeunes, narratives ou communautés.</td><td>Risque extrême : perte totale, fraude, illiquidité, manipulation ou abandon du projet.</td></tr>
     </tbody></table>
 
-    <h2>Sécurité crypto</h2>
-    <ul class="checklist"><li>Activer 2FA.</li><li>Utiliser un mot de passe unique.</li><li>Ne jamais partager sa seed phrase.</li><li>Éviter les captures d’écran de phrase de récupération.</li><li>Vérifier les adresses avant retrait.</li><li>Tester un petit retrait avant un gros montant.</li><li>Conserver les justificatifs.</li></ul>
+    <h2>Pourquoi la crypto doit rester une poche satellite</h2>
+    <p>Une poche satellite est une petite partie du patrimoine financier que l’on accepte de voir varier fortement sans mettre en danger le plan principal. Elle ne remplace pas l’épargne de sécurité, ne finance pas un projet à court terme et ne doit pas forcer à vendre les ETF au mauvais moment.</p>
+    <p>Si la crypto est refusée dans l’<a href={withBase('assistant')}>Assistant</a>, l’allocation doit rester à 100 % hors crypto selon le profil : pas de Bitcoin, pas d’Ethereum et pas de poche cachée. La page <a href={withBase('commencer-50')}>Commencer</a> peut alors servir à structurer les premiers versements avec des supports mieux compris.</p>
 
-    <h2>Fiscalité crypto France</h2>
-    <p>En France, une cession d’actifs numériques peut être imposable. La déclaration peut notamment impliquer le formulaire 2086 pour détailler les opérations, et les comptes crypto ouverts auprès d’acteurs étrangers peuvent devoir être déclarés si la situation l’exige. Steve doit conserver l’historique des transactions, exports, justificatifs de dépôts/retraits et vérifier impots.gouv.fr chaque année avant de déclarer.</p>
+    <div class="callout conseil"><strong>Conseil</strong><p>Si vous refusez la crypto ou si le risque n’est pas clair, construisez uniquement avec une épargne de sécurité, des versements réguliers et une stratégie ETF / PEA documentée. Ne cherchez pas à “compenser” avec une petite ligne crypto cachée.</p></div>
 
-    <h2>Erreurs crypto à éviter</h2>
-    <ul><li>Acheter trop d’altcoins.</li><li>Acheter après une forte hausse par peur de rater.</li><li>Vendre en panique.</li><li>Laisser une grosse somme sur une plateforme sans raison.</li><li>Utiliser levier ou futures.</li><li>Confondre staking/rendement avec sécurité.</li><li>Oublier la fiscalité.</li></ul>
+    <h2>Pourquoi Bitcoin et Ethereum sont différents des petites altcoins</h2>
+    <p>Bitcoin et Ethereum disposent d’un historique, d’une liquidité et d’une reconnaissance plus importants que la majorité des petites altcoins. Cela peut faciliter l’analyse et l’exécution, mais ne rend pas ces actifs sûrs. Ils restent très volatils et peuvent connaître de longues périodes de baisse.</p>
+    <p>Les petites altcoins sont souvent plus fragiles : liquidité plus faible, dépendance à une équipe, risque de faille, cotation limitée, effet de mode, communication agressive ou projet abandonné. Le guide ne recommande donc aucune altcoin précise comme investissement.</p>
 
-    <h2>Sources à vérifier</h2>
-    <p>Pour la fiscalité, vérifier chaque année les pages officielles impots.gouv.fr sur les cessions d’actifs numériques, le formulaire 2086 et la déclaration des comptes d’actifs numériques ouverts à l’étranger. Pour les plateformes, vérifier les conditions officielles N26, Revolut et de toute plateforme crypto avant achat ou retrait.</p>
+    <div class="callout attention"><strong>Attention : perte totale possible</strong><p>Certaines altcoins peuvent perdre 90 % ou 100 % de leur valeur. Une capitalisation élevée, une communauté active ou une forte hausse récente ne constituent pas une protection.</p></div>
+
+    <CryptoRiskTable />
+
+    <h2>Allocation crypto pédagogique</h2>
+    <p>La table ci-dessous reprend les montants centralisés du site. Elle illustre seulement une petite poche Bitcoin / Ethereum lorsque l’utilisateur accepte explicitement la crypto, avec horizon long, épargne de sécurité prête et tolérance au risque suffisante. Elle ne doit jamais être appliquée si la réponse crypto est “Non”.</p>
+    <CryptoAllocationTable />
+
+    <h2>Risques à connaître avant toute décision</h2>
+    <ul>
+      <li><strong>Perte en capital</strong> : aucune garantie de récupérer le montant investi.</li>
+      <li><strong>Piratage et fraude</strong> : phishing, faux supports, usurpations, plateformes compromises ou projets malveillants.</li>
+      <li><strong>Risque plateforme</strong> : blocage, faillite, retrait suspendu, conditions qui changent ou acteur non autorisé.</li>
+      <li><strong>Liquidité</strong> : difficulté à vendre au prix attendu, spread important ou marché asséché.</li>
+      <li><strong>Réglementation</strong> : règles fiscales, accès, services autorisés et obligations déclaratives peuvent évoluer.</li>
+      <li><strong>Erreurs de transfert</strong> : mauvaise adresse, mauvais réseau ou perte de clé privée peuvent rendre les fonds irrécupérables.</li>
+    </ul>
+
+    <h2>Conservation : plateforme ou wallet personnel ?</h2>
+    <p>Conserver sur une plateforme peut être plus simple, mais ajoute une dépendance à l’intermédiaire : accès au compte, sécurité de la plateforme, retraits, justificatifs et statut réglementaire. Un wallet personnel donne davantage de contrôle, mais transfère aussi la responsabilité : sauvegarde de la phrase de récupération, erreurs irréversibles, succession et historique fiscal.</p>
+    <p>Cette page ne donne pas de tutoriel technique de retrait ou de wallet, car une procédure mal comprise peut créer plus de risque que de sécurité. Avant d’agir, il faut comprendre les frais, les réseaux, les adresses, les sauvegardes et tester uniquement avec de très petits montants.</p>
+
+    <h2>Fiscalité française crypto</h2>
+    <p>Pour un résident fiscal français, les cessions d’actifs numériques peuvent déclencher des obligations déclaratives et une imposition. Les comptes d’actifs numériques ouverts auprès d’acteurs étrangers peuvent aussi devoir être déclarés selon la situation.</p>
+    <p>La source prioritaire reste <a href="https://www.impots.gouv.fr/particulier/questions/comment-declarer-les-plus-ou-moins-values-sur-cessions-dactifs-numeriques" rel="noreferrer">impots.gouv.fr</a>. Pour organiser les justificatifs, consultez aussi <a href={withBase('declaration-documents')}>Déclaration</a> et <a href={withBase('fiscalite')}>Fiscalité</a>.</p>
+
+    <h2>N26, Revolut ou plateforme crypto séparée ?</h2>
+    <table><thead><tr><th>Solution</th><th>Intérêt possible</th><th>Limite principale</th></tr></thead><tbody>
+      <tr><td>Application bancaire ou néobanque</td><td>Simplicité d’accès, interface connue, petits montants possibles.</td><td>Frais, retrait, entité contractante, documents fiscaux et propriété opérationnelle à vérifier.</td></tr>
+      <tr><td>Plateforme crypto dédiée</td><td>Plus d’options, retraits souvent plus complets, exports parfois adaptés.</td><td>Complexité, risque plateforme, frais variables et nécessité de vérifier l’autorisation / enregistrement.</td></tr>
+      <tr><td>Wallet personnel</td><td>Contrôle direct si l’utilisateur est formé.</td><td>Perte définitive possible en cas d’erreur, sauvegarde fragile, suivi fiscal à tenir soi-même.</td></tr>
+    </tbody></table>
+    <p>Pour comparer les acteurs, commencez par la page <a href={withBase('plateformes')}>Plateformes</a> et par les listes officielles de l’AMF / ABE Info Service plutôt que par des influenceurs ou des prévisions de prix.</p>
+
+    <h2>Quand ne pas investir en crypto</h2>
+    <ul>
+      <li>Vous n’avez pas encore d’épargne de sécurité.</li>
+      <li>Vous avez besoin de l’argent dans moins de cinq ans.</li>
+      <li>Vous ne supportez pas l’idée d’une baisse de 50 %, 70 %, 90 % ou plus.</li>
+      <li>Vous achetez parce qu’un proche, un influenceur ou une hausse récente vous met la pression.</li>
+      <li>Vous ne savez pas expliquer la fiscalité, les frais, la conservation et le risque de perte.</li>
+    </ul>
+
+    <h2>Sources et suite du parcours</h2>
+    <p>Pour vérifier les règles et alertes, utilisez la page <a href={withBase('sources')}>Sources</a>, les pages AMF sur les crypto-actifs et impots.gouv.fr pour la déclaration. Pour décider si la crypto doit apparaître ou non dans votre plan, repassez par l’<a href={withBase('assistant')}>Assistant</a> avant tout achat.</p>
   </article>
 </BaseLayout>

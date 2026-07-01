@@ -6,7 +6,7 @@ order: 3
 
 <p class="lead">Les ETF sont le cœur possible d’une stratégie progressive 2026–2055 : ils permettent d’investir régulièrement dans un panier diversifié, avec des règles simples et des frais souvent lisibles. Ils restent toutefois des produits de marché : le capital n’est pas garanti, les performances passées ne garantissent pas les performances futures et le DIC/KID doit être lu avant achat.</p>
 
-<div class="callout retenir"><strong>À retenir</strong><p>Pour débuter, un ETF Monde bien compris peut souvent suffire. L’objectif n’est pas d’avoir le portefeuille le plus compliqué, mais une méthode répétable, contrôlable et compatible avec votre horizon.</p></div>
+<div class="callout a-retenir"><strong>À retenir</strong><p>Pour débuter, un ETF Monde bien compris peut souvent suffire. L’objectif n’est pas d’avoir le portefeuille le plus compliqué, mais une méthode répétable, contrôlable et compatible avec votre horizon.</p></div>
 
 ## Qu’est-ce qu’un ETF ?
 
@@ -115,7 +115,7 @@ Multiplier les ETF donne une impression de sophistication, mais peut créer :
 - une tentation de modifier la stratégie à chaque actualité ;
 - une fausse diversification si les mêmes grandes entreprises dominent plusieurs indices.
 
-<div class="callout retenir"><strong>À retenir</strong><p>Une stratégie simple, comprise et tenue pendant vingt ou trente ans vaut souvent mieux qu’une accumulation d’ETF choisie parce qu’elle paraît plus complète.</p></div>
+<div class="callout a-retenir"><strong>À retenir</strong><p>Une stratégie simple, comprise et tenue pendant vingt ou trente ans vaut souvent mieux qu’une accumulation d’ETF choisie parce qu’elle paraît plus complète.</p></div>
 
 ## ETF Monde en PEA
 

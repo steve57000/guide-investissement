@@ -1,0 +1,28 @@
+---
+import { cryptoAssets } from '../data/cryptoAssets';
+---
+<section class="crypto-risk-table" aria-labelledby="crypto-risk-table-title">
+  <div class="crypto-risk-table__intro">
+    <h2 id="crypto-risk-table-title">Tableau pédagogique des catégories crypto</h2>
+    <p>Ce tableau compare des catégories, pas des promesses de rendement. Il sert à limiter le risque, pas à pousser à l’achat.</p>
+  </div>
+  <div class="table-wrap crypto-risk-table__wrap" role="region" aria-label="Risques crypto par catégorie" tabindex="0">
+    <table class="crypto-risk-table__table">
+      <thead>
+        <tr><th>Actif / catégorie</th><th>Rôle possible</th><th>Risque principal</th><th>Allocation maximale pédagogique</th><th>À éviter si…</th><th>Source / vérification</th></tr>
+      </thead>
+      <tbody>
+        {cryptoAssets.map((asset) => (
+          <tr>
+            <td><strong>{asset.name}</strong><span class="verified">{asset.category} · vérifié le {asset.checkedAt}</span></td>
+            <td>{asset.roleInPortfolio}</td>
+            <td><strong>{asset.riskLevel}</strong><br />{asset.keyRisks.join(', ')}</td>
+            <td>{asset.maximumSuggestedAllocation}</td>
+            <td>{asset.avoidIf}</td>
+            <td><a href={asset.sourceUrl} rel="noreferrer">Source officielle</a><span class="verified">{asset.notes}</span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
