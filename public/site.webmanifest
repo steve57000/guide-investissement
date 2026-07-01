@@ -1,0 +1,21 @@
+{
+  "name": "Guide Investissement 2026–2055",
+  "short_name": "Guide Invest",
+  "start_url": "/guide-investissement/",
+  "scope": "/guide-investissement/",
+  "display": "standalone",
+  "background_color": "#061426",
+  "theme_color": "#061426",
+  "icons": [
+    {
+      "src": "/guide-investissement/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/guide-investissement/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -3,7 +3,12 @@ import '../styles/global.css';
 import { footerLinks, mainNav, understandSections } from '../data/navigation';
 const { title = 'Guide Investissement 2026–2055', description = 'Guide éducatif pour investir progressivement.' } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://steve57000.github.io';
 const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
+const withSite = (path = '') => new URL(withBase(path), `${siteUrl}/`).toString();
+const canonicalUrl = new URL(Astro.url.pathname, `${siteUrl}/`).toString();
+const ogImageUrl = withSite('og-image.png');
+const socialSquareUrl = withSite('social-square.png');
 const understandNav = understandSections.flatMap((section) => section.links);
 const normalizePath = (path = '/') => {
   const basePath = new URL(baseUrl, 'https://example.com').pathname;
@@ -20,6 +25,32 @@ const hasActiveUnderstandLink = understandNav.some(([href]) => isActive(href));
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#061426" />
+    <link rel="icon" href={withBase('favicon.ico')} sizes="any" />
+    <link rel="icon" type="image/png" sizes="16x16" href={withBase('favicon-16x16.png')} />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon-32x32.png')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={withBase('apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('site.webmanifest')} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Guide Investissement 2026–2055" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:secure_url" content={ogImageUrl} />
+    <meta property="og:image:alt" content="Guide Investissement 2026–2055" />
+    <meta property="og:image:width" content="1731" />
+    <meta property="og:image:height" content="909" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image" content={socialSquareUrl} />
+    <meta property="og:image:width" content="1254" />
+    <meta property="og:image:height" content="1254" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <title>{title}</title>
   </head>
   <body>
