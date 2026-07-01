@@ -53,6 +53,8 @@ const { mainNav, understandSections, footerLinks } = loadTs('src/data/navigation
 const { sitePages } = loadTs('src/data/sitePages.ts', ['sitePages']);
 const { sources } = loadTs('src/data/sources.ts', ['sources']);
 const { allocations } = loadTs('src/data/allocations.ts', ['allocations']);
+const etfDataPath = fromRoot('src/data/etfs.ts');
+const etfs = fs.existsSync(etfDataPath) ? loadTs('src/data/etfs.ts', ['etfs']).etfs : null;
 
 const pageHrefs = new Set(sitePages.map((page) => page.href));
 
@@ -157,6 +159,31 @@ function verifyInternalLinks() {
   }
 }
 
+
+function verifyEtfs() {
+  if (!etfs) return;
+  if (!Array.isArray(etfs) || etfs.length === 0) fail('ETF: src/data/etfs.ts existe mais ne contient aucun ETF.');
+
+  for (const etf of etfs ?? []) {
+    const label = etf?.id || etf?.name || 'ETF inconnu';
+    for (const field of ['name', 'issuer', 'checkedAt']) assertNonEmpty(etf?.[field], `ETF: champ "${field}" manquant ou vide pour "${label}".`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(etf?.checkedAt ?? '')) fail(`ETF: checkedAt invalide pour "${label}": "${etf?.checkedAt}".`);
+    const hasOfficialSource = typeof etf?.officialPageUrl === 'string' && /^https?:\/\//.test(etf.officialPageUrl) || typeof etf?.kidUrl === 'string' && /^https?:\/\//.test(etf.kidUrl);
+    const hasVerifyStatus = Object.values(etf ?? {}).some((value) => typeof value === 'string' && value.toLowerCase().includes('à vérifier'));
+    if (!hasOfficialSource && !hasVerifyStatus) fail(`ETF: "${label}" doit avoir au moins une source officielle ou un statut "à vérifier".`);
+  }
+}
+
+function verifyEtfPageLinks() {
+  const file = 'src/content/pages/etf.md';
+  if (!fs.existsSync(fromRoot(file))) return;
+  const content = read(file);
+  for (const match of content.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
+    const href = match[1];
+    if (/^\/(?!\/|#)/.test(href)) fail(`ETF: lien root-relative incompatible GitHub Pages dans ${file}: ${href}`);
+  }
+}
+
 function verifyWorkflow() {
   const workflow = read('.github/workflows/deploy.yml');
   if (workflow.includes('enablement: true')) fail('Workflow: .github/workflows/deploy.yml contient encore "enablement: true".');
@@ -169,6 +196,8 @@ verifySitePages();
 verifySources();
 verifyAllocations();
 verifyInternalLinks();
+verifyEtfs();
+verifyEtfPageLinks();
 verifyWorkflow();
 
 for (const warning of warnings) console.warn(`⚠️  ${warning}`);
