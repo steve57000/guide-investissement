@@ -5,6 +5,7 @@ order: 5
 ---
 
 <div class="callout a-retenir"><strong>À retenir — faits sourcés vs recommandation</strong><p>Les disponibilités ci-dessous reprennent les pages officielles consultées le 29 juin 2026. Les frais, pays de conservation, univers d’ETF et documents fiscaux peuvent changer : vérifier dans l’application et dans les conditions officielles avant d’ouvrir ou de transférer un compte.</p></div>
+<div class="callout conseil"><strong>Besoin d’une recommandation rapide ?</strong><p>Cette page est le comparatif complet et sourcé. Si Steve veut surtout décider quoi faire maintenant selon son cas — PEA, N26, Revolut, Trade Republic ou courtier français — il peut lire la page d’aide à la décision : <a href="../choisir-plateforme">Choisir plateforme</a>.</p></div>
 
 ## Badges de lecture
 

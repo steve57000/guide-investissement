@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DataWarning from '../components/DataWarning.astro';
 import PlatformDecisionTable from '../components/PlatformDecisionTable.astro';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 ---
 <BaseLayout title="Choisir sa plateforme | Guide Investissement 2026–2055" description="Comparateur pédagogique pour choisir la plateforme principale de Steve entre banques, courtiers, apps d’investissement et plateformes avancées.">
   <article class="content-page prose">
@@ -10,10 +12,26 @@ import PlatformDecisionTable from '../components/PlatformDecisionTable.astro';
     <p class="lead">Le choix de la plateforme compte parce qu’il détermine l’enveloppe fiscale disponible, les ETF accessibles, la simplicité de suivi et la qualité des documents à conserver. Une belle application ne suffit pas : Steve doit choisir un outil compatible avec son objectif long terme.</p>
     <DataWarning context="Données variables — plateformes" />
 
+    <div class="callout conseil"><strong>Voir le comparatif complet</strong><p>Cette page aide Steve à décider rapidement. Pour le tableau détaillé, les sources et les limites par plateforme, consulter aussi <a href={withBase('plateformes')}>Plateformes</a>.</p></div>
+
     <div class="callout a-retenir"><strong>Principe central</strong><p>La meilleure plateforme dépend de l’enveloppe, pas seulement de l’application. Pour le cœur long terme, on compare d’abord PEA, CTO, ETF disponibles et fiscalité ; l’ergonomie vient ensuite.</p></div>
 
     <h2>Comparatif d’aide à la décision</h2>
     <PlatformDecisionTable />
+
+    <h2>Parcours guidé selon le besoin</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Si Steve veut…</th><th>Priorité</th><th>Décision raisonnable</th><th>Vérification obligatoire</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Un PEA pour le cœur long terme</strong></td><td>Enveloppe fiscale, ETF éligibles, documents</td><td>Comparer d’abord Trade Republic, BoursoBank, Fortuneo, Bourse Direct, N26 et XTB sur leur PEA.</td><td>Brochure tarifaire officielle, ETF disponibles, aide fiscale/IFU et conditions d’éligibilité.</td></tr>
+          <tr><td><strong>Garder N26</strong></td><td>Simplicité bancaire + investissement</td><td>Le garder comme candidat, mais ne pas conclure avant comparaison du PEA et des documents fiscaux.</td><td>Univers PEA, conditions Upvest, frais exacts et exports annuels.</td></tr>
+          <tr><td><strong>Utiliser Revolut</strong></td><td>Découverte, petits montants, application mobile</td><td>Usage satellite possible ; éviter d’en faire le cœur long terme si le PEA n’est pas disponible officiellement.</td><td>Comptes/produits étrangers à déclarer, frais de change, spread, aide fiscale.</td></tr>
+          <tr><td><strong>Automatiser des versements</strong></td><td>Discipline mensuelle</td><td>Choisir seulement si l’automatisation porte sur des supports simples et compatibles avec l’objectif.</td><td>Coût des ordres programmés, ETF fractionnés ou non, conditions de sortie.</td></tr>
+          <tr><td><strong>Avoir un outil avancé</strong></td><td>Large choix et contrôle</td><td>Interactive Brokers ou XTB peuvent être étudiés, mais Steve doit accepter plus de complexité.</td><td>Fiscalité, rapports, produits à levier à éviter, aide déclarative.</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <h2>Recommandation débutant pour Steve</h2>
     <div class="callout conseil"><strong>Conseil</strong><p>Pour commencer proprement, Steve devrait choisir une plateforme principale orientée <strong>PEA ETF</strong>, puis garder éventuellement une application simple comme N26 ou Revolut pour apprendre avec de petits montants. La plateforme principale doit gagner sur la fiscalité, les documents et la disponibilité des ETF, pas seulement sur le design mobile.</p></div>
