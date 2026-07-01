@@ -58,3 +58,31 @@ Le workflow `.github/workflows/deploy.yml` se déclenche à chaque push sur `mai
 URL finale attendue : https://steve57000.github.io/guide-investissement/
 
 > Le contenu est éducatif et ne constitue pas un conseil financier personnalisé. Les pages prévoient des zones de sources officielles avant ajout de données chiffrées.
+
+## Contrôles qualité
+
+Le projet contient des scripts de vérification pour limiter les incohérences lorsque le guide s’enrichit :
+
+```bash
+npm run verify:wizard
+```
+
+Vérifie la cohérence de l’assistant guidé et de ses données.
+
+```bash
+npm run verify:site
+```
+
+Vérifie globalement le site : navigation, pages référencées, sources, allocations, liens internes incompatibles avec le `base` GitHub Pages et workflow de déploiement.
+
+```bash
+npm run test
+```
+
+Lance les contrôles qualité automatisés (`verify:wizard` puis `verify:site`).
+
+```bash
+npm run build
+```
+
+Génère le site statique Astro et permet de valider que les pages se compilent correctement avant déploiement.
