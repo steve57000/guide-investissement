@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AllocationTable from '../components/AllocationTable.astro';
+import PrintButton from '../components/PrintButton.astro';
 const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 ---
@@ -12,7 +13,7 @@ const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 
     <div class="callout a-retenir"><strong>À retenir — cadre éducatif</strong><p>Cette page propose une méthode pédagogique pour Steve. Elle ne constitue pas un conseil financier personnalisé réglementé : Steve doit vérifier sa situation, sa fiscalité, les documents officiels des plateformes et, si nécessaire, consulter un professionnel.</p></div>
 
-    <div class="actions"><a class="btn secondary" href={withBase('tableau-de-bord')}>Ouvrir le tableau de bord</a></div>
+    <div class="actions"><a class="btn secondary" href={withBase('tableau-de-bord')}>Ouvrir le tableau de bord</a><a class="btn secondary" href={withBase('export-pdf')}>Exporter en PDF</a><PrintButton /></div>
 
     <p><span class="badge badge-beginner">Débutant</span> <span class="badge badge-pea">PEA</span> <span class="badge">ETF</span> <span class="badge badge-crypto">Crypto</span> <span class="badge badge-check">Long terme</span></p>
 

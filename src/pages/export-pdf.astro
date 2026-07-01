@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PrintButton from '../components/PrintButton.astro';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
+const pagesToExport = [
+  ['','Accueil'],
+  ['commencer-50','Commencer avec 50 €/mois'],
+  ['plan-action','Plan d’action'],
+  ['tableau-de-bord','Tableau de bord'],
+  ['assistant','Assistant'],
+  ['plateformes','Plateformes'],
+  ['choisir-plateforme','Choisir plateforme'],
+  ['simulations','Simulations'],
+  ['portefeuille-steve','Portefeuille Steve'],
+  ['journal-investissement','Journal d’investissement'],
+  ['sauvegarde-donnees','Sauvegarde'],
+  ['fiscalite','Fiscalité'],
+  ['sources','Sources'],
+];
+---
+<BaseLayout title="Exporter le guide en PDF | Guide Investissement 2026–2055" description="Mode impression et export PDF du Guide Investissement depuis le navigateur, sans génération serveur.">
+  <article class="content-page prose export-pdf-page">
+    <p class="eyebrow">Archive personnelle</p>
+    <h1>Exporter le guide en PDF</h1>
+    <p class="lead">Le site reste la version principale du guide : c’est lui qui contient les pages à jour, les liens, les tableaux et les outils interactifs.</p>
+    <div class="callout a-retenir"><strong>À retenir</strong><p>Le PDF sert surtout à archiver une version, relire hors ligne ou conserver une copie de travail. L’export se fait depuis l’impression du navigateur : aucun PDF n’est généré côté serveur.</p></div>
+
+    <div class="actions print-actions">
+      <PrintButton />
+    </div>
+
+    <h2>Comment exporter une page</h2>
+    <ol>
+      <li>Ouvrir la page importante du guide.</li>
+      <li>Cliquer sur <strong>Imprimer cette page</strong> quand le bouton est présent, ou utiliser le menu du navigateur.</li>
+      <li>Choisir <strong>Enregistrer au format PDF</strong> comme destination d’impression.</li>
+      <li>Vérifier l’aperçu, notamment les tableaux, puis enregistrer le fichier.</li>
+    </ol>
+
+    <h2>Pages conseillées à exporter</h2>
+    <p>Exportez uniquement les pages utiles à votre suivi personnel, puis revenez régulièrement au site pour consulter la version la plus récente.</p>
+    <div class="export-link-grid content-wide">
+      {pagesToExport.map(([href, label]) => <a class="btn secondary" href={withBase(href)}>{label}</a>)}
+    </div>
+  </article>
+</BaseLayout>
