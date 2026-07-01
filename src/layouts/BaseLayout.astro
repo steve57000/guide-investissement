@@ -4,7 +4,7 @@ const { title = 'Guide Investissement 2026–2055', description = 'Guide éducat
 const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 const mainNav = [['','Accueil'],['commencer-50','50 €/mois'],['plan-action','Plan d’action'],['assistant','Assistant'],['tableau-de-bord','Tableau de bord'],['simulations','Simulations'],['plateformes','Plateformes'],['choisir-plateforme','Choisir plateforme']];
-const understandNav = [['placements','Placements'],['etf','ETF'],['crypto','Crypto'],['reequilibrage','Rééquilibrage'],['objectifs','Objectifs'],['scenarios-crise','Crises'],['strategie-sortie','Quand vendre'],['suivi-portefeuille','Suivi portefeuille'],['journal-investissement','Journal'],['sauvegarde-donnees','Sauvegarde'],['fiscalite','Fiscalité'],['declaration-documents','Déclaration'],['frais','Frais'],['sources','Sources'],['portefeuille-steve','Portefeuille Steve'],['export-pdf','Export PDF']];
+const understandNav = [['faq','FAQ'],['placements','Placements'],['etf','ETF'],['crypto','Crypto'],['reequilibrage','Rééquilibrage'],['objectifs','Objectifs'],['scenarios-crise','Crises'],['strategie-sortie','Quand vendre'],['suivi-portefeuille','Suivi portefeuille'],['journal-investissement','Journal'],['sauvegarde-donnees','Sauvegarde'],['fiscalite','Fiscalité'],['declaration-documents','Déclaration'],['frais','Frais'],['sources','Sources'],['portefeuille-steve','Portefeuille Steve'],['export-pdf','Export PDF']];
 const normalizePath = (path = '/') => {
   const basePath = new URL(baseUrl, 'https://example.com').pathname;
   let current = path.startsWith(basePath) ? path.slice(basePath.length) : path.replace(/^\/+/, '');
