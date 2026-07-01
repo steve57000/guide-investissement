@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 ---
 <BaseLayout title="Scénarios de crise | Guide Investissement 2026–2055" description="Méthode pédagogique pour réagir aux baisses de marché, pertes de revenus, besoins d’argent, frais de plateforme et changements fiscaux.">
   <article class="content-page prose">
@@ -55,7 +57,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </table>
     </div>
 
-    <div class="callout conseil"><strong>Conseil</strong><p>Avant toute action, écrire en une phrase la raison de la décision, l’alternative envisagée et le risque principal. Si la phrase est floue, attendre 24 à 48 heures peut éviter une décision impulsive. La page <a href={`${import.meta.env.BASE_URL}strategie-sortie`}>Quand vendre ou sécuriser ?</a> aide à distinguer vente panique et arbitrage méthodique.</p></div>
+    <div class="callout conseil"><strong>Conseil</strong><p>Avant toute action, écrire en une phrase la raison de la décision, l’alternative envisagée et le risque principal. Si la phrase est floue, attendre 24 à 48 heures peut éviter une décision impulsive. La page <a href={withBase('strategie-sortie')}>Quand vendre ou sécuriser ?</a> aide à distinguer vente panique et arbitrage méthodique.</p></div>
     <div class="callout attention"><strong>Cadre pédagogique</strong><p>Ces scénarios ne constituent pas un conseil financier personnalisé. Ils servent à préparer une méthode prudente à adapter à la situation, aux objectifs, aux revenus et à la fiscalité de chacun.</p></div>
   </article>
 </BaseLayout>

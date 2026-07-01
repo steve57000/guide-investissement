@@ -3,8 +3,15 @@ import '../styles/global.css';
 const { title = 'Guide Investissement 2026–2055', description = 'Guide éducatif pour investir progressivement.' } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
-const mainNav = [['','Accueil'],['commencer-50','50 €/mois'],['plan-action','Plan d’action'],['assistant','Assistant'],['tableau-de-bord','Tableau de bord'],['simulations','Simulations'],['plateformes','Plateformes'],['choisir-plateforme','Choisir plateforme']];
-const understandNav = [['faq','FAQ'],['placements','Placements'],['etf','ETF'],['crypto','Crypto'],['reequilibrage','Rééquilibrage'],['objectifs','Objectifs'],['scenarios-crise','Crises'],['strategie-sortie','Quand vendre'],['suivi-portefeuille','Suivi portefeuille'],['journal-investissement','Journal'],['sauvegarde-donnees','Sauvegarde'],['fiscalite','Fiscalité'],['declaration-documents','Déclaration'],['frais','Frais'],['sources','Sources'],['portefeuille-steve','Portefeuille Steve'],['export-pdf','Export PDF']];
+const mainNav = [['','Accueil'],['commencer-50','Commencer'],['plan-action','Plan d’action'],['assistant','Assistant'],['tableau-de-bord','Tableau de bord'],['simulations','Simulations'],['plateformes','Plateformes']];
+const understandSections = [
+  { title: 'Bases', links: [['faq','FAQ'],['placements','Placements'],['etf','ETF'],['crypto','Crypto']] },
+  { title: 'Méthode', links: [['reequilibrage','Rééquilibrage'],['scenarios-crise','Crises'],['strategie-sortie','Quand vendre'],['objectifs','Objectifs']] },
+  { title: 'Suivi', links: [['suivi-portefeuille','Suivi portefeuille'],['journal-investissement','Journal'],['sauvegarde-donnees','Sauvegarde']] },
+  { title: 'Fiscalité', links: [['fiscalite','Fiscalité'],['declaration-documents','Déclaration'],['frais','Frais'],['sources','Sources']] },
+  { title: 'Personnel', links: [['portefeuille-steve','Portefeuille Steve'],['export-pdf','Export PDF']] },
+];
+const understandNav = understandSections.flatMap((section) => section.links);
 const normalizePath = (path = '/') => {
   const basePath = new URL(baseUrl, 'https://example.com').pathname;
   let current = path.startsWith(basePath) ? path.slice(basePath.length) : path.replace(/^\/+/, '');
@@ -37,12 +44,17 @@ const hasActiveUnderstandLink = understandNav.some(([href]) => isActive(href));
             return <a class:list={[{ 'nav-active': active }]} aria-current={active ? 'page' : undefined} href={withBase(href)}>{label}</a>;
           })}
           <div class:list={["nav-group", { "nav-group-active": hasActiveUnderstandLink }]}>
-            <button class="nav-group-button" type="button" aria-expanded="false">Comprendre</button>
-            <div class="nav-dropdown">
-              {understandNav.map(([href,label]) => {
-                const active = isActive(href);
-                return <a class:list={[{ 'nav-active': active }]} aria-current={active ? 'page' : undefined} href={withBase(href)}>{label}</a>;
-              })}
+            <button class="nav-group-button" type="button" aria-expanded="false" aria-controls="understand-navigation">Comprendre</button>
+            <div class="nav-dropdown" id="understand-navigation">
+              {understandSections.map((section) => (
+                <section class="nav-dropdown-section" aria-label={section.title}>
+                  <p class="nav-dropdown-title">{section.title}</p>
+                  {section.links.map(([href,label]) => {
+                    const active = isActive(href);
+                    return <a class:list={[{ 'nav-active': active }]} aria-current={active ? 'page' : undefined} href={withBase(href)}>{label}</a>;
+                  })}
+                </section>
+              ))}
             </div>
           </div>
         </div>
