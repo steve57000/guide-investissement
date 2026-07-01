@@ -1,0 +1,49 @@
+---
+import { siteCategories, sitePages } from '../data/sitePages';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
+const searchPages = sitePages.map((page) => ({ ...page, url: withBase(page.href) }));
+---
+<section class="site-search" data-site-search>
+  <div class="search-panel card">
+    <label for="site-search-input">Rechercher dans le guide</label>
+    <input id="site-search-input" class="search-input" type="search" placeholder="ETF, fiscalité, frais, journal…" autocomplete="off" data-search-input />
+    <div class="category-filters" role="group" aria-label="Filtrer par catégorie">
+      <button type="button" class="category-filter is-active" data-category="">Toutes</button>
+      {siteCategories.map((category) => <button type="button" class="category-filter" data-category={category}>{category}</button>)}
+    </div>
+  </div>
+  <p class="search-count muted" data-search-count></p>
+  <div class="search-results" data-search-results></div>
+  <p class="search-empty card" hidden data-search-empty>Aucun résultat. Essayez un autre mot-clé ou retirez le filtre de catégorie.</p>
+</section>
+<script define:vars={{ searchPages }}>
+  const root = document.querySelector('[data-site-search]');
+  if (root) {
+    const input = root.querySelector('[data-search-input]');
+    const results = root.querySelector('[data-search-results]');
+    const empty = root.querySelector('[data-search-empty]');
+    const count = root.querySelector('[data-search-count]');
+    const buttons = Array.from(root.querySelectorAll('[data-category]'));
+    let activeCategory = '';
+    const normalize = (value) => String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const render = () => {
+      const query = normalize(input.value).trim();
+      const matches = searchPages.filter((page) => {
+        const categoryMatch = !activeCategory || page.category === activeCategory;
+        const haystack = normalize([page.title, page.category, page.description, ...(page.keywords || [])].join(' '));
+        return categoryMatch && (!query || haystack.includes(query));
+      });
+      results.innerHTML = matches.map((page) => `<a class="search-result-card" href="${page.url}"><span>${page.category}</span><strong>${page.title}</strong><p>${page.description}</p></a>`).join('');
+      empty.hidden = matches.length > 0;
+      count.textContent = `${matches.length} résultat${matches.length > 1 ? 's' : ''}`;
+    };
+    input.addEventListener('input', render);
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      activeCategory = button.dataset.category || '';
+      buttons.forEach((item) => item.classList.toggle('is-active', item === button));
+      render();
+    }));
+    render();
+  }
+</script>

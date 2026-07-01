@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteCategories, sitePages } from '../data/sitePages';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
+---
+<BaseLayout title="Plan du site | Guide Investissement 2026–2055" description="Toutes les pages du guide d’investissement classées par catégories.">
+  <article class="content-page sitemap-page">
+    <p class="eyebrow">Navigation</p>
+    <h1>Plan du site</h1>
+    <p class="lead">Retrouvez toutes les pages du Guide Investissement regroupées par catégories pour accéder rapidement à la bonne ressource.</p>
+    <div class="sitemap-grid">
+      {siteCategories.map((category) => (
+        <section class="sitemap-section card" aria-labelledby={`sitemap-${category}`}>
+          <h2 id={`sitemap-${category}`}>{category}</h2>
+          <div class="sitemap-links">
+            {sitePages.filter((page) => page.category === category).map((page) => (
+              <a class="sitemap-link" href={withBase(page.href)}>
+                <strong>{page.title}</strong>
+                <span>{page.description}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </article>
+</BaseLayout>

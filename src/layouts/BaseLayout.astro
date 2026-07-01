@@ -1,16 +1,9 @@
 ---
 import '../styles/global.css';
+import { footerLinks, mainNav, understandSections } from '../data/navigation';
 const { title = 'Guide Investissement 2026–2055', description = 'Guide éducatif pour investir progressivement.' } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
-const mainNav = [['','Accueil'],['commencer-50','Commencer'],['plan-action','Plan d’action'],['assistant','Assistant'],['tableau-de-bord','Tableau de bord'],['simulations','Simulations'],['plateformes','Plateformes']];
-const understandSections = [
-  { title: 'Bases', links: [['faq','FAQ'],['placements','Placements'],['etf','ETF'],['crypto','Crypto']] },
-  { title: 'Méthode', links: [['reequilibrage','Rééquilibrage'],['scenarios-crise','Crises'],['strategie-sortie','Quand vendre'],['objectifs','Objectifs']] },
-  { title: 'Suivi', links: [['suivi-portefeuille','Suivi portefeuille'],['journal-investissement','Journal'],['sauvegarde-donnees','Sauvegarde']] },
-  { title: 'Fiscalité', links: [['fiscalite','Fiscalité'],['declaration-documents','Déclaration'],['frais','Frais'],['sources','Sources']] },
-  { title: 'Personnel', links: [['portefeuille-steve','Portefeuille Steve'],['export-pdf','Export PDF']] },
-];
 const understandNav = understandSections.flatMap((section) => section.links);
 const normalizePath = (path = '/') => {
   const basePath = new URL(baseUrl, 'https://example.com').pathname;
@@ -61,7 +54,14 @@ const hasActiveUnderstandLink = understandNav.some(([href]) => isActive(href));
       </div>
     </nav>
     <main class="container"><slot /></main>
-    <footer class="footer"><div class="container">Contenu éducatif uniquement : ne constitue pas un conseil financier personnalisé. Sources à compléter avec documents officiels avant toute décision.</div></footer>
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>Contenu éducatif uniquement : ne constitue pas un conseil financier personnalisé. Sources à compléter avec documents officiels avant toute décision.</p>
+        <nav class="footer-links" aria-label="Liens utiles">
+          {footerLinks.map(([href, label]) => <a href={withBase(href)}>{label}</a>)}
+        </nav>
+      </div>
+    </footer>
     <script is:inline>
       const navRoot = document.querySelector('[data-main-nav]');
       const navToggle = document.querySelector('[data-nav-toggle]');

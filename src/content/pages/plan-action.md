@@ -14,7 +14,7 @@ order: 9
   <span class="badge badge-annual">Annuel</span>
 </div>
 
-<div class="actions"><a class="btn secondary" href="/guide-investissement/faq">Lire la FAQ</a><a class="btn secondary" href="/guide-investissement/tableau-de-bord">Ouvrir le tableau de bord</a><a class="btn secondary" href="/guide-investissement/sauvegarde-donnees">Sauvegarder les données locales</a></div>
+<div class="actions"><a class="btn secondary" href="../faq">Lire la FAQ</a><a class="btn secondary" href="../tableau-de-bord">Ouvrir le tableau de bord</a><a class="btn secondary" href="../sauvegarde-donnees">Sauvegarder les données locales</a></div>
 
 ## Étape 1 — Faire le point avant d’investir
 
@@ -128,4 +128,4 @@ Un krach fait partie des scénarios possibles quand on investit en actions ou en
 
 ## Étape 9 — Savoir vendre ou sécuriser
 
-Avant une vente, vérifier la méthode dédiée : [Quand vendre ou sécuriser ?](/guide-investissement/strategie-sortie). Une décision rationnelle doit préciser le montant, l’horizon, les frais, la fiscalité et le risque évité. Noter aussi la décision dans le [journal d’investissement](/guide-investissement/journal-investissement) pour conserver la raison, les frais et les documents associés.
+Avant une vente, vérifier la méthode dédiée : [Quand vendre ou sécuriser ?](../strategie-sortie). Une décision rationnelle doit préciser le montant, l’horizon, les frais, la fiscalité et le risque évité. Noter aussi la décision dans le [journal d’investissement](../journal-investissement) pour conserver la raison, les frais et les documents associés.
