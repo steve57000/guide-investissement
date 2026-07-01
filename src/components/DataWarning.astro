@@ -1,0 +1,8 @@
+---
+type Props = { context?: string };
+const { context = 'Données variables' } = Astro.props;
+---
+<div class="callout attention data-warning">
+  <strong>{context}</strong>
+  <p>Les frais, conditions, fiscalité, ETF disponibles et documents réglementaires peuvent changer. Vérifier la source officielle avant toute décision. Les simulations et allocations du guide sont pédagogiques, non garanties et ne constituent pas un conseil personnalisé.</p>
+</div>

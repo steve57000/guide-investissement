@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DataWarning from '../components/DataWarning.astro';
+import SourceList from '../components/SourceList.astro';
+---
+<BaseLayout title="Méthodologie | Guide Investissement 2026–2055" description="Méthode éditoriale du guide : hypothèses, sources, limites, données variables et vérifications à effectuer avant d’agir.">
+  <article class="content-page prose">
+    <p class="eyebrow">Fiabilité du guide</p>
+    <h1>Méthodologie</h1>
+    <p class="lead">Cette page explique comment le guide construit ses hypothèses, choisit ses sources et distingue pédagogie, données vérifiées et décisions personnelles.</p>
+    <DataWarning context="Données variables — méthode" />
+
+    <h2>1. Comment les hypothèses sont construites</h2>
+    <p>Les hypothèses du site servent à comparer des trajectoires. Elles simplifient volontairement la réalité : versements réguliers, rendements annualisés, absence possible de fiscalité, de frais ou d’inflation selon les tableaux. Elles doivent être lues comme des scénarios de travail, pas comme une prévision.</p>
+
+    <h2>2. Rendement historique, hypothèse et promesse</h2>
+    <ul>
+      <li><strong>Rendement historique</strong> : observation du passé, utile pour comprendre un ordre de grandeur, mais non reproductible mécaniquement.</li>
+      <li><strong>Hypothèse</strong> : chiffre choisi pour tester une trajectoire pédagogique.</li>
+      <li><strong>Promesse</strong> : engagement de résultat. Le guide n’en formule aucune.</li>
+    </ul>
+
+    <h2>3. Comment les sources sont choisies</h2>
+    <p>Les règles générales privilégient les sources officielles : AMF, Service-Public.fr, impots.gouv.fr et Banque de France. Les informations de plateforme viennent des pages officielles des acteurs concernés. Les informations sur ETF doivent être confirmées par l’émetteur et le DIC/KID le plus récent.</p>
+
+    <h2>4. Fréquence de mise à jour recommandée</h2>
+    <ul>
+      <li>Fiscalité : au minimum chaque année pendant la campagne déclarative et après chaque loi de finances.</li>
+      <li>Plateformes et frais : trimestriellement ou avant ouverture/transfert de compte.</li>
+      <li>ETF et documents réglementaires : avant chaque achat, puis lors des revues de portefeuille.</li>
+      <li>Simulations : à chaque changement de budget, horizon, frais ou fiscalité.</li>
+    </ul>
+
+    <h2>5. Pourquoi le site reste éducatif</h2>
+    <p>Le guide aide Steve à poser les bonnes questions, conserver les bons documents et éviter les décisions impulsives. Il ne connaît pas toutes les contraintes personnelles, fiscales, patrimoniales ou professionnelles de l’utilisateur. Il ne remplace donc pas une vérification officielle ni un accompagnement professionnel si la situation le justifie.</p>
+
+    <h2>6. Limites du guide</h2>
+    <ul>
+      <li>Les plateformes peuvent modifier leurs frais, pays de conservation, documents fiscaux et produits disponibles.</li>
+      <li>La fiscalité peut changer et dépend de la situation personnelle.</li>
+      <li>Les marchés peuvent baisser durablement ; aucune allocation ne garantit un capital final.</li>
+      <li>Les outils localStorage restent locaux au navigateur et doivent être sauvegardés.</li>
+    </ul>
+
+    <h2>7. Ce que Steve doit vérifier avant d’agir</h2>
+    <ul class="checklist">
+      <li>Sa résidence fiscale, ses obligations déclaratives et les formulaires de l’année.</li>
+      <li>Les frais officiels, conditions contractuelles, IFU ou aides fiscales de la plateforme.</li>
+      <li>L’éligibilité PEA, les frais, l’indice suivi et le DIC/KID de chaque ETF.</li>
+      <li>La compatibilité de toute allocation avec son budget, son horizon et sa tolérance au risque.</li>
+      <li>La présence d’une épargne de sécurité avant d’augmenter l’investissement risqué.</li>
+    </ul>
+
+    <h2>Sources structurantes</h2>
+    <SourceList category="Régulation" />
+    <SourceList category="Fiscalité et enveloppes" />
+  </article>
+</BaseLayout>

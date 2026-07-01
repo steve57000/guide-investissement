@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DataWarning from '../components/DataWarning.astro';
 import CryptoAllocationTable from '../components/CryptoAllocationTable.astro';
 ---
 <BaseLayout title="Cryptomonnaies | Guide Investissement 2026–2055" description="Page éducative et prudente sur Bitcoin, Ethereum, la sécurité, la fiscalité française générale et la place limitée de la crypto dans un portefeuille.">
@@ -7,6 +8,7 @@ import CryptoAllocationTable from '../components/CryptoAllocationTable.astro';
     <p class="eyebrow">Guide Investissement 2026–2055</p>
     <h1>Cryptomonnaies</h1>
     <p class="muted">Bitcoin, Ethereum, conservation, fiscalité française générale et règles de prudence pour une petite poche satellite.</p>
+    <DataWarning context="Données variables — crypto" />
 
     <div class="callout attention"><strong>Attention — risque très élevé</strong><p>Les crypto-actifs peuvent perdre une grande partie de leur valeur, devenir illiquides ou être perdus définitivement en cas d’erreur de conservation. Cette page est pédagogique, pas une recommandation financière personnalisée.</p></div>
 

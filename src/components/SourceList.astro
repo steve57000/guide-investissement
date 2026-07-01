@@ -1,0 +1,37 @@
+---
+import type { Source } from '../data/sources';
+import { sources as defaultSources } from '../data/sources';
+
+type Props = { sources?: Source[]; category?: string };
+const { sources = defaultSources, category } = Astro.props;
+const now = new Date('2026-07-01T00:00:00Z');
+const filtered = category ? sources.filter((source) => source.category === category) : sources;
+const categories = [...new Set(filtered.map((source) => source.category))];
+const daysSince = (date: string) => Math.floor((now.getTime() - new Date(`${date}T00:00:00Z`).getTime()) / 86_400_000);
+const needsReview = (source: Source) => daysSince(source.checkedAt) > 180 || ['Plateformes', 'Émetteurs ETF', 'Documents réglementaires', 'Fiscalité et enveloppes'].includes(source.category) || /avant|trimestrielle|loi de finances/i.test(source.refreshFrequency);
+---
+<div class="source-list">
+  {categories.map((sourceCategory) => (
+    <section class="source-category" aria-labelledby={`sources-${sourceCategory.toLowerCase().replaceAll(' ', '-')}`}>
+      <h2 id={`sources-${sourceCategory.toLowerCase().replaceAll(' ', '-')}`}>{sourceCategory}</h2>
+      <div class="source-grid">
+        {filtered.filter((source) => source.category === sourceCategory).map((source) => (
+          <article class="source-card">
+            <div class="source-card__header">
+              <h3><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></h3>
+              <span class={`badge reliability reliability-${source.reliabilityLevel}`}>{source.reliabilityLevel}</span>
+            </div>
+            <p class="muted"><strong>{source.organization}</strong></p>
+            <p>{source.usedFor}</p>
+            <dl>
+              <div><dt>Vérifiée le</dt><dd>{source.checkedAt}</dd></div>
+              <div><dt>Révision</dt><dd>{source.refreshFrequency}</dd></div>
+            </dl>
+            {needsReview(source) && <span class="badge badge-check">À revérifier</span>}
+            <p class="muted small">{source.notes}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+</div>

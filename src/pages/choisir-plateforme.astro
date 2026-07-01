@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DataWarning from '../components/DataWarning.astro';
 import PlatformDecisionTable from '../components/PlatformDecisionTable.astro';
 ---
 <BaseLayout title="Choisir sa plateforme | Guide Investissement 2026–2055" description="Comparateur pédagogique pour choisir la plateforme principale de Steve entre banques, courtiers, apps d’investissement et plateformes avancées.">
@@ -7,6 +8,7 @@ import PlatformDecisionTable from '../components/PlatformDecisionTable.astro';
     <p class="eyebrow">Guide Investissement 2026–2055</p>
     <h1>Choisir sa plateforme</h1>
     <p class="lead">Le choix de la plateforme compte parce qu’il détermine l’enveloppe fiscale disponible, les ETF accessibles, la simplicité de suivi et la qualité des documents à conserver. Une belle application ne suffit pas : Steve doit choisir un outil compatible avec son objectif long terme.</p>
+    <DataWarning context="Données variables — plateformes" />
 
     <div class="callout a-retenir"><strong>Principe central</strong><p>La meilleure plateforme dépend de l’enveloppe, pas seulement de l’application. Pour le cœur long terme, on compare d’abord PEA, CTO, ETF disponibles et fiscalité ; l’ergonomie vient ensuite.</p></div>
 
