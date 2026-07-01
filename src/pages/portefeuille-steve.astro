@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DataWarning from '../components/DataWarning.astro';
 import AllocationTable from '../components/AllocationTable.astro';
 import PrintButton from '../components/PrintButton.astro';
 const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
@@ -10,6 +11,7 @@ const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
     <p class="eyebrow">Guide Investissement 2026–2055</p>
     <h1>Portefeuille Steve</h1>
     <p class="muted">Plan éducatif 2026–2055 pour démarrer progressivement avec 50 € par mois, un cœur ETF Monde et une petite poche crypto maîtrisée.</p>
+    <DataWarning context="Données variables — allocation personnelle" />
 
     <div class="callout a-retenir"><strong>À retenir — cadre éducatif</strong><p>Cette page propose une méthode pédagogique pour Steve. Elle ne constitue pas un conseil financier personnalisé réglementé : Steve doit vérifier sa situation, sa fiscalité, les documents officiels des plateformes et, si nécessaire, consulter un professionnel.</p></div>
 

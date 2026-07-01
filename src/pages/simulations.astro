@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DataWarning from '../components/DataWarning.astro';
 import Simulator from '../components/Simulator.astro';
 import SimulationTables from '../components/SimulationTables.astro';
 import PrintButton from '../components/PrintButton.astro';
@@ -10,6 +11,7 @@ import PrintButton from '../components/PrintButton.astro';
     <h1>Simulations patrimoniales</h1>
     <div class="actions"><PrintButton /></div>
     <p class="lead">Cette page transforme les versements mensuels en projections lisibles : comparer des efforts d’épargne, visualiser des scénarios prudent, équilibré et dynamique, puis relier les chiffres à des objectifs patrimoniaux concrets.</p>
+    <DataWarning context="Données variables — simulations" />
 
     <div class="dashboard-cards">
       <div class="card"><span class="badge badge-prudent">Prudent</span><h3>4 % annuel</h3><p class="muted">Hypothèse nominale pédagogique pour tester une trajectoire modérée.</p></div>

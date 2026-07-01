@@ -3,6 +3,8 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AllocationTable from '../components/AllocationTable.astro';
 import PrintButton from '../components/PrintButton.astro';
+import SourceList from '../components/SourceList.astro';
+import DataWarning from '../components/DataWarning.astro';
 export async function getStaticPaths() {
   const pages = await getCollection('pages');
   return pages
@@ -14,14 +16,17 @@ const { Content } = await render(page);
 const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 const printablePages = ['plan-action', 'fiscalite', 'sources'];
+const dataWarningPages = ['fiscalite', 'plateformes', 'etf', 'frais', 'plan-action'];
 ---
 <BaseLayout title={`${page.data.title} | Guide Investissement 2026–2055`} description={page.data.description}>
   <article class="content-page prose">
     <p class="eyebrow">Guide Investissement 2026–2055</p>
     <h1>{page.data.title}</h1>
     <p class="muted">{page.data.description}</p>
+    {dataWarningPages.includes(page.id) && <DataWarning context="Données variables" />}
     {printablePages.includes(page.id) && <div class="actions"><PrintButton />{page.id === 'sources' && <a class="btn secondary" href={withBase('export-pdf')}>Exporter le guide en PDF</a>}</div>}
     <Content />
+    {page.id === 'sources' && <SourceList />}
     {page.id === 'commencer-50' && <><h2>Allocations officielles centralisées</h2><AllocationTable /></>}
     {page.id === 'plan-action' && <><h2>Allocation de départ officielle</h2><AllocationTable /></>}
   </article>
