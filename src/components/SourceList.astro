@@ -4,7 +4,7 @@ import { sources as defaultSources } from '../data/sources';
 
 type Props = { sources?: Source[]; category?: string };
 const { sources = defaultSources, category } = Astro.props;
-const now = new Date('2026-07-01T00:00:00Z');
+const now = new Date();
 const filtered = category ? sources.filter((source) => source.category === category) : sources;
 const categories = [...new Set(filtered.map((source) => source.category))];
 const daysSince = (date: string) => Math.floor((now.getTime() - new Date(`${date}T00:00:00Z`).getTime()) / 86_400_000);
