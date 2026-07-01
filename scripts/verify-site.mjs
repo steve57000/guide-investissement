@@ -75,6 +75,19 @@ function verifyNavigation() {
 function verifySitePages() {
   for (const href of duplicates(sitePages.map((page) => page.href))) fail(`Pages: href dupliqué dans sitePages: "${href}".`);
 
+  const ignoredAstroPages = new Set(['index', '[slug]']);
+  const directAstroPages = fs
+    .readdirSync(fromRoot('src/pages'), { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.astro'))
+    .map((entry) => entry.name.replace(/\.astro$/, ''))
+    .filter((slug) => !ignoredAstroPages.has(slug));
+
+  for (const slug of directAstroPages) {
+    if (!pageHrefs.has(slug)) {
+      fail(`Pages: fichier orphelin src/pages/${slug}.astro absent de src/data/sitePages.ts.`);
+    }
+  }
+
   for (const page of sitePages) {
     assertNonEmpty(page.title, `Pages: titre vide pour href "${page.href}".`);
     assertNonEmpty(page.description, `Pages: description vide pour "${page.href}".`);

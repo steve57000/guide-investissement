@@ -18,7 +18,7 @@ export const mainNav: NavLink[] = [
 
 export const understandSections: NavSection[] = [
   { title: 'Bases', links: [['faq', 'FAQ'], ['placements', 'Placements'], ['etf', 'ETF'], ['crypto', 'Crypto'], ['methodologie', 'Méthodologie']] },
-  { title: 'Méthode', links: [['reequilibrage', 'Rééquilibrage'], ['scenarios-crise', 'Crises'], ['strategie-sortie', 'Quand vendre'], ['objectifs', 'Objectifs']] },
+  { title: 'Méthode', links: [['choisir-plateforme', 'Choisir plateforme'], ['reequilibrage', 'Rééquilibrage'], ['scenarios-crise', 'Crises'], ['strategie-sortie', 'Quand vendre'], ['objectifs', 'Objectifs']] },
   { title: 'Suivi', links: [['suivi-portefeuille', 'Suivi portefeuille'], ['journal-investissement', 'Journal'], ['sauvegarde-donnees', 'Sauvegarde']] },
   { title: 'Fiscalité', links: [['fiscalite', 'Fiscalité'], ['declaration-documents', 'Déclaration'], ['frais', 'Frais'], ['sources', 'Sources']] },
   { title: 'Personnel', links: [['portefeuille-steve', 'Portefeuille Steve'], ['export-pdf', 'Export PDF'], ['plan-du-site', 'Plan du site']] },
