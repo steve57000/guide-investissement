@@ -5,6 +5,7 @@ import AllocationTable from '../components/AllocationTable.astro';
 import PrintButton from '../components/PrintButton.astro';
 import SourceList from '../components/SourceList.astro';
 import DataWarning from '../components/DataWarning.astro';
+import EtfComparisonTable from '../components/EtfComparisonTable.astro';
 export async function getStaticPaths() {
   const pages = await getCollection('pages');
   return pages
@@ -26,6 +27,7 @@ const dataWarningPages = ['fiscalite', 'plateformes', 'etf', 'frais', 'plan-acti
     {dataWarningPages.includes(page.id) && <DataWarning context="Données variables" />}
     {printablePages.includes(page.id) && <div class="actions"><PrintButton />{page.id === 'sources' && <a class="btn secondary" href={withBase('export-pdf')}>Exporter le guide en PDF</a>}</div>}
     <Content />
+    {page.id === 'etf' && <EtfComparisonTable />}
     {page.id === 'sources' && <SourceList />}
     {page.id === 'commencer-50' && <><h2>Allocations officielles centralisées</h2><AllocationTable /></>}
     {page.id === 'plan-action' && <><h2>Allocation de départ officielle</h2><AllocationTable /></>}

@@ -1,0 +1,61 @@
+---
+import { etfs } from '../data/etfs';
+
+const badgeClass = (badge: string) => {
+  const normalized = badge.toLowerCase();
+  if (normalized.includes('pea')) return 'badge-pea';
+  if (normalized.includes('débutant')) return 'badge-beginner';
+  if (normalized.includes('vérifier')) return 'badge-check';
+  if (normalized.includes('monde')) return 'badge-cto';
+  if (normalized.includes('capitalisant')) return 'badge-ifu';
+  return '';
+};
+---
+<section class="etf-comparison content-wide" aria-labelledby="comparatif-etf">
+  <div class="etf-comparison__intro">
+    <h2 id="comparatif-etf">Tableau de comparaison ETF</h2>
+    <p>Ce tableau sert de grille de lecture. Les lignes sont des profils pédagogiques, pas des recommandations ni des données produit garanties : les frais, la réplication et l’éligibilité PEA doivent être vérifiés dans la documentation officielle avant tout achat.</p>
+  </div>
+  <div class="etf-table-wrap" role="region" aria-label="Comparaison ETF" tabindex="0">
+    <table class="etf-table">
+      <thead>
+        <tr>
+          <th>ETF / type</th>
+          <th>Indice suivi</th>
+          <th>Émetteur</th>
+          <th>Éligibilité PEA</th>
+          <th>Frais courants</th>
+          <th>Réplication</th>
+          <th>Usage conseillé</th>
+          <th>Point de vigilance</th>
+          <th>Source officielle</th>
+        </tr>
+      </thead>
+      <tbody>
+        {etfs.map((etf) => (
+          <tr>
+            <td>
+              <strong>{etf.name}</strong>
+              <span class="platform-type">{etf.category} · {etf.accumulationOrDistribution}</span>
+              <span class="platform-badges">
+                {etf.badges.map((badge) => <span class={`badge ${badgeClass(badge)}`}>{badge}</span>)}
+              </span>
+            </td>
+            <td>{etf.indexTracked}</td>
+            <td>{etf.issuer}</td>
+            <td>{etf.peaEligibleStatus}</td>
+            <td>{etf.ongoingCharges}</td>
+            <td>{etf.replication}</td>
+            <td>{etf.suggestedUse}</td>
+            <td>{etf.vigilancePoint}</td>
+            <td>
+              <a href={etf.officialPageUrl}>Page émetteur</a><br />
+              <a href={etf.kidUrl}>DIC/KID ou référence officielle</a>
+              <span class="verified">Vérifié le {etf.checkedAt}</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
