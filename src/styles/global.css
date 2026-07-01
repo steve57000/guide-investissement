@@ -88,3 +88,6 @@ main.container{width:min(var(--site-max),calc(100% - var(--page-gutter)));margin
   .simulator,.personal-dashboard{display:block!important}.hero,.hero-premium{display:block!important;padding:0!important}.hero-dashboard{display:none!important}
   img,svg{max-width:100%!important;break-inside:avoid}.export-link-grid{display:block!important}.export-link-grid a{display:block!important;margin:0 0 6pt!important}
 }
+
+/* Simulator table horizontal scrolling */
+html,body{max-width:100%;overflow-x:hidden}.simulator,.card.simulator,main.container{max-width:100%}.table-wrap{width:100%;max-width:100%;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch}.table-wrap table{display:table;margin:0}.simulator-table-wrap{width:100%;max-width:100%;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch}.simulator-table-wrap .year-table{width:max-content;min-width:760px}.simulator-table-wrap th,.simulator-table-wrap td{white-space:nowrap}.faq-list{display:grid;gap:12px;margin:28px 0}.faq-item{border:1px solid rgba(215,181,109,.2);border-radius:18px;background:rgba(255,255,255,.04);overflow:hidden}.faq-item summary{cursor:pointer;padding:16px 18px;color:#fff;font-weight:850}.faq-item summary:focus-visible{outline:3px solid rgba(241,216,151,.76);outline-offset:3px}.faq-item p{margin:0;padding:0 18px 18px;color:#d5e2f1}

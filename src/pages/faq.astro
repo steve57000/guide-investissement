@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const faqs = [
+  ['Est-ce grave de commencer avec seulement 50 €/mois ?', 'Non. L’essentiel est de commencer avec un montant durable, sans fragiliser le budget ni l’épargne de sécurité. Un petit versement régulier aide à installer l’habitude avant d’augmenter plus tard.'],
+  ['Dois-je attendre une baisse pour investir ?', 'Attendre le point bas parfait est très difficile. Pour un débutant, investir progressivement tous les mois réduit le risque de tout placer au mauvais moment et évite de rester bloqué par l’hésitation.'],
+  ['Que faire si le marché baisse juste après mon achat ?', 'Vérifier d’abord que l’argent investi n’est pas nécessaire à court terme. Si l’horizon reste long et que l’épargne de sécurité est en place, la baisse fait partie du parcours normal des marchés.'],
+  ['Faut-il investir tous les mois ou attendre d’avoir plus d’argent ?', 'Un versement mensuel modeste est souvent plus simple à tenir. Attendre une grosse somme peut retarder l’apprentissage et augmenter la pression émotionnelle au moment d’investir.'],
+  ['Est-ce que je dois garder N26 et Revolut ?', 'Ces applications peuvent rester utiles, mais il faut vérifier les frais, les documents fiscaux, les comptes à déclarer et les enveloppes disponibles. Pour le cœur long terme en France, comparer un PEA reste important.'],
+  ['Pourquoi le PEA est souvent prioritaire en France ?', 'Pour un résident fiscal français, le PEA peut offrir un cadre fiscal avantageux après la durée requise, sous conditions. Il faut vérifier l’éligibilité des ETF, les frais, les plafonds et les règles fiscales à jour.'],
+  ['Est-ce que je dois acheter du Bitcoin ?', 'Pas obligatoirement. Le Bitcoin est très volatil et peut baisser fortement. S’il est utilisé, il doit rester une poche satellite assumée, avec un montant que Steve accepte de voir fluctuer fortement.'],
+  ['Que faire si je ne veux pas de crypto ?', 'C’est une option parfaitement cohérente. Une stratégie peut rester centrée sur l’épargne de sécurité, le PEA et un ETF Monde, sans crypto. La simplicité est souvent un avantage.'],
+  ['Est-ce qu’un ETF Monde suffit ?', 'Pour beaucoup de débutants, un ETF Monde peut constituer un cœur très simple et diversifié. Il faut tout de même comprendre l’indice suivi, les frais, la devise, la réplication et les risques de marché.'],
+  ['Quand ajouter du S&P 500 ou du Nasdaq ?', 'Seulement après avoir compris que cela augmente l’exposition aux États-Unis et souvent aux grandes valeurs technologiques. Ce n’est pas indispensable si l’ETF Monde répond déjà à l’objectif.'],
+  ['Combien garder en épargne de sécurité ?', 'Un repère courant est de garder plusieurs mois de dépenses essentielles disponibles. Le montant dépend de la stabilité des revenus, des charges, des personnes à charge et des dépenses prévues.'],
+  ['Est-ce que les simulations sont garanties ?', 'Non. Les simulations sont des hypothèses pédagogiques. Les rendements, les frais, l’inflation et la fiscalité réelle peuvent changer, et le capital investi peut baisser.'],
+  ['Quand vendre ?', 'Il vaut mieux vendre selon une règle prévue à l’avance : objectif atteint, besoin réel, réduction progressive du risque ou changement durable de situation. Vendre par panique est rarement une bonne méthode.'],
+  ['Comment éviter les erreurs fiscales ?', 'Conserver les relevés, IFU, exports CSV, justificatifs crypto et informations de comptes étrangers. En cas de doute, vérifier les sources officielles ou demander l’aide d’un professionnel.'],
+  ['À quelle fréquence regarder mon portefeuille ?', 'Un suivi mensuel léger ou trimestriel suffit souvent. Regarder tous les jours augmente le risque de décisions émotionnelles sans améliorer la stratégie de long terme.'],
+];
+---
+<BaseLayout title="FAQ investissement | Guide Investissement 2026–2055" description="Réponses pédagogiques aux questions fréquentes pour débuter avec méthode, prudence et régularité.">
+  <article class="content-page prose faq-page">
+    <p class="eyebrow">Comprendre</p>
+    <h1>FAQ investissement</h1>
+    <p class="lead">Réponses courtes aux questions fréquentes de Steve et d’un débutant qui veut investir progressivement sans confondre méthode, simulation et promesse.</p>
+    <div class="callout attention"><strong>Cadre éducatif</strong><p>Cette FAQ est un contenu pédagogique. Elle ne constitue pas un conseil financier personnalisé, ni une recommandation réglementée d’achat, de vente ou d’ouverture de compte.</p></div>
+
+    <section class="faq-list" aria-label="Questions fréquentes investissement">
+      {faqs.map(([question, answer]) => (
+        <details class="faq-item">
+          <summary>{question}</summary>
+          <p>{answer}</p>
+        </details>
+      ))}
+    </section>
+  </article>
+</BaseLayout>
