@@ -55,11 +55,19 @@
   const summary = document.querySelector('[data-journal-summary]');
   const feedback = document.querySelector('[data-journal-feedback]');
 
-  const normalizeRow = (row) => fields.reduce((entry, field) => ({ ...entry, [field]: String(row?.[field] ?? '') }), {});
+  const limits = { date: 10, type: 80, amount: 40, asset: 80, platform: 80, comment: 500 };
+  const normalizeText = (value, field) => String(value ?? '').trim().slice(0, limits[field] ?? 120);
+  const isValidDate = (value) => !value || /^\d{4}-\d{2}-\d{2}$/.test(value);
+  const normalizeRow = (row) => fields.reduce((entry, field) => ({ ...entry, [field]: normalizeText(row?.[field], field) }), {});
+  const validateRows = (value) => {
+    if (!Array.isArray(value)) return null;
+    const rows = value.map(normalizeRow).filter((row) => isValidDate(row.date) && (row.date || row.type || row.amount || row.asset || row.platform || row.comment));
+    return rows.length <= 1000 ? rows : rows.slice(0, 1000);
+  };
   const loadRows = () => {
     try {
       const rows = JSON.parse(localStorage.getItem(storageKey) || '[]');
-      return Array.isArray(rows) ? rows.map(normalizeRow) : [];
+      return validateRows(rows) ?? [];
     } catch { return []; }
   };
   const saveRows = (rows) => localStorage.setItem(storageKey, JSON.stringify(rows.map(normalizeRow)));
@@ -133,7 +141,12 @@
     event.preventDefault();
     const data = new FormData(form);
     const rows = loadRows();
-    rows.push(normalizeRow(Object.fromEntries(fields.map((field) => [field, data.get(field)]))));
+    const nextRow = normalizeRow(Object.fromEntries(fields.map((field) => [field, data.get(field)])));
+    if (!nextRow.date || !nextRow.type || !isValidDate(nextRow.date)) {
+      showFeedback('Date et type d’action sont obligatoires, avec une date au format valide.', 'error');
+      return;
+    }
+    rows.push(nextRow);
     saveRows(rows);
     form.reset();
     showFeedback('Ligne ajoutée au journal.', 'ok');
@@ -165,7 +178,7 @@
     if (!file) return;
     try {
       const parsed = JSON.parse(await file.text());
-      const importedRows = Array.isArray(parsed) ? parsed.map(normalizeRow) : null;
+      const importedRows = validateRows(parsed);
       if (!importedRows) throw new Error('Format invalide');
       const mode = confirm('OK : ajouter les lignes importées aux lignes existantes. Annuler : remplacer toutes les lignes existantes après confirmation.') ? 'append' : 'replace';
       let nextRows = importedRows;

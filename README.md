@@ -30,6 +30,22 @@ npm run preview
 
 Le build Astro génère le site statique dans `dist/`. Il ne faut pas créer manuellement de `index.html` à la racine du dépôt.
 
+
+## Données locales et confidentialité
+
+Le site est statique : les outils interactifs ne transmettent aucune donnée à un serveur. Les données personnelles restent dans le navigateur de l’utilisateur via `localStorage`.
+
+Clés utilisées :
+
+- `guide-investissement-portfolio-journal` : lignes du journal d’investissement, exportables en CSV ou JSON et importables depuis un fichier JSON validé côté navigateur.
+- `guide-investissement-personal-dashboard` : paramètres du tableau de bord personnel, exportables/importables en JSON validé côté navigateur.
+
+Les imports JSON sont normalisés avant sauvegarde pour éviter les formats inattendus, les champs trop longs et les valeurs numériques invalides.
+
+## Données d’allocation centralisées
+
+Les allocations mensuelles pédagogiques sont centralisées dans `src/data/allocations.ts`. Les pages et composants doivent réutiliser ces données dès que possible afin d’éviter les incohérences entre l’accueil, le plan d’action, l’assistant, les simulations, la FAQ et le portefeuille Steve.
+
 ## Déploiement GitHub Pages
 
 Le site est configuré pour GitHub Pages avec :

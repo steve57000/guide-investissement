@@ -5,11 +5,11 @@ order: 9
 ---
 
 <div class="callout a-retenir"><strong>Objectif</strong><p>Le suivi sert à vérifier que la stratégie reste cohérente, pas à surveiller les cours tous les jours ni à multiplier les arbitrages.</p></div>
-<div class="actions"><a class="btn secondary" href="../sauvegarde-donnees">Sauvegarder les données locales</a></div>
+<div class="actions"><a class="btn secondary" href="/guide-investissement/sauvegarde-donnees">Sauvegarder les données locales</a></div>
 
 ## Pourquoi suivre sans regarder tous les jours
 
-Un portefeuille long terme se pilote avec des règles simples : versements réguliers, allocation cible, frais maîtrisés et décisions documentées. Le [journal d’investissement](../journal-investissement) permet de centraliser ces traces sans consulter les cours tous les jours. Regarder les cours quotidiennement augmente souvent le risque d’achat impulsif, de vente panique ou de changement de stratégie après une simple variation de marché.
+Un portefeuille long terme se pilote avec des règles simples : versements réguliers, allocation cible, frais maîtrisés et décisions documentées. Le [journal d’investissement](/guide-investissement/journal-investissement) permet de centraliser ces traces sans consulter les cours tous les jours. Regarder les cours quotidiennement augmente souvent le risque d’achat impulsif, de vente panique ou de changement de stratégie après une simple variation de marché.
 
 ## Suivi mensuel
 
