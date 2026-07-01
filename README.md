@@ -86,3 +86,20 @@ npm run build
 ```
 
 Génère le site statique Astro et permet de valider que les pages se compilent correctement avant déploiement.
+
+## Images et métadonnées
+
+Les images du site restent dans `public/` afin qu’Astro les copie telles quelles dans le build statique et que les chemins GitHub Pages restent prévisibles avec `base: "/guide-investissement"`.
+
+- `public/favicon.ico` : favicon générique utilisé par les navigateurs historiques.
+- `public/favicon-16x16.png` : favicon PNG compact pour les onglets et petits contextes.
+- `public/favicon-32x32.png` : favicon PNG standard pour les navigateurs modernes.
+- `public/apple-touch-icon.png` : icône d’ajout à l’écran d’accueil iOS.
+- `public/android-chrome-192x192.png` : icône Android/PWA 192 × 192 déclarée dans le manifeste.
+- `public/android-chrome-512x512.png` : icône Android/PWA 512 × 512 déclarée dans le manifeste.
+- `public/og-image.png` : image principale Open Graph et Twitter/X Card, exposée en URL absolue pour les partages sociaux.
+- `public/social-square.png` : image sociale carrée déclarée comme image Open Graph complémentaire lorsque les plateformes préfèrent un format carré.
+- `public/splash-screen.png` : visuel de splash screen conservé dans `public/` pour un usage mobile ou PWA ultérieur.
+- `public/site.webmanifest` : manifeste web app avec le nom du guide, les couleurs mobiles, le périmètre GitHub Pages et les icônes Android.
+
+Les balises globales de favicon, manifeste, couleur de thème, Open Graph et Twitter/X Card sont centralisées dans `src/layouts/BaseLayout.astro` pour s’appliquer à toutes les pages.
