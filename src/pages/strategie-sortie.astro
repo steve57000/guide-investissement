@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const withBase = (path = '') => `${baseUrl}${path.replace(/^\/+/, '')}`;
 ---
 <BaseLayout title="Quand vendre ou sécuriser ? | Guide Investissement 2026–2055" description="Méthode pédagogique pour distinguer une vente paniquée d’un arbitrage rationnel, sécuriser un projet court terme et réduire progressivement le risque.">
   <article class="content-page prose">
@@ -56,6 +58,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </table>
     </div>
 
-    <div class="callout a-retenir"><strong>À retenir</strong><p>Une vente rationnelle a une raison, un montant, un calendrier et une trace écrite. Sans ces éléments, il s’agit souvent d’une émotion déguisée en décision. Après validation, inscrire l’arbitrage dans le <a href="/guide-investissement/journal-investissement">journal d’investissement</a>.</p></div>
+    <div class="callout a-retenir"><strong>À retenir</strong><p>Une vente rationnelle a une raison, un montant, un calendrier et une trace écrite. Sans ces éléments, il s’agit souvent d’une émotion déguisée en décision. Après validation, inscrire l’arbitrage dans le <a href={withBase('journal-investissement')}>journal d’investissement</a>.</p></div>
   </article>
 </BaseLayout>
